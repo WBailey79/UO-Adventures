@@ -66,7 +66,6 @@ namespace Server.Misc
 			PackItem(new Candle());
 			PackItem(new BankCheck(5000000));
 			PackItem(new HousePlacementTool());
-			PackItem(new HomeStone());
 			PackItem(new SkillBallPlus());
 		}
 
