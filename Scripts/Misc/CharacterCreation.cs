@@ -65,6 +65,9 @@ namespace Server.Misc
 			PackItem(new Gold(50000)); // Starting gold can be customized here
 			PackItem(new Candle());
 			PackItem(new BankCheck(5000000));
+			PackItem(new HousePlacementTool());
+			PackItem(new HomeStone());
+			PackItem(new SkillBallPlus());
 		}
 
 		private static void AddShirt(Mobile m, int shirtHue)
