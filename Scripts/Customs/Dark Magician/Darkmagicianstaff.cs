@@ -10,10 +10,8 @@ namespace Server.Items
 	public class Darkmagicianstaff : GnarledStaff
   {
 public override int ArtifactRarity{ get{ return 44; } }
-		//public override int OldMinDamage{ get{ return 50; } }
-		public override int AosMinDamage{ get{ return 50; } }
-		//public override int OldMaxDamage{ get{ return 150; } }
-		public override int AosMaxDamage{ get{ return 150; } }
+      public override int MinDamage{ get{ return 50; } }
+      public override int MaxDamage{ get{ return 150; } }
 
 		public override int InitMinHits{ get{ return 100; } }
 		public override int InitMaxHits{ get{ return 155; } }
