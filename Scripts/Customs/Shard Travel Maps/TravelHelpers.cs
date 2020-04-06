@@ -39,6 +39,7 @@ Shard Owners may want to include information about any costs they add to the use
         {
             bool NonGM = from.AccessLevel < AccessLevel.GameMaster;
 
+
             if (NonGM && from.Criminal)
             {
                 from.SendLocalizedMessage(1005561, "", 0x22);
