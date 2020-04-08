@@ -36,7 +36,7 @@ namespace Server.Misc
 		/// </summary>
 		private const int LocationSize = 4;
 
-		public static bool GGSActive { get { return !Siege.SiegeShard; } }
+		public static bool GGSActive => !Siege.SiegeShard; 
 
 		static SkillCheck()
 		{
@@ -368,8 +368,7 @@ namespace Server.Misc
 			if (from is BaseCreature && ((BaseCreature)from).IsDeadPet)
 				return;
 
-			if (skill.SkillName == SkillName.Focus && from is BaseCreature &&
-				(!PetTrainingHelper.Enabled || !((BaseCreature)from).Controlled))
+			if (skill.SkillName == SkillName.Focus && from is BaseCreature && !((BaseCreature)from).Controlled)
 				return;
 
 			if (skill.Base < skill.Cap && skill.Lock == SkillLock.Up)

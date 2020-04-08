@@ -171,7 +171,7 @@ namespace Server.Mobiles
         //future use: Talisman 'Protection/Bonus vs. Specific Creature
         private readonly TextDefinition m_FriendlyName;
 
-        public TextDefinition FriendlyName { get { return m_FriendlyName; } }
+        public TextDefinition FriendlyName => m_FriendlyName; 
 
         public FriendlyNameAttribute(TextDefinition friendlyName)
         {
@@ -330,13 +330,13 @@ namespace Server.Mobiles
         }
         #endregion
 
-        public virtual InhumanSpeech SpeechType { get { return null; } }
+        public virtual InhumanSpeech SpeechType => null; 
 
-        public virtual bool ForceStayHome { get { return false; } }
+        public virtual bool ForceStayHome => false; 
 
         public int FollowRange { get; set; }
 
-        public virtual bool CanBeParagon { get { return true; } }
+        public virtual bool CanBeParagon => true; 
 
         /* Do not serialize this till the code is finalized */
 
@@ -428,15 +428,15 @@ namespace Server.Mobiles
         #region Bonding
         public const bool BondingEnabled = true;
 
-        public virtual bool IsBondable { get { return (BondingEnabled && !Summoned && !m_Allured && !IsGolem); } }
-        public virtual TimeSpan BondingDelay { get { return TimeSpan.FromDays(7.0); } }
-        public virtual TimeSpan BondingAbandonDelay { get { return TimeSpan.FromDays(1.0); } }
+        public virtual bool IsBondable => (BondingEnabled && !Summoned && !m_Allured && !IsGolem); 
+        public virtual TimeSpan BondingDelay => TimeSpan.FromDays(7.0); 
+        public virtual TimeSpan BondingAbandonDelay => TimeSpan.FromDays(1.0); 
 
-        public override bool CanRegenHits { get { return !m_IsDeadPet && !Summoned && base.CanRegenHits; } }
-        public override bool CanRegenStam { get { return !IsParagon && !m_IsDeadPet && base.CanRegenStam; } }
-        public override bool CanRegenMana { get { return !m_IsDeadPet && base.CanRegenMana; } }
+        public override bool CanRegenHits => !m_IsDeadPet && !Summoned && base.CanRegenHits; 
+        public override bool CanRegenStam => !IsParagon && !m_IsDeadPet && base.CanRegenStam; 
+        public override bool CanRegenMana => !m_IsDeadPet && base.CanRegenMana; 
 
-        public override bool IsDeadBondedPet { get { return m_IsDeadPet; } }
+        public override bool IsDeadBondedPet => m_IsDeadPet; 
 
         private bool m_IsBonded;
         private bool m_IsDeadPet;
@@ -579,7 +579,7 @@ namespace Server.Mobiles
         public TrainingProfile TrainingProfile { get { return _TrainingProfile; } set { _TrainingProfile = value; } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public double BardingDifficulty { get { return BaseInstrument.GetBaseDifficulty(this); } }
+        public double BardingDifficulty => BaseInstrument.GetBaseDifficulty(this); 
 
         public virtual WeaponAbility TryGetWeaponAbility()
         {
@@ -617,14 +617,11 @@ namespace Server.Mobiles
                 SetSpecialAbility(SpecialAbility.Heal);
             }
 
-            if (PetTrainingHelper.Enabled)
-            {
-                if (Skills[SkillName.Focus].Value == 0)
-                    SetSkill(SkillName.Focus, 2, 20);
+            if (Skills[SkillName.Focus].Value == 0)
+                SetSkill(SkillName.Focus, 2, 20);
 
-                if (Skills[SkillName.DetectHidden].Value == 0 && !(this is BaseVendor))
-                    SetSkill(SkillName.DetectHidden, Utility.RandomList(10, 60));
-            }
+            if (Skills[SkillName.DetectHidden].Value == 0 && !(this is BaseVendor))
+                SetSkill(SkillName.DetectHidden, Utility.RandomList(10, 60));
         }
 
         public void SetMagicalAbility(MagicalAbility ability)
@@ -672,13 +669,13 @@ namespace Server.Mobiles
             return PetTrainingHelper.GetAbilityProfile(this, true).HasAbility(o);
         }
 
-        public virtual double AverageThreshold { get { return 0.33; } }
+        public virtual double AverageThreshold => 0.33; 
 
         public List<double> _InitAverage;
 
         private void SetAverage(double min, double max, double value)
         {
-            if (PetTrainingHelper.Enabled && CanLowerSlot() && max > min)
+            if (CanLowerSlot() && max > min)
             {
                 if (_InitAverage == null)
                     _InitAverage = new List<double>();
@@ -687,7 +684,7 @@ namespace Server.Mobiles
             }
         }
 
-        public static Type[] SlotLowerables { get { return _SlotLowerables; } }
+        public static Type[] SlotLowerables => _SlotLowerables; 
         private static Type[] _SlotLowerables =
         {
             typeof(Nightmare), typeof(Najasaurus), typeof(RuneBeetle), typeof(GreaterDragon), typeof(FrostDragon),
@@ -844,7 +841,7 @@ namespace Server.Mobiles
             }
         }
 
-        public static bool IsSoulboundEnemies { get { return PointsSystem.FellowshipData.Enabled; } }
+        public static bool IsSoulboundEnemies => PointsSystem.FellowshipData.Enabled; 
 
         public static Type[] _SoulboundCreatures =
         {
@@ -852,7 +849,7 @@ namespace Server.Mobiles
         };
         #endregion
 
-        public virtual double WeaponAbilityChance { get { return 0.4; } }
+        public virtual double WeaponAbilityChance => 0.4; 
 
         public virtual WeaponAbility GetWeaponAbility()
         {
@@ -860,11 +857,11 @@ namespace Server.Mobiles
         }
 
         #region Elemental Resistance/Damage
-        public override int BasePhysicalResistance { get { return m_PhysicalResistance; } }
-        public override int BaseFireResistance { get { return m_FireResistance; } }
-        public override int BaseColdResistance { get { return m_ColdResistance; } }
-        public override int BasePoisonResistance { get { return m_PoisonResistance; } }
-        public override int BaseEnergyResistance { get { return m_EnergyResistance; } }
+        public override int BasePhysicalResistance => m_PhysicalResistance; 
+        public override int BaseFireResistance => m_FireResistance; 
+        public override int BaseColdResistance => m_ColdResistance; 
+        public override int BasePoisonResistance => m_PoisonResistance; 
+        public override int BaseEnergyResistance => m_EnergyResistance; 
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int PhysicalResistanceSeed
@@ -1045,48 +1042,48 @@ namespace Server.Mobiles
 
         public bool IsAmbusher { get; set; }
 
-        public virtual FoodType FavoriteFood { get { return FoodType.Meat; } }
-        public virtual PackInstinct PackInstinct { get { return PackInstinct.None; } }
+        public virtual FoodType FavoriteFood => FoodType.Meat; 
+        public virtual PackInstinct PackInstinct => PackInstinct.None; 
 
-        public List<Mobile> Owners { get { return m_Owners; } }
+        public List<Mobile> Owners => m_Owners; 
 
-        public virtual bool AllowMaleTamer { get { return true; } }
-        public virtual bool AllowFemaleTamer { get { return true; } }
-        public virtual bool SubdueBeforeTame { get { return false; } }
-        public virtual bool StatLossAfterTame { get { return SubdueBeforeTame; } }
-        public virtual bool ReduceSpeedWithDamage { get { return true; } }
-        public virtual bool IsSubdued { get { return SubdueBeforeTame && (Hits < ((double)HitsMax / 10)); } }
+        public virtual bool AllowMaleTamer => true; 
+        public virtual bool AllowFemaleTamer => true; 
+        public virtual bool SubdueBeforeTame => false; 
+        public virtual bool StatLossAfterTame => SubdueBeforeTame; 
+        public virtual bool ReduceSpeedWithDamage => true; 
+        public virtual bool IsSubdued => SubdueBeforeTame && (Hits < ((double)HitsMax / 10)); 
 
-        public virtual bool Commandable { get { return true; } }
+        public virtual bool Commandable => true; 
 
-        public virtual Poison HitPoison { get { return null; } }
-        public virtual double HitPoisonChance { get { return 0.5; } }
-        public virtual Poison PoisonImmune { get { return null; } }
+        public virtual Poison HitPoison => null; 
+        public virtual double HitPoisonChance => 0.5; 
+        public virtual Poison PoisonImmune => null; 
 
-        public virtual bool BardImmune { get { return false; } }
-        public virtual bool Unprovokable { get { return BardImmune || m_IsDeadPet; } }
-        public virtual bool Uncalmable { get { return BardImmune || m_IsDeadPet; } }
-        public virtual bool AreaPeaceImmune { get { return BardImmune || m_IsDeadPet; } }
+        public virtual bool BardImmune => false; 
+        public virtual bool Unprovokable => BardImmune || m_IsDeadPet; 
+        public virtual bool Uncalmable => BardImmune || m_IsDeadPet; 
+        public virtual bool AreaPeaceImmune => BardImmune || m_IsDeadPet; 
 
-        public virtual bool BleedImmune { get { return false; } }
-        public virtual double BonusPetDamageScalar { get { return 1.0; } }
-        public virtual bool AllureImmune { get { return false; } }
+        public virtual bool BleedImmune => false; 
+        public virtual double BonusPetDamageScalar => 1.0; 
+        public virtual bool AllureImmune => false; 
 
-        public virtual bool DeathAdderCharmable { get { return false; } }
+        public virtual bool DeathAdderCharmable => false; 
 
-        public virtual bool GivesFameAndKarmaAward { get { return true; } }
+        public virtual bool GivesFameAndKarmaAward => true; 
 
         //TODO: Find the pub 31 tweaks to the DispelDifficulty and apply them of course.
-        public virtual double DispelDifficulty { get { return 0.0; } } // at this skill level we dispel 50% chance
-        public virtual double DispelFocus { get { return 20.0; } }
+        public virtual double DispelDifficulty => 0.0; // at this skill level we dispel 50% chance
+        public virtual double DispelFocus => 20.0;
         // at difficulty - focus we have 0%, at difficulty + focus we have 100%
-        public virtual bool DisplayWeight { get { return Backpack is StrongBackpack; } }
+        public virtual bool DisplayWeight => Backpack is StrongBackpack; 
 
-        public virtual double TeleportChance { get { return 0.05; } }
-        public virtual bool AttacksFocus { get { return false; } }
-        public virtual bool ShowSpellMantra { get { return false; } }
-        public virtual bool FreezeOnCast { get { return ShowSpellMantra; } }
-        public virtual bool CanFly { get { return false; } }
+        public virtual double TeleportChance => 0.05; 
+        public virtual bool AttacksFocus => false; 
+        public virtual bool ShowSpellMantra => false; 
+        public virtual bool FreezeOnCast => ShowSpellMantra; 
+        public virtual bool CanFly => false; 
 
         public virtual bool CanAutoStable
         {
@@ -1105,8 +1102,8 @@ namespace Server.Mobiles
             }
         }
 
-        public virtual bool TaintedLifeAura { get { return false; } }
-        public virtual bool BreathImmune { get { return false; } }
+        public virtual bool TaintedLifeAura => false; 
+        public virtual bool BreathImmune => false; 
 
         #region Spill Acid
         public void SpillAcid(int Amount)
@@ -1157,7 +1154,7 @@ namespace Server.Mobiles
         }
 
         #region Flee!!!
-        public virtual bool CanFlee { get { return !m_Paragon && !GivesMLMinorArtifact; } }
+        public virtual bool CanFlee => !m_Paragon && !GivesMLMinorArtifact; 
 
         private DateTime m_EndFlee;
 
@@ -1195,14 +1192,14 @@ namespace Server.Mobiles
         }
         #endregion
 
-        public virtual bool IsInvulnerable { get { return false; } }
+        public virtual bool IsInvulnerable => false; 
 
-        public BaseAI AIObject { get { return m_AI; } }
+        public BaseAI AIObject => m_AI; 
 
         public const int MaxOwners = 5;
 
         // Tribe Opposition (Replaces Opposition Group
-        public virtual TribeType Tribe { get { return TribeType.None; } } // What opposition list am I in?
+        public virtual TribeType Tribe => TribeType.None; // What opposition list am I in?
 
         public virtual bool IsTribeEnemy(Mobile m)
         {
@@ -1229,9 +1226,9 @@ namespace Server.Mobiles
         }
 
         #region Friends
-        public List<Mobile> Friends { get { return m_Friends; } }
+        public List<Mobile> Friends => m_Friends; 
 
-        public virtual bool AllowNewPetFriend { get { return (m_Friends == null || m_Friends.Count < 5); } }
+        public virtual bool AllowNewPetFriend => (m_Friends == null || m_Friends.Count < 5); 
 
         public virtual bool IsPetFriend(Mobile m)
         {
@@ -1546,7 +1543,7 @@ namespace Server.Mobiles
             return amount;
         }
 
-        public virtual bool DeleteCorpseOnDeath { get { return false; } }
+        public virtual bool DeleteCorpseOnDeath => false; 
 
         public override void SetLocation(Point3D newLocation, bool isTeleport)
         {
@@ -1650,7 +1647,7 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public IPoint2D TargetLocation { get { return m_TargetLocation; } set { m_TargetLocation = value; } }
 
-        public virtual Mobile ConstantFocus { get { return null; } }
+        public virtual Mobile ConstantFocus => null; 
 
         public virtual bool DisallowAllMoves
         {
@@ -1692,8 +1689,8 @@ namespace Server.Mobiles
             }
         }
 
-        public virtual bool HoldSmartSpawning { get { return IsParagon; } }
-        public virtual bool UseSmartAI { get { return false; } }
+        public virtual bool HoldSmartSpawning => IsParagon; 
+        public virtual bool UseSmartAI => false; 
 
         [CommandProperty(AccessLevel.GameMaster)]
         public virtual int DamageMin { get { return m_DamageMin; } set { m_DamageMin = value; } }
@@ -1789,9 +1786,9 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public int ManaMaxSeed { get { return m_ManaMax; } set { m_ManaMax = value; } }
 
-        public virtual bool CanOpenDoors { get { return !Body.IsAnimal && !Body.IsSea; } }
+        public virtual bool CanOpenDoors => !Body.IsAnimal && !Body.IsSea; 
 
-        public virtual bool CanMoveOverObstacles { get { return Body.IsMonster; } }
+        public virtual bool CanMoveOverObstacles => Body.IsMonster; 
 
         public virtual bool CanDestroyObstacles
         {
@@ -2658,49 +2655,11 @@ namespace Server.Mobiles
             double activeSpeed = m_dActiveSpeed;
             double passiveSpeed = m_dPassiveSpeed;
 
-            if (version >= 28)
-            {
-                SpeedInfo.GetSpeedsNew(this, ref activeSpeed, ref passiveSpeed);
+            SpeedInfo.GetSpeeds(this, ref activeSpeed, ref passiveSpeed);
 
-                m_dActiveSpeed = activeSpeed;
-                m_dPassiveSpeed = passiveSpeed;
-            }
-            else
-            {
-                SpeedInfo.GetSpeeds(this, ref activeSpeed, ref passiveSpeed);
-
-                bool isStandardActive = false;
-                for (int i = 0; !isStandardActive && i < m_StandardActiveSpeeds.Length; ++i)
-                {
-                    isStandardActive = (m_dActiveSpeed == m_StandardActiveSpeeds[i]);
-                }
-
-                bool isStandardPassive = false;
-                for (int i = 0; !isStandardPassive && i < m_StandardPassiveSpeeds.Length; ++i)
-                {
-                    isStandardPassive = (m_dPassiveSpeed == m_StandardPassiveSpeeds[i]);
-                }
-
-                if (isStandardActive && m_dCurrentSpeed == m_dActiveSpeed)
-                {
-                    m_dCurrentSpeed = activeSpeed;
-                }
-                else if (isStandardPassive && m_dCurrentSpeed == m_dPassiveSpeed)
-                {
-                    m_dCurrentSpeed = passiveSpeed;
-                }
-
-                if (isStandardActive && !m_Paragon)
-                {
-                    m_dActiveSpeed = activeSpeed;
-                }
-
-                if (isStandardPassive && !m_Paragon)
-                {
-                    m_dPassiveSpeed = passiveSpeed;
-                }
-            }
-
+            m_dActiveSpeed = activeSpeed;
+            m_dPassiveSpeed = passiveSpeed;
+           
             if (version >= 14)
             {
                 m_RemoveIfUntamed = reader.ReadBool();
@@ -2887,7 +2846,7 @@ namespace Server.Mobiles
             return false;
         }
 
-        public override bool ShouldCheckStatTimers { get { return false; } }
+        public override bool ShouldCheckStatTimers => false; 
 
         #region Food
         private static readonly Type[] m_Eggs = new[] { typeof(FriedEggs), typeof(Eggs) };
@@ -3079,7 +3038,7 @@ namespace Server.Mobiles
             return false;
         }
 
-        public virtual bool CanAngerOnTame { get { return false; } }
+        public virtual bool CanAngerOnTame => false; 
 
         #region OnAction[...]
         public virtual void OnActionWander()
@@ -3134,7 +3093,7 @@ namespace Server.Mobiles
             return true;
         }
 
-        protected virtual BaseAI ForcedAI { get { return null; } }
+        protected virtual BaseAI ForcedAI => null; 
 
         public void ChangeAIType(AIType NewAI)
         {
@@ -3360,10 +3319,10 @@ namespace Server.Mobiles
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public Mobile CharmMaster { get { return m_CharmMaster; } }
+        public Mobile CharmMaster => m_CharmMaster; 
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public Point2D CharmTarget { get { return m_CharmTarget; } }
+        public Point2D CharmTarget => m_CharmTarget; 
 
         private class CharmTimer : Timer
         {
@@ -3638,7 +3597,7 @@ namespace Server.Mobiles
             get { return m_iControlSlots; }
             set
             {
-                if (PetTrainingHelper.Enabled && ControlSlotsMin == 0 && ControlSlotsMax == 0)
+                if (ControlSlotsMin == 0 && ControlSlotsMax == 0)
                 {
                     m_iControlSlots = value;
 
@@ -3666,35 +3625,35 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.Administrator)]
         public int ControlSlotsMin { get; set; }
 
-        public virtual bool NoHouseRestrictions { get { return false; } }
-        public virtual bool IsHouseSummonable { get { return false; } }
+        public virtual bool NoHouseRestrictions => false; 
+        public virtual bool IsHouseSummonable => false; 
 
         #region Corpse Resources
-        public virtual int Feathers { get { return 0; } }
-        public virtual int Wool { get { return 0; } }
+        public virtual int Feathers => 0; 
+        public virtual int Wool => 0; 
 
-        public virtual int Fur { get { return 0; } }
-        public virtual FurType FurType { get { return FurType.Green; } }
+        public virtual int Fur => 0; 
+        public virtual FurType FurType => FurType.Green; 
 
-        public virtual MeatType MeatType { get { return MeatType.Ribs; } }
-        public virtual int Meat { get { return 0; } }
+        public virtual MeatType MeatType => MeatType.Ribs; 
+        public virtual int Meat => 0; 
 
-        public virtual int Hides { get { return 0; } }
-        public virtual HideType HideType { get { return HideType.Regular; } }
+        public virtual int Hides => 0; 
+        public virtual HideType HideType => HideType.Regular; 
 
-        public virtual int Scales { get { return 0; } }
-        public virtual ScaleType ScaleType { get { return ScaleType.Red; } }
+        public virtual int Scales => 0; 
+        public virtual ScaleType ScaleType => ScaleType.Red; 
 
-        public virtual int DragonBlood { get { return 0; } }
+        public virtual int DragonBlood => 0; 
         #endregion
 
-        public virtual bool AutoDispel { get { return false; } }
-        public virtual double AutoDispelChance { get { return 0.1; } }
+        public virtual bool AutoDispel => false; 
+        public virtual double AutoDispelChance => 0.1; 
 
-        public virtual bool IsScaryToPets { get { return false; } }
-        public virtual bool IsScaredOfScaryThings { get { return true; } }
+        public virtual bool IsScaryToPets => false; 
+        public virtual bool IsScaredOfScaryThings => true; 
 
-        public virtual bool CanRummageCorpses { get { return false; } }
+        public virtual bool CanRummageCorpses => false; 
 
         public virtual void OnGotMeleeAttack(Mobile attacker)
         {
@@ -3713,7 +3672,7 @@ namespace Server.Mobiles
             m.Delete();
         }
 
-        public virtual bool DeleteOnRelease { get { return m_bSummoned; } }
+        public virtual bool DeleteOnRelease => m_bSummoned; 
 
         public virtual void OnGaveMeleeAttack(Mobile defender)
         {
@@ -3734,7 +3693,7 @@ namespace Server.Mobiles
 
                 if (Controlled)
                 {
-                    if (!PetTrainingHelper.Enabled || (AbilityProfile != null && AbilityProfile.HasAbility(MagicalAbility.Poisoning)))
+                    if (AbilityProfile != null && AbilityProfile.HasAbility(MagicalAbility.Poisoning))
                     {
                         CheckSkill(SkillName.Poisoning, 0, Skills[SkillName.Poisoning].Cap);
                     }
@@ -3755,7 +3714,7 @@ namespace Server.Mobiles
 
         public virtual Poison GetHitPoison()
         {
-            if (!PetTrainingHelper.Enabled || !Controlled)
+            if (!Controlled)
                 return HitPoison;
 
             int current = 0;
@@ -3786,7 +3745,7 @@ namespace Server.Mobiles
 
         private bool TryHitPoison()
         {
-            if (!PetTrainingHelper.Enabled || !Controlled)
+            if (!Controlled)
                 return HitPoisonChance >= Utility.RandomDouble();
 
             var profile = AbilityProfile;
@@ -3982,8 +3941,7 @@ namespace Server.Mobiles
 
         public class PetRenamePrompt : Prompt
         {
-            // Enter a new name for your pet.
-            public override int MessageCliloc { get { return 1115558; } }
+            public override int MessageCliloc => 1115558; // Enter a new name for your pet.
 
             private BaseCreature m_Creature;
 
@@ -4016,7 +3974,7 @@ namespace Server.Mobiles
         }
 
         #region Teaching
-        public virtual bool CanTeach { get { return false; } }
+        public virtual bool CanTeach => false; 
 
         public virtual bool CheckTeach(SkillName skill, Mobile from)
         {
@@ -4563,8 +4521,8 @@ namespace Server.Mobiles
             m_NextReacquireTime = Core.TickCount;
         }
 
-        public virtual bool CanStealth { get { return false; } }
-        public virtual bool SupportsRunAnimation { get { return true; } }
+        public virtual bool CanStealth => false; 
+        public virtual bool SupportsRunAnimation => true; 
 
         protected override bool OnMove(Direction d)
         {
@@ -5004,7 +4962,7 @@ namespace Server.Mobiles
             double activeSpeed = 0.0;
             double passiveSpeed = 0.0;
 
-            SpeedInfo.GetSpeedsNew(this, ref activeSpeed, ref passiveSpeed);
+            SpeedInfo.GetSpeeds(this, ref activeSpeed, ref passiveSpeed);
 
             m_dActiveSpeed = activeSpeed;
             m_dPassiveSpeed = passiveSpeed;
@@ -5514,10 +5472,10 @@ namespace Server.Mobiles
                 list.Add(1155480); // Ambusher
         }
 
-        public virtual double TreasureMapChance { get { return TreasureMap.LootChance; } }
-        public virtual int TreasureMapLevel { get { return -1; } }
+        public virtual double TreasureMapChance => TreasureMap.LootChance; 
+        public virtual int TreasureMapLevel => -1; 
 
-        public virtual bool IgnoreYoungProtection { get { return false; } }
+        public virtual bool IgnoreYoungProtection => false; 
 
         public override bool OnBeforeDeath()
         {
@@ -5847,7 +5805,7 @@ namespace Server.Mobiles
             }
         }
 
-        public virtual bool GivesMLMinorArtifact { get { return false; } }
+        public virtual bool GivesMLMinorArtifact => false; 
         #endregion
 
         public virtual void OnRelease(Mobile from)
@@ -6010,7 +5968,7 @@ namespace Server.Mobiles
                             }
                             else
                             {
-                                if (PetTrainingHelper.Enabled && ds.m_Mobile is PlayerMobile)
+                                if (ds.m_Mobile is PlayerMobile)
                                 {
                                     foreach (var pet in ((PlayerMobile)ds.m_Mobile).AllFollowers.Where(p => DamageEntries.Any(de => de.Damager == p)))
                                     {
@@ -6136,11 +6094,11 @@ namespace Server.Mobiles
 
         public long NextReacquireTime { get { return m_NextReacquireTime; } set { m_NextReacquireTime = value; } }
 
-        public virtual TimeSpan ReacquireDelay { get { return TimeSpan.FromSeconds(10.0); } }
-        public virtual bool ReacquireOnMovement { get { return false; } }
+        public virtual TimeSpan ReacquireDelay => TimeSpan.FromSeconds(10.0); 
+        public virtual bool ReacquireOnMovement => false; 
 
-        public virtual bool AcquireOnApproach { get { return m_Paragon || ApproachWait; } }
-        public virtual int AcquireOnApproachRange { get { return ApproachRange; } }
+        public virtual bool AcquireOnApproach => m_Paragon || ApproachWait; 
+        public virtual int AcquireOnApproachRange => ApproachRange; 
 
         [CommandProperty(AccessLevel.GameMaster)]
         public bool ApproachWait { get; set; }
@@ -6285,7 +6243,7 @@ namespace Server.Mobiles
 
         public virtual void OnAfterTame(Mobile tamer)
         {
-            if (StatLossAfterTame && (!PetTrainingHelper.Enabled || Owners.Count == 0))
+            if (StatLossAfterTame && Owners.Count == 0)
             {
                 AnimalTaming.ScaleStats(this, 0.5);
             }
@@ -6392,16 +6350,16 @@ namespace Server.Mobiles
 
         private long m_NextRummageTime;
 
-        public virtual bool IsDispellable { get { return Summoned && !IsAnimatedDead; } }
+        public virtual bool IsDispellable => Summoned && !IsAnimatedDead; 
 
         #region Healing
-        public virtual double HealChance { get { return 0.0; } }
+        public virtual double HealChance => 0.0; 
 
         private long m_NextHealTime = Core.TickCount;
         private long m_NextHealOwnerTime = Core.TickCount;
         private Timer m_HealTimer;
 
-        public bool IsHealing { get { return (m_HealTimer != null); } }
+        public bool IsHealing => (m_HealTimer != null); 
 
         public virtual bool CheckHeal()
         {
@@ -6520,7 +6478,7 @@ namespace Server.Mobiles
                     CheckSkill(SkillName.Healing, 0.0, Skills[SkillName.Healing].Cap);
                     CheckSkill(SkillName.Anatomy, 0.0, Skills[SkillName.Anatomy].Cap);
                 }
-                else if (PetTrainingHelper.Enabled && Controlled)
+                else if (Controlled)
                 {
                     CheckSkill(SkillName.Healing, 0.0, 10);
                     CheckSkill(SkillName.Anatomy, 0.0, 10);
@@ -6657,10 +6615,10 @@ namespace Server.Mobiles
             } 
         }
 
-        public virtual bool CanPeace { get { return false; } }
-        public virtual bool CanProvoke { get { return false; } }
+        public virtual bool CanPeace => false; 
+        public virtual bool CanProvoke => false; 
 
-        public virtual bool PlayInstrumentSound { get { return true; } }
+        public virtual bool PlayInstrumentSound => true; 
 
         public virtual bool DoDiscord()
         {
@@ -6856,12 +6814,12 @@ namespace Server.Mobiles
         #region TeleportTo
         private long m_NextTeleport;
 
-        public virtual bool TeleportsTo { get { return false; } }
-        public virtual TimeSpan TeleportDuration { get { return TimeSpan.FromSeconds(5); } }
-        public virtual int TeleportRange { get { return 16; } }
-        public virtual double TeleportProb { get { return 0.25; } }
+        public virtual bool TeleportsTo => false; 
+        public virtual TimeSpan TeleportDuration => TimeSpan.FromSeconds(5); 
+        public virtual int TeleportRange => 16; 
+        public virtual double TeleportProb => 0.25; 
 
-        public virtual bool TeleportsPets { get { return false; } }
+        public virtual bool TeleportsPets => false; 
 
         private static int[] m_Offsets = new int[]
 			{
@@ -6966,13 +6924,13 @@ namespace Server.Mobiles
         #region Detect Hidden
         private long _NextDetect;
 
-        public virtual bool CanDetectHidden { get { return Controlled && Skills.DetectHidden.Value > 0; } }
+        public virtual bool CanDetectHidden => Controlled && Skills.DetectHidden.Value > 0; 
 
-        public virtual int FindPlayerDelayBase { get { return (15000 / Int); } }
-        public virtual int FindPlayerDelayMax { get { return 60; } }
-        public virtual int FindPlayerDelayMin { get { return 5; } }
-        public virtual int FindPlayerDelayHigh { get { return 10; } }
-        public virtual int FindPlayerDelayLow { get { return 9; } }
+        public virtual int FindPlayerDelayBase => (15000 / Int); 
+        public virtual int FindPlayerDelayMax => 60; 
+        public virtual int FindPlayerDelayMin => 5; 
+        public virtual int FindPlayerDelayHigh => 10; 
+        public virtual int FindPlayerDelayLow => 9; 
 
         public virtual void TryFindPlayer()
         {
@@ -7369,7 +7327,7 @@ namespace Server.Mobiles
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public virtual bool PlayerRangeSensitive { get { return CurrentWayPoint == null && (_NavPoints == null || _NavPoints.Count == 0); } }
+        public virtual bool PlayerRangeSensitive => CurrentWayPoint == null && (_NavPoints == null || _NavPoints.Count == 0); 
         //If they are following a waypoint, they'll continue to follow it even if players aren't around
 
         /* until we are sure about who should be getting deleted, move them instead */
@@ -7396,7 +7354,7 @@ namespace Server.Mobiles
             return false;
         }
 
-        public virtual bool ReturnsToHome { get { return (m_SeeksHome && (Home != Point3D.Zero) && !m_ReturnQueued && !Controlled && !Summoned); } }
+        public virtual bool ReturnsToHome => (m_SeeksHome && (Home != Point3D.Zero) && !m_ReturnQueued && !Controlled && !Summoned); 
 
         public override void OnSectorDeactivate()
         {

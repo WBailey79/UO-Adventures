@@ -59,7 +59,7 @@ namespace Server.Multis
         // Who is currently customizing this -or- null if not customizing.
         public Mobile Customizer { get; set; }
 
-        public override bool IsAosRules { get { return true; } }
+        public override bool IsAosRules => true; 
 
         public override bool IsActive
         {
@@ -855,7 +855,7 @@ namespace Server.Multis
 
         public static void Designer_Action(NetState state, IEntity e, EncodedReader pvSrc)
         {
-            pvSrc.Trace(state);
+            //pvSrc.Trace(state);
             // TODO: What does this do?
         }
 
@@ -2124,7 +2124,7 @@ namespace Server.Multis
 
         public int Level { get; set; }
 
-        public int MaxLevels { get { return Foundation.MaxLevels; } }
+        public int MaxLevels => Foundation.MaxLevels; 
 
         public DesignContext(HouseFoundation foundation)
         {
