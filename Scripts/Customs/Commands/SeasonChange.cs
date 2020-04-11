@@ -136,10 +136,6 @@ namespace Server.Gumps
                     {
                         ns.Send(new MobileUpdate(m));
                     }
-                    else
-                    {
-                        ns.Send(new MobileUpdateOld(m));
-                    }
                 }
             }
             from.CloseGump(typeof(SeasonChange));
