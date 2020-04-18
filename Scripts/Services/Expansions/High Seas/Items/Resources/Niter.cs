@@ -1,7 +1,6 @@
-﻿using System;
-using Server;
+﻿using Server.Engines.Harvest;
+using System;
 using System.Collections.Generic;
-using Server.Engines.Harvest;
 
 namespace Server.Items
 {
@@ -21,31 +20,31 @@ namespace Server.Items
         private int m_Hits;
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Hits 
-        { 
-            get 
-            { 
-                return m_Hits; 
-            } 
+        public int Hits
+        {
+            get
+            {
+                return m_Hits;
+            }
             set
-            { 
-                m_Hits = value; 
+            {
+                m_Hits = value;
                 InvalidateSize();
-            } 
-        }
-
-        [CommandProperty(AccessLevel.GameMaster)]
-        public NiterSize Size 
-        { 
-            get { return m_Size; }
-            set 
-            { 
-                m_Size = value; 
-                InvalidateID(); 
             }
         }
 
-        public override bool Decays { get { return true; } }
+        [CommandProperty(AccessLevel.GameMaster)]
+        public NiterSize Size
+        {
+            get { return m_Size; }
+            set
+            {
+                m_Size = value;
+                InvalidateID();
+            }
+        }
+
+        public override bool Decays => true;
 
         [Constructable]
         public NiterDeposit() : this(Utility.RandomMinMax(1, 5))
@@ -68,7 +67,7 @@ namespace Server.Items
             if (tool is IUsesRemaining && ((IUsesRemaining)tool).UsesRemaining < 1)
                 return;
 
-            from.Direction = from.GetDirectionTo(this.Location);
+            from.Direction = from.GetDirectionTo(Location);
             from.Animate(11, 5, 1, true, false, 0);
 
             Timer.DelayCall(TimeSpan.FromSeconds(1), new TimerStateCallback(DoMine), new object[] { from, tool });
@@ -166,7 +165,7 @@ namespace Server.Items
             return m_BankTable.ContainsKey(bank);
         }
 
-        private static Dictionary<HarvestBank, DateTime> m_BankTable = new Dictionary<HarvestBank, DateTime>();
+        private static readonly Dictionary<HarvestBank, DateTime> m_BankTable = new Dictionary<HarvestBank, DateTime>();
 
         public static void AddBank(HarvestBank bank)
         {
@@ -193,7 +192,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);
+            writer.Write(0);
             writer.Write(m_Hits);
             writer.Write((int)m_Size);
 

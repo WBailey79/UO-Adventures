@@ -1,5 +1,3 @@
-using System;
-
 namespace Server.Items
 {
     public enum WeaponType
@@ -14,16 +12,6 @@ namespace Server.Items
         Fists		// Fists
     }
 
-    public enum WeaponDurabilityLevel
-    {
-        Regular,
-        Durable,
-        Substantial,
-        Massive,
-        Fortified,
-        Indestructible
-    }
-
     public enum WeaponAnimation
     {
         Slash1H = 9,
@@ -35,6 +23,6 @@ namespace Server.Items
         ShootBow = 18,
         ShootXBow = 19,
         Wrestle = 31,
-        Throwing = 32,
+        Throwing = 32
     }
 }

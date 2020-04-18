@@ -1,8 +1,6 @@
-using System;
-using Server;
-using System.Collections;
-using System.Collections.Generic;
 using Server.Spells;
+using System;
+using System.Collections.Generic;
 
 namespace Server.Items
 {
@@ -12,7 +10,7 @@ namespace Server.Items
         {
         }
 
-        public override int BaseMana { get { return 20; } }
+        public override int BaseMana => 20;
 
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
@@ -51,7 +49,7 @@ namespace Server.Items
                 spell.Disturb(DisturbType.Hurt, false, true);
         }
 
-        private static Dictionary<Mobile, List<ForceArrowInfo>> m_Table = new Dictionary<Mobile, List<ForceArrowInfo>>();
+        private static readonly Dictionary<Mobile, List<ForceArrowInfo>> m_Table = new Dictionary<Mobile, List<ForceArrowInfo>>();
 
         public static void BeginForceArrow(Mobile attacker, Mobile defender)
         {
@@ -114,13 +112,13 @@ namespace Server.Items
 
         public class ForceArrowInfo
         {
-            private Mobile m_Attacker;
-            private Mobile m_Defender;
+            private readonly Mobile m_Attacker;
+            private readonly Mobile m_Defender;
             private ForceArrowTimer m_Timer;
             private int m_DefenseChanceMalus;
 
-            public Mobile Attacker { get { return m_Attacker; } }
-            public Mobile Defender { get { return m_Defender; } }
+            public Mobile Attacker => m_Attacker;
+            public Mobile Defender => m_Defender;
             public ForceArrowTimer Timer { get { return m_Timer; } set { m_Timer = value; } }
             public int DefenseChanceMalus { get { return m_DefenseChanceMalus; } set { m_DefenseChanceMalus = value; } }
 
@@ -134,7 +132,7 @@ namespace Server.Items
 
         public class ForceArrowTimer : Timer
         {
-            private ForceArrowInfo m_Info;
+            private readonly ForceArrowInfo m_Info;
             private DateTime m_Expires;
 
             public ForceArrowTimer(ForceArrowInfo info)

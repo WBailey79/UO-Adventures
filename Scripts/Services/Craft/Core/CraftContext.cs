@@ -1,7 +1,6 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Server.Engines.Plants;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Server.Engines.Craft
 {
@@ -12,14 +11,12 @@ namespace Server.Engines.Craft
         PromptForMark
     }
 
-    #region SA
     public enum CraftQuestOption
     {
         QuestItem,
         NonQuestItem
     }
-    #endregion
-	
+
     public class CraftContext
     {
         public Mobile Owner { get; private set; }
@@ -35,53 +32,8 @@ namespace Server.Engines.Craft
         private int m_MakeTotal;
         private PlantHue m_RequiredPlantHue;
 
-        #region Hue State Vars
-        /*private bool m_CheckedHues;
-        private List<int> m_Hues;
-        private Item m_CompareHueTo;
+        public List<CraftItem> Items => m_Items;
 
-        public bool CheckedHues
-        {
-            get
-            {
-                return m_CheckedHues;
-            }
-            set
-            {
-                m_CheckedHues = value;
-            }
-        }
-        public List<int> Hues
-        {
-            get
-            {
-                return m_Hues;
-            }
-            set
-            {
-                m_Hues = value;
-            }
-        }
-        public Item CompareHueTo
-        {
-            get
-            {
-                return m_CompareHueTo;
-            }
-            set
-            {
-                m_CompareHueTo = value;
-            }
-        }*/
-        #endregion
-
-        public List<CraftItem> Items
-        {
-            get
-            {
-                return m_Items;
-            }
-        }
         public int LastResourceIndex
         {
             get
@@ -137,7 +89,6 @@ namespace Server.Engines.Craft
                 m_MarkOption = value;
             }
         }
-        #region SA
         public CraftQuestOption QuestOption
         {
             get
@@ -150,26 +101,25 @@ namespace Server.Engines.Craft
             }
         }
 
-        public int MakeTotal 
-        { 
+        public int MakeTotal
+        {
             get
             {
                 return m_MakeTotal;
-            } 
-            set 
+            }
+            set
             {
                 m_MakeTotal = value;
-            } 
+            }
         }
 
         public PlantHue RequiredPlantHue
-        { 
-            get { return m_RequiredPlantHue; } 
-            set { m_RequiredPlantHue = value; } 
+        {
+            get { return m_RequiredPlantHue; }
+            set { m_RequiredPlantHue = value; }
         }
 
         public PlantPigmentHue RequiredPigmentHue { get; set; }
-        #endregion
 
         public CraftContext(Mobile owner, CraftSystem system)
         {
@@ -211,7 +161,7 @@ namespace Server.Engines.Craft
 
         public virtual void Serialize(GenericWriter writer)
         {
-            writer.Write((int)0);
+            writer.Write(0);
 
             writer.Write(Owner);
             writer.Write(GetSystemIndex(System));
@@ -271,12 +221,12 @@ namespace Server.Engines.Craft
         }
 
         #region Serialize/Deserialize Persistence
-        private static string FilePath = Path.Combine("Saves", "CraftContext", "Contexts.bin");
+        private static readonly string FilePath = Path.Combine("Saves", "CraftContext", "Contexts.bin");
 
-        private static List<CraftContext> Contexts = new List<CraftContext>();
+        private static readonly List<CraftContext> Contexts = new List<CraftContext>();
 
-        public static CraftSystem[] Systems { get { return _Systems; } }
-        private static CraftSystem[] _Systems = new CraftSystem[11];
+        public static CraftSystem[] Systems => _Systems;
+        private static readonly CraftSystem[] _Systems = new CraftSystem[11];
 
         public static void Configure()
         {

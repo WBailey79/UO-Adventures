@@ -9,16 +9,16 @@ namespace Server.Items
     [FlipableAddon(Direction.South, Direction.East)]
     public class SacrificialAltarAddon : BaseAddonContainer
     {
-        public override int LabelNumber { get { return 1074818; } } // Sacrificial Altar
+        public override int LabelNumber => 1074818;  // Sacrificial Altar
 
-        public override bool Security { get { return false; } }
-        public override int DefaultGumpID { get { return 0x9; } }
-        public override int DefaultDropSound { get { return 740; } }
+        public override bool Security => false;
+        public override int DefaultGumpID => 0x9;
+        public override int DefaultDropSound => 740;
 
         private Timer m_Timer;
         private List<CleanupArray> m_Cleanup;
 
-        public override BaseAddonContainerDeed Deed { get { return new SacrificialAltarDeed(); } }
+        public override BaseAddonContainerDeed Deed => new SacrificialAltarDeed();
 
         [Constructable]
         public SacrificialAltarAddon()
@@ -32,7 +32,7 @@ namespace Server.Items
         public SacrificialAltarAddon(Serial serial)
             : base(serial)
         {
-        }       
+        }
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
@@ -99,7 +99,7 @@ namespace Server.Items
 
         public virtual void Flip(Mobile from, Direction direction)
         {
-            switch ( direction )
+            switch (direction)
             {
                 case Direction.East:
                     ItemID = 0x2A9C;
@@ -163,7 +163,7 @@ namespace Server.Items
 
                 if (m_Cleanup.Any(x => x.mobiles != null))
                 {
-                    foreach (var m in m_Cleanup.Select(x => x.mobiles).Distinct())
+                    foreach (Mobile m in m_Cleanup.Select(x => x.mobiles).Distinct())
                     {
                         if (m_Cleanup.Find(x => x.mobiles == m && x.confirm) != null)
                         {
@@ -244,7 +244,7 @@ namespace Server.Items
 
     public class SacrificialAltarDeed : BaseAddonContainerDeed
     {
-        public override int LabelNumber { get { return 1074818; } } // Sacrificial Altar
+        public override int LabelNumber => 1074818;  // Sacrificial Altar
 
         [Constructable]
         public SacrificialAltarDeed()
@@ -258,8 +258,8 @@ namespace Server.Items
         {
         }
 
-        public override BaseAddonContainer Addon { get { return new SacrificialAltarAddon(); } }
-        
+        public override BaseAddonContainer Addon => new SacrificialAltarAddon();
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);

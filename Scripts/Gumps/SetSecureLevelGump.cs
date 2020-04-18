@@ -1,7 +1,5 @@
-using System;
 
 using Server.Mobiles;
-using Server.Guilds;
 using Server.Multis;
 using Server.Network;
 
@@ -14,7 +12,7 @@ namespace Server.Gumps
 
     public class SetSecureLevelGump : Gump
     {
-        private ISecurable m_Info;
+        private readonly ISecurable m_Info;
 
         public SetSecureLevelGump(Mobile from, ISecurable info, BaseHouse house)
             : base(50, 50)
@@ -72,7 +70,7 @@ namespace Server.Gumps
         {
             SecureLevel level = m_Info.Level;
 
-            switch ( info.ButtonID )
+            switch (info.ButtonID)
             {
                 case 1:
                     level = SecureLevel.Owner;

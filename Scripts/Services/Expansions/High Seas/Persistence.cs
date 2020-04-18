@@ -1,10 +1,7 @@
-using Server;
-using System;
+using Server.Commands;
 using Server.Engines.Quests;
 using Server.Mobiles;
 using Server.Regions;
-using Server.Commands;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Server.Items
@@ -27,7 +24,7 @@ namespace Server.Items
         }
 
         private static HighSeasPersistance m_Instance;
-        public static HighSeasPersistance Instance { get { return m_Instance; } }
+        public static HighSeasPersistance Instance => m_Instance;
 
         public bool HighSeasActive { get; set; }
 
@@ -44,7 +41,7 @@ namespace Server.Items
                 FilePath,
                 writer =>
                 {
-                    writer.Write((int)1);
+                    writer.Write(1);
 
                     Server.Regions.SeaMarketRegion.Save(writer);
 

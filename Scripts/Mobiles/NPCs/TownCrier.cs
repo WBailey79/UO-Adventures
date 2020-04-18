@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Server.Commands;
+using Server.ContextMenus;
 using Server.Gumps;
 using Server.Items;
 using Server.Network;
 using Server.Prompts;
-using System.IO;
-using Server.Engines.CityLoyalty;
-using Server.ContextMenus;
 using Server.Services.TownCryer;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace Server.Mobiles
 {
@@ -43,21 +42,9 @@ namespace Server.Mobiles
             }
         }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                return (m_Entries == null || m_Entries.Count == 0);
-            }
-        }
+        public bool IsEmpty => (m_Entries == null || m_Entries.Count == 0);
 
-        public List<TownCrierEntry> Entries
-        {
-            get
-            {
-                return m_Entries;
-            }
-        }
+        public List<TownCrierEntry> Entries => m_Entries;
 
         public static void Initialize()
         {
@@ -182,7 +169,7 @@ namespace Server.Mobiles
                                 int count = reader.ReadInt();
                                 for (int i = 0; i < count; i++)
                                 {
-                                    var entry = new TownCrierEntry(reader);
+                                    TownCrierEntry entry = new TownCrierEntry(reader);
 
                                     if (!entry.Expired)
                                     {
@@ -215,29 +202,11 @@ namespace Server.Mobiles
             m_ExpireTime = DateTime.UtcNow + duration;
         }
 
-        public string[] Lines
-        {
-            get
-            {
-                return m_Lines;
-            }
-        }
+        public string[] Lines => m_Lines;
 
-        public DateTime ExpireTime
-        {
-            get
-            {
-                return m_ExpireTime;
-            }
-        }
+        public DateTime ExpireTime => m_ExpireTime;
 
-        public bool Expired
-        {
-            get
-            {
-                return (DateTime.UtcNow >= m_ExpireTime);
-            }
-        }
+        public bool Expired => (DateTime.UtcNow >= m_ExpireTime);
 
         public TownCrierEntry(GenericReader reader)
         {
@@ -259,7 +228,7 @@ namespace Server.Mobiles
             writer.Write(0);
 
             writer.Write(Lines.Length);
-            foreach (var str in Lines)
+            foreach (string str in Lines)
             {
                 writer.Write(str);
             }
@@ -394,7 +363,7 @@ namespace Server.Mobiles
             {
                 for (int i = 0; i < entries.Count; ++i)
                 {
-                    TownCrierEntry tce = (TownCrierEntry)entries[i];
+                    TownCrierEntry tce = entries[i];
 
                     TimeSpan toExpire = tce.ExpireTime - DateTime.UtcNow;
 
@@ -499,7 +468,7 @@ namespace Server.Mobiles
 
             Item skirt;
 
-            switch ( Utility.Random(2) )
+            switch (Utility.Random(2))
             {
                 case 0:
                     skirt = new Skirt();
@@ -518,7 +487,7 @@ namespace Server.Mobiles
 
             Item boots;
 
-            switch ( Utility.Random(2) )
+            switch (Utility.Random(2))
             {
                 case 0:
                     boots = new Boots();
@@ -540,21 +509,9 @@ namespace Server.Mobiles
             m_Instances.Add(this);
         }
 
-        public static List<TownCrier> Instances
-        {
-            get
-            {
-                return m_Instances;
-            }
-        }
+        public static List<TownCrier> Instances => m_Instances;
 
-        public List<TownCrierEntry> Entries
-        {
-            get
-            {
-                return m_Entries;
-            }
-        }
+        public List<TownCrierEntry> Entries => m_Entries;
 
         public TownCrierEntry GetRandomEntry()
         {
@@ -707,7 +664,7 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.Write((int)1); // version
+            writer.Write(1); // version
 
             writer.Write(m_Entries == null ? 0 : m_Entries.Count);
 
@@ -731,7 +688,7 @@ namespace Server.Mobiles
 
                         for (int i = 0; i < count; i++)
                         {
-                            var entry = new TownCrierEntry(reader);
+                            TownCrierEntry entry = new TownCrierEntry(reader);
 
                             if (!entry.Expired)
                             {

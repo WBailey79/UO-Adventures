@@ -1,6 +1,5 @@
-using System;
 using Server.Mobiles;
-using System.Collections.Generic;
+using System;
 
 namespace Server.Items
 {
@@ -15,16 +14,11 @@ namespace Server.Items
         {
         }
 
-        public override int BaseMana
-        {
-            get
-            {
-                return 25;
-            }
-        }
+        public override int BaseMana => 25;
+
         public override bool CheckSkills(Mobile from)
         {
-            if (this.GetSkill(from, SkillName.Bushido) < 50.0)
+            if (GetSkill(from, SkillName.Bushido) < 50.0)
             {
                 from.SendLocalizedMessage(1070768, "50"); // You need ~1_SKILL_REQUIREMENT~ Bushido skill to perform that attack!
                 return false;
@@ -42,7 +36,7 @@ namespace Server.Items
                 return;
             }
 
-            if (!this.Validate(attacker) || !this.CheckMana(attacker, true))
+            if (!Validate(attacker) || !CheckMana(attacker, true))
                 return;
 
             ClearCurrentAbility(attacker);
@@ -53,7 +47,7 @@ namespace Server.Items
             {
                 BlockMountType type = BlockMountType.RidingSwipe;
                 IMount mount = defender.Mount;
-                
+
                 if (defender.Flying)
                 {
                     type = BlockMountType.RidingSwipeFlying;
@@ -65,7 +59,7 @@ namespace Server.Items
 
                 Server.Items.Dismount.DoDismount(attacker, defender, mount, 10, type);
 
-                if(mount is Mobile)
+                if (mount is Mobile)
                     AOS.Damage((Mobile)mount, attacker, amount, 100, 0, 0, 0, 0);
 
                 defender.PlaySound(0x140);

@@ -1,7 +1,7 @@
-using System;
 using Server.Engines.Craft;
 using Server.Multis;
 using Server.Targeting;
+using System;
 
 namespace Server.Items
 {
@@ -24,9 +24,9 @@ namespace Server.Items
 
         public abstract BaseAddon Addon { get; }
 
-        public virtual bool UseCraftResource { get { return true; } }
+        public virtual bool UseCraftResource => true;
 
-        public virtual bool ExcludeDeedHue { get { return false; } }
+        public virtual bool ExcludeDeedHue => false;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public CraftResource Resource
@@ -51,7 +51,7 @@ namespace Server.Items
         public bool IsReDeed
         {
             get { return m_ReDeed; }
-            set 
+            set
             {
                 m_ReDeed = value;
 
@@ -206,7 +206,7 @@ namespace Server.Items
                         from.SendLocalizedMessage(500271); // You cannot build near the door.
                     else if (res == AddonFitResult.NoWall)
                         from.SendLocalizedMessage(500268); // This object needs to be mounted on something.
-					
+
                     if (res != AddonFitResult.Valid)
                     {
                         addon.Delete();
@@ -225,7 +225,7 @@ namespace Server.Items
                     return null;
                 }
 
-                var galleon = BaseGalleon.FindGalleonAt(p, map);
+                BaseGalleon galleon = BaseGalleon.FindGalleonAt(p, map);
 
                 if (galleon != null && galleon.CanAddAddon(p))
                 {

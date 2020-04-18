@@ -1,6 +1,6 @@
+using Server.ContextMenus;
 using System;
 using System.Collections.Generic;
-using Server.ContextMenus;
 
 namespace Server.Items
 {
@@ -159,7 +159,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)3); // version
+            writer.Write(3); // version
 
             // version 3
             writer.Write(m_AutoRes);
@@ -177,7 +177,7 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-            switch ( version )
+            switch (version)
             {
                 case 3:
                     {

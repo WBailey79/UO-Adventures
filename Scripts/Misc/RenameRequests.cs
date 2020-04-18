@@ -1,6 +1,5 @@
-using System;
-
 using Server.Mobiles;
+using System;
 
 namespace Server.Misc
 {
@@ -21,8 +20,8 @@ namespace Server.Misc
             {
                 name = name.Trim();
 
-                var numExceptions = 0;
-                var exceptions = NameVerification.Empty;
+                int numExceptions = 0;
+                char[] exceptions = NameVerification.Empty;
 
                 if (targ is BaseCreature)
                 {

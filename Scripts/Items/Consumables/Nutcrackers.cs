@@ -1,8 +1,6 @@
-using System;
-using Server.Items;
-using Server.Mobiles;
-using Server.Engines.Craft;
 using Server.ContextMenus;
+using Server.Engines.Craft;
+using System;
 using System.Collections.Generic;
 
 namespace Server.Items
@@ -20,7 +18,7 @@ namespace Server.Items
         {
             get
             {
-                switch (this.Type)
+                switch (Type)
                 {
                     default:
                     case ChocolateType.Milk: return _Wrapped ? 1156388 : 1156391;
@@ -46,11 +44,11 @@ namespace Server.Items
         }
 
         [Constructable]
-        public ChocolateNutcracker(ChocolateType type) 
+        public ChocolateNutcracker(ChocolateType type)
             : base(39952)
         {
             Wrapped = true;
-            this.Type = type;
+            Type = type;
         }
 
         private void InvalidateID()
@@ -76,8 +74,8 @@ namespace Server.Items
         }
 
         private void Unwrap(Mobile from)
-		{
-			from.PrivateOverheadMessage(Server.Network.MessageType.Regular, 1154, 1156393, from.NetState); // *You carefully peel back the wrapper...*
+        {
+            from.PrivateOverheadMessage(Server.Network.MessageType.Regular, 1154, 1156393, from.NetState); // *You carefully peel back the wrapper...*
             from.PlaySound(Utility.Random(0x21F, 4));
 
             Timer.DelayCall(TimeSpan.FromSeconds(1), () =>
@@ -90,11 +88,11 @@ namespace Server.Items
 
                 Wrapped = false;
             });
-		}
+        }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
-            if(!_Wrapped)
+            if (!_Wrapped)
                 base.GetContextMenuEntries(from, list);
         }
 
@@ -102,7 +100,7 @@ namespace Server.Items
         {
             if (craftItem != null && craftItem.Data is ChocolateType)
             {
-                this.Type = (ChocolateType)craftItem.Data;
+                Type = (ChocolateType)craftItem.Data;
             }
 
             return quality;
@@ -117,7 +115,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
+            writer.Write(0);
             writer.Write((int)_Type);
             writer.Write(_Wrapped);
         }

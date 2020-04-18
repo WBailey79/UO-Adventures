@@ -1,7 +1,7 @@
-using System;
 using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
+using System;
 
 namespace Server.SkillHandlers
 {
@@ -27,7 +27,7 @@ namespace Server.SkillHandlers
             public InternalTarget()
                 : base(2, false, TargetFlags.None)
             {
-                this.AllowNonlocal = true;
+                AllowNonlocal = true;
             }
 
             protected override void OnTarget(Mobile from, object targeted)

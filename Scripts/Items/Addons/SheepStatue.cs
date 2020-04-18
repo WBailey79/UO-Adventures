@@ -1,8 +1,7 @@
-using System;
 using Server.Engines.VeteranRewards;
-using Server.Gumps;
 using Server.Multis;
 using Server.Network;
+using System;
 
 namespace Server.Items
 {
@@ -14,7 +13,7 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NextResourceCount { get; set; }
 
-        public override bool ForceShowProperties { get { return true; } }
+        public override bool ForceShowProperties => true;
 
         [Constructable]
         public SheepStatue(int itemID)
@@ -111,7 +110,7 @@ namespace Server.Items
                 {
                     Item res = null;
 
-                    switch ( Utility.Random(5) )
+                    switch (Utility.Random(5))
                     {
                         case 0: res = new Wool(); break;
                         case 1: res = new Leather(); break;
@@ -144,7 +143,7 @@ namespace Server.Items
         private class InternalAddonComponent : AddonComponent
         {
             public InternalAddonComponent(int id)
-                :base(id)
+                : base(id)
             {
             }
 
@@ -186,8 +185,8 @@ namespace Server.Items
 
             TryGiveResourceCount();
 
-            writer.Write((bool)m_IsRewardItem);
-            writer.Write((int)m_ResourceCount);
+            writer.Write(m_IsRewardItem);
+            writer.Write(m_ResourceCount);
 
             writer.Write(NextResourceCount);
         }
@@ -231,13 +230,7 @@ namespace Server.Items
         {
         }
 
-        public override int LabelNumber
-        {
-            get
-            {
-                return 1151835;
-            }
-        }// Sheep Statue Deed
+        public override int LabelNumber => 1151835;// Sheep Statue Deed
 
         public override BaseAddon Addon
         {
@@ -303,8 +296,8 @@ namespace Server.Items
 
             writer.WriteEncodedInt(0); // version
 
-            writer.Write((bool)m_IsRewardItem);
-            writer.Write((int)m_ResourceCount);
+            writer.Write(m_IsRewardItem);
+            writer.Write(m_ResourceCount);
         }
 
         public override void Deserialize(GenericReader reader)

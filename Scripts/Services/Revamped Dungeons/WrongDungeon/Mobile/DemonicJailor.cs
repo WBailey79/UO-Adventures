@@ -1,56 +1,53 @@
-using System;
-using Server;
 using Server.Items;
-using System.Collections;
 using Server.Network;
+using System;
+using System.Collections;
 
-namespace Server.Mobiles 
-{ 
-    public class DemonicJailor : BaseCreature 
-    { 
-        [Constructable] 
+namespace Server.Mobiles
+{
+    public class DemonicJailor : BaseCreature
+    {
+        [Constructable]
         public DemonicJailor()
             : base(AIType.AI_Melee, FightMode.Closest, 15, 1, 0.1, 0.3)
         {
-            this.Name = NameList.RandomName("male");
-            this.SpeechHue = Utility.RandomDyedHue(); 
-            this.Title = "the demonic jailor";
-            this.Hue = 34531;
-            this.Body = 0x190;             
+            Name = NameList.RandomName("male");
+            SpeechHue = Utility.RandomDyedHue();
+            Title = "the Demonic Jailor";
+            Hue = 34531;
+            Body = 0x190;
 
-            this.SetStr(386, 400);
-            this.SetDex(151, 165);
-            this.SetInt(161, 175);
+            SetStr(386, 400);
+            SetDex(151, 165);
+            SetInt(161, 175);
 
-            this.SetDamage(8, 10);
+            SetDamage(8, 10);
 
-            this.SetDamageType(ResistanceType.Physical, 100);
+            SetDamageType(ResistanceType.Physical, 100);
 
-            this.SetResistance(ResistanceType.Physical, 35, 45);
-            this.SetResistance(ResistanceType.Fire, 25, 30);
-            this.SetResistance(ResistanceType.Cold, 25, 30);
-            this.SetResistance(ResistanceType.Poison, 10, 20);
-            this.SetResistance(ResistanceType.Energy, 10, 20);
+            SetResistance(ResistanceType.Physical, 35, 45);
+            SetResistance(ResistanceType.Fire, 25, 30);
+            SetResistance(ResistanceType.Cold, 25, 30);
+            SetResistance(ResistanceType.Poison, 10, 20);
+            SetResistance(ResistanceType.Energy, 10, 20);
 
-            this.SetSkill(SkillName.Anatomy, 125.0);
-            this.SetSkill(SkillName.Fencing, 46.0, 77.5);
-            this.SetSkill(SkillName.Macing, 35.0, 57.5);
-            this.SetSkill(SkillName.Poisoning, 60.0, 82.5);
-            this.SetSkill(SkillName.DetectHidden, 100);
-            this.SetSkill(SkillName.MagicResist, 83.5, 92.5);
-            this.SetSkill(SkillName.Swords, 125.0);
-            this.SetSkill(SkillName.Tactics, 125.0);
-            this.SetSkill(SkillName.Lumberjacking, 125.0);
+            SetSkill(SkillName.Anatomy, 125.0);
+            SetSkill(SkillName.Fencing, 46.0, 77.5);
+            SetSkill(SkillName.Macing, 35.0, 57.5);
+            SetSkill(SkillName.Poisoning, 60.0, 82.5);
+            SetSkill(SkillName.DetectHidden, 100);
+            SetSkill(SkillName.MagicResist, 83.5, 92.5);
+            SetSkill(SkillName.Swords, 125.0);
+            SetSkill(SkillName.Tactics, 125.0);
+            SetSkill(SkillName.Lumberjacking, 125.0);
 
-            this.Fame = 5000;
-            this.Karma = -5000;
+            Fame = 5000;
+            Karma = -5000;
 
-            this.VirtualArmor = 40;
-
-            this.SetWearable(new ShortPants(Utility.RandomRedHue()));
-            this.AddItem(new Sandals(Utility.RandomRedHue())); 
-            this.AddItem(new Shirt(Utility.RandomRedHue()));
-            this.AddItem(new SkinningKnife());
+            SetWearable(new ShortPants(Utility.RandomRedHue()));
+            AddItem(new Sandals(Utility.RandomRedHue()));
+            AddItem(new Shirt(Utility.RandomRedHue()));
+            AddItem(new SkinningKnife());
 
             Utility.AssignRandomHair(this);
         }
@@ -58,9 +55,9 @@ namespace Server.Mobiles
         public override void OnGaveMeleeAttack(Mobile defender)
         {
             base.OnGaveMeleeAttack(defender);
-        
+
             Point3D loc = new Point3D(5703, 639, 0);
-            Map map = this.Map;
+            Map map = Map;
 
             Effects.SendLocationParticles(EffectItem.Create(loc, map, EffectItem.DefaultDuration), 0x3728, 10, 10, 0, 0, 2023, 0);
             Effects.PlaySound(loc, map, 0x1FE);
@@ -121,7 +118,7 @@ namespace Server.Mobiles
 
         public DemonicJailor(Serial serial)
             : base(serial)
-        { 
+        {
         }
 
         private DateTime m_NextTerror;
@@ -129,11 +126,11 @@ namespace Server.Mobiles
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
 
-            if (this.UseSkill(SkillName.DetectHidden))
+            if (UseSkill(SkillName.DetectHidden))
                 m.RevealingAction();
             base.OnMovement(m, oldLocation);
 
-               if (m_NextTerror < DateTime.Now && m != null && InRange(m.Location, 3) && m.AccessLevel == AccessLevel.Player)
+            if (m_NextTerror < DateTime.Now && m != null && InRange(m.Location, 3) && m.AccessLevel == AccessLevel.Player)
             {
                 m.Frozen = true;
                 m.SendLocalizedMessage(1080342, Title, 33); // Terror slices into your very being, destroying any chance of resisting ~1_name~ you might have had
@@ -155,28 +152,32 @@ namespace Server.Mobiles
             }
         }
 
-        public override bool AlwaysMurderer { get { return true; } }
-        public override bool BardImmune { get { return false; } }
-        public override bool Unprovokable { get { return true; } }
-        public override bool AreaPeaceImmune { get { return true; } }
-        public override Poison PoisonImmune { get { return Poison.Lethal; } }
+        public override bool AlwaysMurderer => true;
+
+        public override bool BardImmune => false;
+
+        public override bool Unprovokable => true;
+
+        public override bool AreaPeaceImmune => true;
+
+        public override Poison PoisonImmune => Poison.Lethal;
 
         public override void GenerateLoot()
         {
-            this.AddLoot(LootPack.FilthyRich);
-            this.AddLoot(LootPack.Meager);
-        }       
-
-        public override void Serialize(GenericWriter writer) 
-        { 
-            base.Serialize(writer);
-            writer.Write((int)0); // version 
+            AddLoot(LootPack.FilthyRich);
+            AddLoot(LootPack.Meager);
         }
 
-        public override void Deserialize(GenericReader reader) 
-        { 
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write(0);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
             base.Deserialize(reader);
-            int version = reader.ReadInt(); 
+            int version = reader.ReadInt();
         }
     }
 }

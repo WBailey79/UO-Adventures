@@ -1,10 +1,9 @@
 #region References
-using System;
-
+using Server.Engines.Quests;
 using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
-using Server.Engines.Quests;
+using System;
 #endregion
 
 namespace Server.SkillHandlers
@@ -149,8 +148,6 @@ namespace Server.SkillHandlers
                             }
                             else
                             {
-                                //from.DoHarmful( m_Creature );
-                                //from.DoHarmful( creature );
                                 if (!from.CheckTargetSkill(SkillName.Provocation, target, diff - 25.0, diff + 25.0))
                                 {
                                     from.NextSkillTime = Core.TickCount + (10000 - ((masteryBonus / 5) * 1000));

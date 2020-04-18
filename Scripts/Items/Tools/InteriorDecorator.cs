@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
 using Server.Gumps;
 using Server.Multis;
 using Server.Network;
 using Server.Targeting;
+using System;
+using System.Linq;
 
 namespace Server.Items
 {
@@ -18,7 +18,7 @@ namespace Server.Items
 
     public class InteriorDecorator : Item
     {
-        public override int LabelNumber { get { return 1041280; } } // an interior decorator
+        public override int LabelNumber => 1041280;  // an interior decorator
 
         [Constructable]
         public InteriorDecorator()
@@ -56,7 +56,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
@@ -174,7 +174,7 @@ namespace Server.Items
                 OnTarget(from, targeted);
             }
 
-            private static Type[] m_KingsCollectionTypes = new Type[]
+            private static readonly Type[] m_KingsCollectionTypes = new Type[]
             {
                 typeof(BirdLamp),    typeof(DragonLantern),
                 typeof(KoiLamp),   typeof(TallLamp)

@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Server.Commands;
 using Server.Engines.CannedEvil;
 using Server.Items;
 using Server.Network;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Mobiles
 {
@@ -53,8 +52,6 @@ namespace Server.Mobiles
             Fame = 28000;
             Karma = -28000;
 
-            VirtualArmor = 80;
-
             SetMagicalAbility(MagicalAbility.WrestlingMastery);
         }
 
@@ -63,45 +60,31 @@ namespace Server.Mobiles
         {
         }
 
-        public override bool Unprovokable { get { return true; } }
-        public override bool BleedImmune { get { return true; } }
-        public override Poison PoisonImmune { get { return Poison.Lethal; } }
-        public override bool ShowFameTitle { get { return false; } }
-        public override bool ClickTitle { get { return false; } }
-        public override bool AlwaysMurderer { get { return true; } }
-        public override bool AutoDispel { get { return true; } }
-        public override double AutoDispelChance { get { return 1.0; } }
+        public override bool Unprovokable => true;
 
-        public override ChampionSkullType SkullType { get { return ChampionSkullType.None; } }
+        public override bool BleedImmune => true;
 
-        public override Type[] UniqueList
-        {
-            get
-            {
-                return new Type[] { };
-            }
-        }
-        public override Type[] SharedList
-        {
-            get
-            {
-                return new Type[] { };
-            }
-        }
-        public override Type[] DecorativeList
-        {
-            get
-            {
-                return new Type[] { };
-            }
-        }
-        public override MonsterStatuetteType[] StatueTypes
-        {
-            get
-            {
-                return new MonsterStatuetteType[] { };
-            }
-        }
+        public override Poison PoisonImmune => Poison.Lethal;
+
+        public override bool ShowFameTitle => false;
+
+        public override bool ClickTitle => false;
+
+        public override bool AlwaysMurderer => true;
+
+        public override bool AutoDispel => true;
+
+        public override double AutoDispelChance => 1.0;
+
+        public override ChampionSkullType SkullType => ChampionSkullType.None;
+
+        public override Type[] UniqueList => new Type[] { };
+
+        public override Type[] SharedList => new Type[] { };
+
+        public override Type[] DecorativeList => new Type[] { };
+
+        public override MonsterStatuetteType[] StatueTypes => new MonsterStatuetteType[] { };
 
         public override void OnBeforeDamage(Mobile from, ref int totalDamage, Server.DamageType type)
         {
@@ -142,7 +125,7 @@ namespace Server.Mobiles
 
         public override void OnThink()
         {
-            base.OnThink();            
+            base.OnThink();
 
             if (Spawn == null || Map == null)
                 return;
@@ -200,7 +183,7 @@ namespace Server.Mobiles
 
         private class InternalTimer : Timer
         {
-            private KhalAnkur m_Mobile;
+            private readonly KhalAnkur m_Mobile;
             private int m_Tick;
 
             public InternalTimer(KhalAnkur mob)
@@ -351,7 +334,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
             writer.WriteItem<ChampionSpawn>(Spawn);
         }
@@ -362,8 +345,6 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             Spawn = reader.ReadItem<ChampionSpawn>();
-
-            Hue = 0;
         }
     }
 }

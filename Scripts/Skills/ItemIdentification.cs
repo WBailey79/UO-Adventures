@@ -1,9 +1,9 @@
-using System;
 using Server.Mobiles;
-using Server.Targeting;
-using System.Collections.Generic;
 using Server.Network;
 using Server.SkillHandlers;
+using Server.Targeting;
+using System;
+using System.Collections.Generic;
 
 namespace Server.Items
 {
@@ -28,7 +28,7 @@ namespace Server.Items
             public InternalTarget()
                 : base(8, false, TargetFlags.None)
             {
-                this.AllowNonlocal = true;
+                AllowNonlocal = true;
             }
 
             protected override void OnTarget(Mobile from, object o)

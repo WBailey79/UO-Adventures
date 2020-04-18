@@ -1,10 +1,10 @@
+using Server.Commands;
+using Server.Gumps;
+using Server.Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Server.Commands;
-using Server.Gumps;
-using Server.Items;
 
 namespace Server
 {
@@ -527,7 +527,7 @@ namespace Server
                     for (int i = 0; i < count; ++i)
                     {
                         staTiles[i].Set((ushort)(m_Buffer[index++] | (m_Buffer[index++] << 8)),
-                            (byte)m_Buffer[index++], (byte)m_Buffer[index++], (sbyte)m_Buffer[index++],
+                            m_Buffer[index++], m_Buffer[index++], (sbyte)m_Buffer[index++],
                             (short)(m_Buffer[index++] | (m_Buffer[index++] << 8)));
                     }
                 }
@@ -547,9 +547,9 @@ namespace Server
             public readonly List<Item> m_List;
             public DeltaState(Point2D p)
             {
-                this.m_X = p.X;
-                this.m_Y = p.Y;
-                this.m_List = new List<Item>();
+                m_X = p.X;
+                m_Y = p.Y;
+                m_List = new List<Item>();
             }
         }
 
@@ -560,9 +560,9 @@ namespace Server
             public readonly Point3D m_End;
             public StateInfo(Map map, Point3D start, Point3D end)
             {
-                this.m_Map = map;
-                this.m_Start = start;
-                this.m_End = end;
+                m_Map = map;
+                m_Start = start;
+                m_End = end;
             }
         }
     }

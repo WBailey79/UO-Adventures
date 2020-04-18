@@ -1,10 +1,10 @@
-using System;
-using System.Text;
 using Server.Commands;
 using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
 using Server.Network;
+using System;
+using System.Text;
 
 namespace Server.Misc
 {
@@ -19,7 +19,6 @@ namespace Server.Misc
 
         public static void Initialize()
         {
-            // Register our speech handler
             if (Enabled)
                 EventSink.Speech += new SpeechEventHandler(EventSink_Speech);
         }
@@ -177,19 +176,12 @@ namespace Server.Misc
             keg.Type = type;
             keg.Hue = hue;
 
-            return MakeNewbie(keg);
+            return keg;
         }
 
-        private static Item MakeNewbie(Item item)
-        {
-            return item;
-        }
-
-        public static void FillBankAOS(Mobile m)
+        public static void FillBank(Mobile m)
         {
             BankBox bank = m.BankBox;
-
-            // The new AOS bankboxes don't have powerscrolls, they are automatically 'applied':
 
             for (int i = 0; i < PowerScroll.Skills.Count; ++i)
                 m.Skills[PowerScroll.Skills[i]].Cap = 120.0;
@@ -528,19 +520,7 @@ namespace Server.Misc
 
         public static void FillBankbox(Mobile m)
         {
-            FillBankAOS(m);
-        }
-
-        public static void AddPowerScrolls(BankBox bank)
-        {
-            Bag bag = new Bag();
-
-            for (int i = 0; i < PowerScroll.Skills.Count; ++i)
-                bag.DropItem(new PowerScroll(PowerScroll.Skills[i], 120.0));
-
-            bag.DropItem(new StatCapScroll(250));
-
-            bank.DropItem(bag);
+            FillBank(m);
         }
 
         public class TCHelpGump : Gump
@@ -548,29 +528,29 @@ namespace Server.Misc
             public TCHelpGump()
                 : base(40, 40)
             {
-                this.AddPage(0);
-                this.AddBackground(0, 0, 160, 120, 5054);
+                AddPage(0);
+                AddBackground(0, 0, 160, 120, 5054);
 
-                this.AddButton(10, 10, 0xFB7, 0xFB9, 1, GumpButtonType.Reply, 0);
-                this.AddLabel(45, 10, 0x34, "ServUO");
+                AddButton(10, 10, 0xFB7, 0xFB9, 1, GumpButtonType.Reply, 0);
+                AddLabel(45, 10, 0x34, "ServUO");
 
-                this.AddButton(10, 35, 0xFB7, 0xFB9, 2, GumpButtonType.Reply, 0);
-                this.AddLabel(45, 35, 0x34, "List of skills");
+                AddButton(10, 35, 0xFB7, 0xFB9, 2, GumpButtonType.Reply, 0);
+                AddLabel(45, 35, 0x34, "List of skills");
 
-                this.AddButton(10, 60, 0xFB7, 0xFB9, 3, GumpButtonType.Reply, 0);
-                this.AddLabel(45, 60, 0x34, "Command list");
+                AddButton(10, 60, 0xFB7, 0xFB9, 3, GumpButtonType.Reply, 0);
+                AddLabel(45, 60, 0x34, "Command list");
 
-                this.AddButton(10, 85, 0xFB1, 0xFB3, 0, GumpButtonType.Reply, 0);
-                this.AddLabel(45, 85, 0x34, "Close");
+                AddButton(10, 85, 0xFB1, 0xFB3, 0, GumpButtonType.Reply, 0);
+                AddLabel(45, 85, 0x34, "Close");
             }
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                switch ( info.ButtonID )
+                switch (info.ButtonID)
                 {
                     case 1:
                         {
-                            sender.LaunchBrowser("http://ServUO.craftuo.com/");
+                            sender.LaunchBrowser("https://servuo.com");
                             break;
                         }
                     case 2: // List of skills

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Server;
-using Server.Items;
 using Server.Mobiles;
+using System.Collections.Generic;
 
 namespace Server.Items
 {
@@ -20,7 +17,7 @@ namespace Server.Items
             }
         }
 
-        private static Dictionary<Mobile, BladeWeaveRedirect> m_NewAttack = new Dictionary<Mobile, BladeWeaveRedirect>();
+        private static readonly Dictionary<Mobile, BladeWeaveRedirect> m_NewAttack = new Dictionary<Mobile, BladeWeaveRedirect>();
 
         public static bool BladeWeaving(Mobile attacker, out WeaponAbility a)
         {
@@ -38,7 +35,7 @@ namespace Server.Items
         {
         }
 
-        public override int BaseMana { get { return 30; } }
+        public override int BaseMana => 30;
 
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)
         {
@@ -105,7 +102,7 @@ namespace Server.Items
             }
 
 
-            return ((BladeWeaveRedirect)m_NewAttack[attacker]).NewAbility.OnBeforeSwing(attacker, defender);
+            return m_NewAttack[attacker].NewAbility.OnBeforeSwing(attacker, defender);
         }
 
         public override bool OnBeforeDamage(Mobile attacker, Mobile defender)

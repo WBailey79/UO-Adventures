@@ -1,5 +1,5 @@
-using System;
 using Server.Items;
+using System;
 
 namespace Server.Mobiles
 {
@@ -38,8 +38,8 @@ namespace Server.Mobiles
             ForceActiveSpeed = 0.2;
             ForcePassiveSpeed = 0.4;
         }
-		
-		public virtual void SpawnPackItems()
+
+        public virtual void SpawnPackItems()
         {
             int carrots = Utility.RandomMinMax(5, 10);
             PackItem(new Carrot(carrots));
@@ -55,9 +55,9 @@ namespace Server.Mobiles
         {
         }
 
-        public override int Meat { get { return 1; } }
-        public override int Hides { get { return 1; } }
-		
+        public override int Meat => 1;
+        public override int Hides => 1;
+
         public override void GenerateLoot()
         {
             AddLoot(LootPack.FilthyRich);
@@ -114,7 +114,7 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
+            writer.Write(0);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -147,7 +147,7 @@ namespace Server.Mobiles
             {
                 base.Serialize(writer);
 
-                writer.Write((int)0);
+                writer.Write(0);
             }
 
             public override void Deserialize(GenericReader reader)

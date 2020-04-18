@@ -1,7 +1,7 @@
+using Server.Diagnostics;
 using System;
 using System.Collections;
 using System.IO;
-using Server.Diagnostics;
 
 namespace Server.Commands
 {
@@ -93,7 +93,7 @@ namespace Server.Commands
                 {
                     Type type = item.GetType();
 
-                    object o = (object)table[type];
+                    object o = table[type];
 
                     if (o == null)
                         table[type] = 1;
@@ -109,7 +109,7 @@ namespace Server.Commands
                 {
                     Type type = m.GetType();
 
-                    object o = (object)table[type];
+                    object o = table[type];
 
                     if (o == null)
                         table[type] = 1;
@@ -362,8 +362,8 @@ namespace Server.Commands
                 DictionaryEntry a = (DictionaryEntry)x;
                 DictionaryEntry b = (DictionaryEntry)y;
 
-                int aCount = this.GetCount(a.Value);
-                int bCount = this.GetCount(b.Value);
+                int aCount = GetCount(a.Value);
+                int bCount = GetCount(b.Value);
 
                 int v = -aCount.CompareTo(bCount);
 

@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
 using Server.Items;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Prompts;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Gumps
 {
@@ -254,7 +253,7 @@ namespace Server.Gumps
             AddPageButton(10, 70, GetButtonID(1, 3), 1060671, HouseGumpPage.Customize);
             AddPageButton(10, 90, GetButtonID(1, 4), 1060672, HouseGumpPage.Ownership);
 
-            switch ( page )
+            switch (page)
             {
                 case HouseGumpPage.Information:
                     {
@@ -266,7 +265,7 @@ namespace Server.Gumps
                         AddHtmlLocalized(20, 210, 380, 20, (house is HouseFoundation) ? 1060681 : 1060680, SelectedColor, false, false); // This is a (pre | custom)-built house.
                         AddHtmlLocalized(20, 230, 380, 20, house.Public ? 1060678 : 1060679, SelectedColor, false, false); // This house is (private | open to the public).
 
-                        switch ( house.DecayType )
+                        switch (house.DecayType)
                         {
                             case DecayType.Ageless:
                             case DecayType.AutoRefresh:
@@ -467,7 +466,7 @@ namespace Server.Gumps
                 case HouseGumpPage.ChangeSign:
                     {
                         int index = 0;
-					
+
                         if (_HouseSigns.Count == 0)
                         {
                             // Add standard signs
@@ -480,7 +479,7 @@ namespace Server.Gumps
                             _HouseSigns.Add(2966);
                             _HouseSigns.Add(3140);
                         }
-					
+
                         int signsPerPage = 24;
                         int totalSigns = 56;
                         int pages = (int)Math.Ceiling((double)totalSigns / signsPerPage);
@@ -605,7 +604,7 @@ namespace Server.Gumps
                 {
                     List<Mobile> list = new List<Mobile>(house.CoOwners);
 
-                    foreach (var m in list)
+                    foreach (Mobile m in list)
                     {
                         house.RemoveCoOwner(from, m, false);
                     }
@@ -632,7 +631,7 @@ namespace Server.Gumps
                 {
                     List<Mobile> list = new List<Mobile>(house.Friends);
 
-                    foreach (var m in list)
+                    foreach (Mobile m in list)
                     {
                         house.RemoveFriend(from, m, false);
                     }
@@ -808,7 +807,7 @@ namespace Server.Gumps
 
         public static void SwapHouse_Callback(Mobile from, bool okay, object state)
         {
-            var house = state as BaseHouse;
+            BaseHouse house = state as BaseHouse;
 
             if (okay && house != null)
             {
@@ -896,11 +895,11 @@ namespace Server.Gumps
             if (!isFriend)
                 return;
 
-            switch ( type )
+            switch (type)
             {
                 case 0:
                     {
-                        switch ( index )
+                        switch (index)
                         {
                             case 0: // Banish
                                 {
@@ -944,7 +943,7 @@ namespace Server.Gumps
                     {
                         HouseGumpPage page;
 
-                        switch ( index )
+                        switch (index)
                         {
                             case 0:
                                 page = HouseGumpPage.Information;
@@ -970,7 +969,7 @@ namespace Server.Gumps
                     }
                 case 3:
                     {
-                        switch ( index )
+                        switch (index)
                         {
                             case 0: // View Co-Owner List
                                 {
@@ -1094,7 +1093,7 @@ namespace Server.Gumps
 
                                         for (int i = 0; i < list.Count; ++i)
                                         {
-                                            Mobile m = (Mobile)list[i];
+                                            Mobile m = list[i];
 
                                             if (!m_House.HasAccess(m) && m_House.IsInside(m))
                                                 m.Location = m_House.BanLocation;
@@ -1127,7 +1126,7 @@ namespace Server.Gumps
 
                                         for (int i = 0; i < list.Count; ++i)
                                         {
-                                            Mobile m = (Mobile)list[i];
+                                            Mobile m = list[i];
 
                                             if (m_House.IsBanned(m) && m_House.IsInside(m))
                                                 m.Location = m_House.BanLocation;
@@ -1142,7 +1141,7 @@ namespace Server.Gumps
                     }
                 case 5:
                     {
-                        switch ( index )
+                        switch (index)
                         {
                             case 0: // Convert Into Customizable House
                                 {
@@ -1304,7 +1303,7 @@ namespace Server.Gumps
                     }
                 case 6:
                     {
-                        switch ( index )
+                        switch (index)
                         {
                             case 0: // Demolish
                                 {
@@ -1314,7 +1313,7 @@ namespace Server.Gumps
                                         {
                                             from.SendLocalizedMessage(1080178); // You must wait one hour between each house demolition.
                                         }
-                                        else 
+                                        else
                                         {
                                             from.CloseGump(typeof(HouseDemolishGump));
                                             from.SendGump(new HouseDemolishGump(from, m_House));
@@ -1376,7 +1375,7 @@ namespace Server.Gumps
 
                             if (index >= 5)
                             {
-                                switch( index )
+                                switch (index)
                                 {
                                     case 5:
                                         newType = FoundationType.ElvenGrey;
@@ -1420,7 +1419,7 @@ namespace Server.Gumps
                             }
                             else
                             {
-                                switch( index )
+                                switch (index)
                                 {
                                     case 0:
                                         newType = FoundationType.DarkWood;
@@ -1477,7 +1476,7 @@ namespace Server.Gumps
                     {
                         if (isOwner && m_List != null && index >= 0 && index < m_List.Count)
                         {
-                            m_House.RemoveCoOwner(from, (Mobile)m_List[index]);
+                            m_House.RemoveCoOwner(from, m_List[index]);
 
                             if (m_House.CoOwners.Count > 0)
                                 from.SendGump(new HouseGump(HouseGumpPage.RemoveCoOwner, from, m_House));
@@ -1491,7 +1490,7 @@ namespace Server.Gumps
                     {
                         if (isCoOwner && m_List != null && index >= 0 && index < m_List.Count)
                         {
-                            m_House.RemoveFriend(from, (Mobile)m_List[index]);
+                            m_House.RemoveFriend(from, m_List[index]);
 
                             if (m_House.Friends.Count > 0)
                                 from.SendGump(new HouseGump(HouseGumpPage.RemoveFriend, from, m_House));
@@ -1505,7 +1504,7 @@ namespace Server.Gumps
                     {
                         if (m_List != null && index >= 0 && index < m_List.Count)
                         {
-                            m_House.RemoveBan(from, (Mobile)m_List[index]);
+                            m_House.RemoveBan(from, m_List[index]);
 
                             if (m_House.Bans.Count > 0)
                                 from.SendGump(new HouseGump(HouseGumpPage.RemoveBan, from, m_House));
@@ -1519,7 +1518,7 @@ namespace Server.Gumps
                     {
                         if (m_List != null && index >= 0 && index < m_List.Count)
                         {
-                            m_House.RemoveAccess(from, (Mobile)m_List[index]);
+                            m_House.RemoveAccess(from, m_List[index]);
 
                             if (m_House.Access.Count > 0)
                                 from.SendGump(new HouseGump(HouseGumpPage.RemoveAccess, from, m_House));
@@ -1609,7 +1608,7 @@ namespace Server.Prompts
 {
     public class RenamePrompt : Prompt
     {
-        public override int MessageCliloc { get { return 501302; } }
+        public override int MessageCliloc => 501302;
         private readonly BaseHouse m_House;
         public RenamePrompt(BaseHouse house)
         {

@@ -1,5 +1,5 @@
-using System;
 using Server.Mobiles;
+using System;
 
 namespace Server.Items
 {
@@ -11,25 +11,20 @@ namespace Server.Items
     /// </summary>
     public class Dismount : WeaponAbility
     {
-        public static readonly TimeSpan DefenderRemountDelay = TimeSpan.FromSeconds(10.0);// TODO: Taken from bola script, needs to be verified
+        public static readonly TimeSpan DefenderRemountDelay = TimeSpan.FromSeconds(10.0);
         public static readonly TimeSpan AttackerRemountDelay = TimeSpan.FromSeconds(3.0);
         public Dismount()
         {
         }
 
-        public override int BaseMana
-        {
-            get
-            {
-                return 25;
-            }
-        }
+        public override int BaseMana => 25;
+
         public override bool Validate(Mobile from)
         {
             if (!base.Validate(from))
                 return false;
 
-            if ( (from.Mounted || from.Flying) && !(from.Weapon is Lance) && !(from.Weapon is GargishLance) )
+            if ((from.Mounted || from.Flying) && !(from.Weapon is Lance) && !(from.Weapon is GargishLance))
             {
                 from.SendLocalizedMessage(1061283); // You cannot perform that attack while mounted or flying!
                 return false;
@@ -40,7 +35,7 @@ namespace Server.Items
 
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
-            if (!this.Validate(attacker))
+            if (!Validate(attacker))
                 return;
 
             if (defender is ChaosDragoon || defender is ChaosDragoonElite)
@@ -59,7 +54,7 @@ namespace Server.Items
                 return;
             }
 
-            if (!this.CheckMana(attacker, true))
+            if (!CheckMana(attacker, true))
             {
                 return;
             }

@@ -1,9 +1,7 @@
-using System;
-using Server;
-using Server.Gumps;
-using Server.Engines;
-using Server.Multis;
 using Server.Commands;
+using Server.Gumps;
+using Server.Multis;
+using System;
 
 namespace Server.Items
 {
@@ -12,7 +10,7 @@ namespace Server.Items
     {
         public static readonly int MaxEggs = 6;
 
-        public override int LabelNumber { get { return 1112479; } } //an incubator
+        public override int LabelNumber => 1112479;  //an incubator
 
         private SecureLevel m_Level;
 
@@ -23,8 +21,8 @@ namespace Server.Items
             set { m_Level = value; }
         }
 
-        public override int DefaultGumpID { get { return 1156; } }
-        public override int DefaultDropSound { get { return 66; } }
+        public override int DefaultGumpID => 1156;
+        public override int DefaultDropSound => 66;
 
         [Constructable]
         public Incubator()
@@ -82,7 +80,7 @@ namespace Server.Items
             }
             if (!(item is ChickenLizardEgg))
             {
-                m.SendMessage("This will only accept chicken eggs."); 
+                m.SendMessage("This will only accept chicken eggs.");
                 return false;
             }
 
@@ -136,7 +134,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
             writer.Write((int)m_Level);
 

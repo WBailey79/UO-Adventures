@@ -1,8 +1,7 @@
-﻿using System;
-using Server.Commands;
+﻿using Server.Commands;
 using Server.Mobiles;
 using Server.Network;
-using System.Linq;
+using System;
 
 namespace Server.Items
 {
@@ -72,7 +71,7 @@ namespace Server.Items
                             pillar.Type = PillarType.Three;
                     }
 
-                    this.TypeRestart = TimeSpan.FromHours(24.0); // The timers rotate among the three stone ruins randomly once a day
+                    TypeRestart = TimeSpan.FromHours(24.0); // The timers rotate among the three stone ruins randomly once a day
                 }
 
                 return ts;
@@ -195,13 +194,13 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
-            writer.Write((Mobile)m_Navrey);
+            writer.Write(m_Navrey);
 
-            writer.Write((Item)m_Pillars[0]);
-            writer.Write((Item)m_Pillars[1]);
-            writer.Write((Item)m_Pillars[2]);
+            writer.Write(m_Pillars[0]);
+            writer.Write(m_Pillars[1]);
+            writer.Write(m_Pillars[2]);
 
             writer.Write(TypeRestart);
         }
@@ -230,7 +229,7 @@ namespace Server.Items
 
         private class RockRainTimer : Timer
         {
-            private Navrey m_Navrey;
+            private readonly Navrey m_Navrey;
             private int m_Ticks;
 
             public RockRainTimer(Navrey navrey)

@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using System;
 
 namespace Server.Misc
 {
@@ -19,7 +17,7 @@ namespace Server.Misc
         public static void FatigueOnDamage(Mobile m, int damage, DFAlgorithm df)
         {
             double fatigue = 0.0;
-            var hits = Math.Max(1, m.Hits);
+            int hits = Math.Max(1, m.Hits);
 
             switch (m.DFA)
             {
@@ -35,7 +33,7 @@ namespace Server.Misc
                     break;
             }
 
-            var reduction = BaseArmor.GetInherentStaminaLossReduction(m) + 1;
+            double reduction = BaseArmor.GetInherentStaminaLossReduction(m) + 1;
 
             if (reduction > 1)
             {
@@ -47,7 +45,7 @@ namespace Server.Misc
                 // On EA, if follows this special rule to reduce the chances of your stamina being dropped to 0
                 if (m.Stam - fatigue <= 10)
                 {
-                    m.Stam -= (int)(fatigue * ((double)m.Hits / (double)m.HitsMax));
+                    m.Stam -= (int)(fatigue * (m.Hits / (double)m.HitsMax));
                 }
                 else
                 {
@@ -90,7 +88,7 @@ namespace Server.Misc
                 return;
             }
 
-            var pm = from as PlayerMobile;
+            PlayerMobile pm = from as PlayerMobile;
 
             if (pm != null)
             {

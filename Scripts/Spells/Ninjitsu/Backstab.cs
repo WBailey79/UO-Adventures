@@ -1,5 +1,5 @@
-using System;
 using Server.SkillHandlers;
+using System;
 
 namespace Server.Spells.Ninjitsu
 {
@@ -9,34 +9,10 @@ namespace Server.Spells.Ninjitsu
         {
         }
 
-        public override int BaseMana
-        {
-            get
-            {
-                return 30;
-            }
-        }
-        public override double RequiredSkill
-        {
-            get
-            {
-                return 40.0;
-            }
-        }
-        public override TextDefinition AbilityMessage
-        {
-            get
-            {
-                return new TextDefinition(1063089);
-            }
-        }// You prepare to Backstab your opponent.
-        public override bool ValidatesDuringHit
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override int BaseMana => 30;
+        public override double RequiredSkill => 40.0;
+        public override TextDefinition AbilityMessage => new TextDefinition(1063089);// You prepare to Backstab your opponent.
+        public override bool ValidatesDuringHit => false;
         public override double GetDamageScalar(Mobile attacker, Mobile defender)
         {
             double ninjitsu = attacker.Skills[SkillName.Ninjitsu].Value;
@@ -57,7 +33,7 @@ namespace Server.Spells.Ninjitsu
 
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)
         {
-            bool valid = this.Validate(attacker) && this.CheckMana(attacker, true);
+            bool valid = Validate(attacker) && CheckMana(attacker, true);
 
             if (valid)
             {
@@ -75,11 +51,11 @@ namespace Server.Spells.Ninjitsu
 
             attacker.SendLocalizedMessage(1063090); // You quickly stab your opponent as you come out of hiding!
 
-            defender.FixedParticles(0x37B9, 1, 5, 0x251D, 0x651, 0, EffectLayer.Waist);						
+            defender.FixedParticles(0x37B9, 1, 5, 0x251D, 0x651, 0, EffectLayer.Waist);
 
             attacker.RevealingAction();
 
-            this.CheckGain(attacker);
+            CheckGain(attacker);
         }
 
         public override void OnMiss(Mobile attacker, Mobile defender)

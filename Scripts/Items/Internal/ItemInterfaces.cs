@@ -1,6 +1,5 @@
-using System;
-using Server.Mobiles;
 using Server.Engines.Craft;
+using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -63,7 +62,7 @@ namespace Server.Items
     {
         Low,
         Normal,
-        Exceptional,
+        Exceptional
     }
 
     public enum DirectionType

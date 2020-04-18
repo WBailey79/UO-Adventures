@@ -1,7 +1,6 @@
+using Server.Items;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Server.Items;
 using System.IO;
 
 namespace Server.Commands
@@ -56,8 +55,8 @@ namespace Server.Commands
     }
     public class GenTeleporter
     {
-        private static string m_Path = Path.Combine("Data", "teleporters.csv");
-        private static char[] m_Sep = { ',' };
+        private static readonly string m_Path = Path.Combine("Data", "teleporters.csv");
+        private static readonly char[] m_Sep = { ',' };
 
         public GenTeleporter()
         {
@@ -86,14 +85,14 @@ namespace Server.Commands
 
             string line;
             int lineNum = 0;
-            while((line = reader.ReadLine()) != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 ++lineNum;
                 line = line.Trim();
                 if (line.StartsWith("#"))
                     continue;
                 string[] parts = line.Split(m_Sep);
-                if(parts.Length != 9)
+                if (parts.Length != 9)
                 {
                     e.Mobile.SendMessage(33, String.Format("Bad teleporter definition on line {0}", lineNum));
                     continue;
@@ -116,7 +115,7 @@ namespace Server.Commands
                 {
                     e.Mobile.SendMessage(33, String.Format("Bad number format on line {0}", lineNum));
                 }
-                catch(ArgumentException ex)
+                catch (ArgumentException ex)
                 {
                     e.Mobile.SendMessage(33, String.Format("Argument Execption {0} on line {1}", ex.Message, lineNum));
                 }
@@ -161,20 +160,20 @@ namespace Server.Commands
             {
                 if (!FindTeleporter(mapLocation, pointLocation))
                 {
-                    this.m_Count++;
-				
+                    m_Count++;
+
                     Teleporter tel = new Teleporter(pointDestination, mapDestination);
-					WeakEntityCollection.Add("tel", tel);
+                    WeakEntityCollection.Add("tel", tel);
 
                     tel.MoveToWorld(pointLocation, mapLocation);
                 }
 
                 if (back && !FindTeleporter(mapDestination, pointDestination))
                 {
-                    this.m_Count++;
+                    m_Count++;
 
                     Teleporter telBack = new Teleporter(pointLocation, mapLocation);
-					WeakEntityCollection.Add("tel", telBack);
+                    WeakEntityCollection.Add("tel", telBack);
 
                     telBack.MoveToWorld(pointDestination, mapDestination);
                 }
@@ -182,12 +181,12 @@ namespace Server.Commands
 
             public void CreateTeleporter(int xLoc, int yLoc, int zLoc, int xDest, int yDest, int zDest, Map map, bool back)
             {
-                this.CreateTeleporter(new Point3D(xLoc, yLoc, zLoc), new Point3D(xDest, yDest, zDest), map, map, back);
+                CreateTeleporter(new Point3D(xLoc, yLoc, zLoc), new Point3D(xDest, yDest, zDest), map, map, back);
             }
 
             public void CreateTeleporter(int xLoc, int yLoc, int zLoc, int xDest, int yDest, int zDest, Map mapLocation, Map mapDestination, bool back)
             {
-                this.CreateTeleporter(new Point3D(xLoc, yLoc, zLoc), new Point3D(xDest, yDest, zDest), mapLocation, mapDestination, back);
+                CreateTeleporter(new Point3D(xLoc, yLoc, zLoc), new Point3D(xDest, yDest, zDest), mapLocation, mapDestination, back);
             }
         }
     }

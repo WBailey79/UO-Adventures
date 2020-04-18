@@ -1,10 +1,9 @@
-using System;
-using System.Collections;
 using Server.Engines.CannedEvil;
 using Server.Items;
-using System.Collections.Generic;
 using Server.Network;
-using System.Linq;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Server.Mobiles
 {
@@ -69,42 +68,18 @@ namespace Server.Mobiles
         public override int GetHurtSound() { return 0x620; }
         public override int GetIdleSound() { return 0x621; }
 
-        public override bool CanRummageCorpses { get { return true; } }
-        public override bool BleedImmune { get { return true; } }
-        public override Poison PoisonImmune { get { return Poison.Lethal; } }
-        public override bool ShowFameTitle { get { return false; } }
-        public override bool ClickTitle { get { return false; } }
+        public override bool CanRummageCorpses => true;
+        public override bool BleedImmune => true;
+        public override Poison PoisonImmune => Poison.Lethal;
+        public override bool ShowFameTitle => false;
+        public override bool ClickTitle => false;
 
-        public override ChampionSkullType SkullType { get { return ChampionSkullType.None; } }
+        public override ChampionSkullType SkullType => ChampionSkullType.None;
 
-        public override Type[] UniqueList
-        {
-            get
-            {
-                return new Type[] { typeof(BansheesCall), typeof(CastOffZombieSkin), typeof(ChannelersDefender), typeof(LightsRampart) };
-            }
-        }
-        public override Type[] SharedList
-        {
-            get
-            {
-                return new Type[] { typeof(TokenOfHolyFavor), typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard), typeof(ProtectoroftheBattleMage) };
-            }
-        }
-        public override Type[] DecorativeList
-        {
-            get
-            {
-                return new Type[] { typeof(MummifiedCorpse) };
-            }
-        }
-        public override MonsterStatuetteType[] StatueTypes
-        {
-            get
-            {
-                return new MonsterStatuetteType[] { };
-            }
-        }        
+        public override Type[] UniqueList => new Type[] { typeof(BansheesCall), typeof(CastOffZombieSkin), typeof(ChannelersDefender), typeof(LightsRampart) };
+        public override Type[] SharedList => new Type[] { typeof(TokenOfHolyFavor), typeof(TheMostKnowledgePerson), typeof(LieutenantOfTheBritannianRoyalGuard), typeof(ProtectoroftheBattleMage) };
+        public override Type[] DecorativeList => new Type[] { typeof(MummifiedCorpse) };
+        public override MonsterStatuetteType[] StatueTypes => new MonsterStatuetteType[] { };
 
         public override void GenerateLoot()
         {
@@ -124,7 +99,7 @@ namespace Server.Mobiles
         {
             ForceReacquire();
             BeginFlee(TimeSpan.FromSeconds(2.5));
-        }       
+        }
 
         public override void OnThink()
         {
@@ -273,9 +248,9 @@ namespace Server.Mobiles
         #region Teleport
         private class TeleportTimer : Timer
         {
-            private Mobile m_Owner;
+            private readonly Mobile m_Owner;
 
-            private static int[] m_Offsets = new int[]
+            private static readonly int[] m_Offsets = new int[]
             {
                 -1, -1,
                 -1,  0,
@@ -374,7 +349,7 @@ namespace Server.Mobiles
         #endregion
 
         #region Unholy Touch
-        private static Dictionary<Mobile, Timer> m_UnholyTouched = new Dictionary<Mobile, Timer>();
+        private static readonly Dictionary<Mobile, Timer> m_UnholyTouched = new Dictionary<Mobile, Timer>();
 
         public void Discord(Mobile target)
         {
@@ -386,27 +361,27 @@ namespace Server.Mobiles
 
                 if (target.PhysicalResistance > 0)
                 {
-                    mods.Add(new ResistanceMod(ResistanceType.Physical, (int)((double)target.PhysicalResistance * scalar)));
+                    mods.Add(new ResistanceMod(ResistanceType.Physical, (int)(target.PhysicalResistance * scalar)));
                 }
 
                 if (target.FireResistance > 0)
                 {
-                    mods.Add(new ResistanceMod(ResistanceType.Fire, (int)((double)target.FireResistance * scalar)));
+                    mods.Add(new ResistanceMod(ResistanceType.Fire, (int)(target.FireResistance * scalar)));
                 }
 
                 if (target.ColdResistance > 0)
                 {
-                    mods.Add(new ResistanceMod(ResistanceType.Cold, (int)((double)target.ColdResistance * scalar)));
+                    mods.Add(new ResistanceMod(ResistanceType.Cold, (int)(target.ColdResistance * scalar)));
                 }
 
                 if (target.PoisonResistance > 0)
                 {
-                    mods.Add(new ResistanceMod(ResistanceType.Poison, (int)((double)target.PoisonResistance * scalar)));
+                    mods.Add(new ResistanceMod(ResistanceType.Poison, (int)(target.PoisonResistance * scalar)));
                 }
 
                 if (target.EnergyResistance > 0)
                 {
-                    mods.Add(new ResistanceMod(ResistanceType.Energy, (int)((double)target.EnergyResistance * scalar)));
+                    mods.Add(new ResistanceMod(ResistanceType.Energy, (int)(target.EnergyResistance * scalar)));
                 }
 
                 for (int i = 0; i < target.Skills.Length; ++i)
@@ -416,7 +391,7 @@ namespace Server.Mobiles
                         mods.Add(new DefaultSkillMod((SkillName)i, true, target.Skills[i].Value * scalar));
                     }
                 }
-                
+
                 target.PlaySound(0x458);
 
                 ApplyMods(target, mods);
@@ -503,7 +478,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)

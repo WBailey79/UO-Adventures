@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using Server.Network;
 using Server.Spells;
 using Server.Targeting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Items
 {
@@ -38,7 +37,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.WriteEncodedInt((int)0); // version
+            writer.WriteEncodedInt(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
@@ -92,7 +91,7 @@ namespace Server.Items
             if (Map == Map.Internal && HeldBy == null)
                 return;
 
-            switch ( m_Ticks )
+            switch (m_Ticks)
             {
                 case 0:
                 case 1:
@@ -136,9 +135,9 @@ namespace Server.Items
                         }
                         else if (RootParent == null)
                         {
-                            var targets = GetTargets();
+                            IEnumerable<Mobile> targets = GetTargets();
 
-                            foreach (var victim in targets)
+                            foreach (Mobile victim in targets)
                             {
                                 if (m_LitBy != null)
                                     m_LitBy.DoHarmful(victim);
@@ -222,13 +221,7 @@ namespace Server.Items
                 m_Bomb = bomb;
             }
 
-            public Firebomb Bomb
-            {
-                get
-                {
-                    return m_Bomb;
-                }
-            }
+            public Firebomb Bomb => m_Bomb;
             protected override void OnTarget(Mobile from, object targeted)
             {
                 m_Bomb.OnFirebombTarget(from, targeted);

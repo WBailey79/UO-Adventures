@@ -1,4 +1,3 @@
-using System;
 using Server.Network;
 using Server.Targeting;
 
@@ -53,19 +52,13 @@ namespace Server.Items
             {
             }
         }
-        public override int LabelNumber
-        {
-            get
-            {
-                return 1049082;
-            }
-        }// powder of fortifying
+        public override int LabelNumber => 1049082;// powder of fortifying
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
 
-            writer.Write((int)0);
-            writer.Write((int)m_UsesRemaining);
+            writer.Write(0);
+            writer.Write(m_UsesRemaining);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -74,7 +67,7 @@ namespace Server.Items
 
             int version = reader.ReadInt();
 
-            switch ( version )
+            switch (version)
             {
                 case 0:
                     {

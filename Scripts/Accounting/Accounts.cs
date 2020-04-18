@@ -19,13 +19,7 @@ namespace Server.Accounting
         {
         }
 
-        public static int Count
-        {
-            get
-            {
-                return m_Accounts.Count;
-            }
-        }
+        public static int Count => m_Accounts.Count;
 
         public static ICollection<IAccount> GetAccounts()
         {
@@ -45,7 +39,7 @@ namespace Server.Accounting
         {
             m_Accounts[a.Username] = a;
         }
-		
+
         public static void Remove(string username)
         {
             m_Accounts.Remove(username);

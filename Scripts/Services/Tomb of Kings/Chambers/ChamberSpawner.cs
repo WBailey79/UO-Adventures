@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Server.Mobiles;
+using System;
 using System.Collections.Generic;
-using Server.Mobiles;
 
 namespace Server.Engines.TombOfKings
 {
@@ -14,7 +14,7 @@ namespace Server.Engines.TombOfKings
             }
         }
 
-        private static Point3D[] m_Positions = new Point3D[]
+        private static readonly Point3D[] m_Positions = new Point3D[]
         {
             new Point3D( 9, 199, -9 ),
             new Point3D( 9, 183, -9 ),
@@ -31,7 +31,7 @@ namespace Server.Engines.TombOfKings
             new Point3D( 60, 119, -9 ),
         };
 
-        private static Type[] m_CreatureTypes = new Type[]
+        private static readonly Type[] m_CreatureTypes = new Type[]
         {
             typeof( SilverSerpent ),
             typeof( UndeadGuardian ),
@@ -119,12 +119,12 @@ namespace Server.Engines.TombOfKings
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
-            writer.Write((int)m_Creatures.Count);
+            writer.Write(m_Creatures.Count);
 
             for (int i = 0; i < m_Creatures.Count; i++)
-                writer.Write((Mobile)m_Creatures[i]);
+                writer.Write(m_Creatures[i]);
         }
 
         public override void Deserialize(GenericReader reader)

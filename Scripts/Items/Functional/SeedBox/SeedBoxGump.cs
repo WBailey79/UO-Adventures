@@ -1,9 +1,7 @@
-using System;
-using Server;
-using Server.Targeting;
-using Server.Engines.Plants;
 using Server.Gumps;
 using Server.Mobiles;
+using Server.Targeting;
+using System;
 
 namespace Server.Engines.Plants
 {
@@ -12,14 +10,14 @@ namespace Server.Engines.Plants
         public SeedBox Box { get; set; }
         public int Page { get; set; }
 
-        public int Pages { get { return (int)Math.Ceiling((double)Box.Entries.Count / 20.0); } }
+        public int Pages => (int)Math.Ceiling(Box.Entries.Count / 20.0);
 
         public SeedBoxGump(PlayerMobile user, SeedBox box, int page = 1) : base(user, 100, 100)
         {
             Box = box;
             Page = page;
 
-            user.CloseGump(this.GetType());
+            user.CloseGump(GetType());
         }
 
         public override void AddGumpLayout()
@@ -149,14 +147,14 @@ namespace Server.Engines.Plants
             Box = box;
             Entry = entry;
 
-            user.CloseGump(this.GetType());
+            user.CloseGump(GetType());
         }
 
         public override void AddGumpLayout()
         {
             if (Entry == null || Entry.Seed == null)
             {
-                User.CloseGump(this.GetType());
+                User.CloseGump(GetType());
                 return;
             }
 
@@ -288,7 +286,7 @@ namespace Server.Engines.Plants
                         Box.Entries.Remove(Entry);
                         Box.Entries.Insert(index - 1, Entry);
                         Box.TrimEntries();
-                        if(Parent is SeedBoxGump)
+                        if (Parent is SeedBoxGump)
                             ((SeedBoxGump)Parent).CheckPage(Entry);
                         RefreshParent(true);
                     }

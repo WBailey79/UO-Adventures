@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using Server.Accounting;
 using Server.Commands;
 using Server.Mobiles;
 using Server.Network;
+using System;
+using System.Threading;
 
 namespace Server.Engines.Reports
 {
@@ -15,13 +13,7 @@ namespace Server.Engines.Reports
         private static DateTime m_GenerateTime;
         private static SnapshotHistory m_StatsHistory;
         private static StaffHistory m_StaffHistory;
-        public static StaffHistory StaffHistory
-        {
-            get
-            {
-                return m_StaffHistory;
-            }
-        }
+        public static StaffHistory StaffHistory => m_StaffHistory;
         public static void Initialize()
         {
             CommandSystem.Register("GenReports", AccessLevel.Administrator, new CommandEventHandler(GenReports_OnCommand));
@@ -33,7 +25,7 @@ namespace Server.Engines.Reports
             m_StaffHistory.Load();
 
             DateTime now = DateTime.UtcNow;
-            
+
             if (!Enabled)
                 return;
 
@@ -53,12 +45,12 @@ namespace Server.Engines.Reports
             Generate();
             m_GenerateTime += TimeSpan.FromHours(1.0);
         }
-        
+
         [Usage("GenReports")]
         [Description("Generates Reports on Command.")]
         public static void GenReports_OnCommand(CommandEventArgs e)
         {
-			Generate();
+            Generate();
         }
 
         public static void Generate()
@@ -215,19 +207,19 @@ namespace Server.Engines.Reports
             renderer.Render();
             renderer.Upload();
         }
-                
+
         public class SkillDistribution : IComparable
         {
             public SkillInfo m_Skill;
             public int m_NumberOfGMs;
             public SkillDistribution(SkillInfo skill)
             {
-                this.m_Skill = skill;
+                m_Skill = skill;
             }
 
             public int CompareTo(object obj)
             {
-                return (((SkillDistribution)obj).m_NumberOfGMs - this.m_NumberOfGMs);
+                return (((SkillDistribution)obj).m_NumberOfGMs - m_NumberOfGMs);
             }
         }
     }

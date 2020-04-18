@@ -1,8 +1,8 @@
-using System;
-using System.Collections.Generic;
 using Server.Commands;
 using Server.Network;
 using Server.Targeting;
+using System;
+using System.Collections.Generic;
 
 namespace Server.Items
 {
@@ -177,13 +177,7 @@ namespace Server.Items
                 m_Link = value;
             }
         }
-        public virtual bool UseChainedFunctionality
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool UseChainedFunctionality => false;
         // Called by RunUO
         public static void Initialize()
         {
@@ -337,7 +331,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
             writer.Write(m_KeyValue);
 
@@ -357,7 +351,7 @@ namespace Server.Items
 
             int version = reader.ReadInt();
 
-            switch ( version )
+            switch (version)
             {
                 case 0:
                     {
@@ -486,7 +480,7 @@ namespace Server.Items
             {
                 int x = m.X, y = m.Y;
 
-                switch ( m.Direction & Direction.Mask )
+                switch (m.Direction & Direction.Mask)
                 {
                     case Direction.North:
                         --y;

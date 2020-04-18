@@ -1,22 +1,17 @@
+using Server.Engines.Quests.Haven;
+using Server.Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Server.Engines.Quests.Haven;
-using Server.Engines.Quests.Necro;
-using Server.Items;
-
 namespace Server.Commands
 {
     public class Decorate
     {
-		private static string m_Key;
-		public static string Key
-		{
-			get { return m_Key; }
-		}
+        private static string m_Key;
+        public static string Key => m_Key;
 
         public static void Initialize()
         {
@@ -33,18 +28,18 @@ namespace Server.Commands
             m_Mobile.SendMessage("Generating world decoration, please wait.");
 
             Generate("deco", "Data/Decoration/Britannia", Map.Trammel, Map.Felucca);
-		    Generate("deco", "Data/Decoration/Trammel", Map.Trammel);
-			Generate("deco", "Data/Decoration/Felucca", Map.Felucca);
-			Generate("deco", "Data/Decoration/Ilshenar", Map.Ilshenar);
-			Generate("deco", "Data/Decoration/Malas", Map.Malas);
-			Generate("deco", "Data/Decoration/Tokuno", Map.Tokuno);
+            Generate("deco", "Data/Decoration/Trammel", Map.Trammel);
+            Generate("deco", "Data/Decoration/Felucca", Map.Felucca);
+            Generate("deco", "Data/Decoration/Ilshenar", Map.Ilshenar);
+            Generate("deco", "Data/Decoration/Malas", Map.Malas);
+            Generate("deco", "Data/Decoration/Tokuno", Map.Tokuno);
 
             m_Mobile.SendMessage("World generating complete. {0} items were generated.", m_Count);
         }
 
         public static void Generate(string keyName, string folder, params Map[] maps)
         {
-			m_Key = keyName;
+            m_Key = keyName;
 
             if (!Directory.Exists(folder))
                 return;
@@ -53,7 +48,7 @@ namespace Server.Commands
 
             for (int i = 0; i < files.Length; ++i)
             {
-                var list = DecorationList.ReadAll(files[i]);
+                List<DecorationList> list = DecorationList.ReadAll(files[i]);
 
                 m_List = list;
 
@@ -73,7 +68,7 @@ namespace Server.Commands
             if (!File.Exists(path))
                 return;
 
-            var list = DecorationList.ReadAll(path);
+            List<DecorationList> list = DecorationList.ReadAll(path);
             int count = 0;
 
             m_List = list;
@@ -99,7 +94,7 @@ namespace Server.Commands
 
             for (int i = 0; i < files.Length; ++i)
             {
-                var list = DecorationList.ReadRestricted(files[i], restrictType, derivesFrom);
+                List<DecorationList> list = DecorationList.ReadRestricted(files[i], restrictType, derivesFrom);
 
                 m_List = list;
 
@@ -121,7 +116,7 @@ namespace Server.Commands
 
             for (int j = 0; j < m_List.Count; ++j)
             {
-                DecorationList list = (DecorationList)m_List[j];
+                DecorationList list = m_List[j];
 
                 if (list.ID == id)
                     return list.Constructed;
@@ -145,13 +140,7 @@ namespace Server.Commands
 
         private Item m_Constructed;
 
-        public Item Constructed
-        {
-            get
-            {
-                return m_Constructed;
-            }
-        }
+        public Item Constructed => m_Constructed;
 
         public int ID
         {
@@ -206,7 +195,7 @@ namespace Server.Commands
                 else if (m_Type == typeof(SecretSwitch))
                 {
                     int id = 0;
-					
+
                     for (int i = 0; i < m_Params.Length; ++i)
                     {
                         if (m_Params[i].StartsWith("SecretWall"))
@@ -220,28 +209,28 @@ namespace Server.Commands
                             }
                         }
                     }
-					
+
                     Item wall = Decorate.FindByID(id);
-					
+
                     item = new SecretSwitch(m_ItemID, wall as SecretWall);
                 }
                 else if (m_Type == typeof(SecretWall))
                 {
                     SecretWall wall = new SecretWall(m_ItemID);
-				
+
                     for (int i = 0; i < m_Params.Length; ++i)
                     {
                         if (m_Params[i].StartsWith("MapDest"))
                         {
                             int indexOf = m_Params[i].IndexOf('=');
-	
+
                             if (indexOf >= 0)
                                 wall.MapDest = Map.Parse(m_Params[i].Substring(++indexOf));
                         }
                         else if (m_Params[i].StartsWith("PointDest"))
                         {
                             int indexOf = m_Params[i].IndexOf('=');
-	
+
                             if (indexOf >= 0)
                                 wall.PointDest = Point3D.Parse(m_Params[i].Substring(++indexOf));
                         }
@@ -250,8 +239,8 @@ namespace Server.Commands
                             wall.Locked = false;
                         }
                     }
-					
-                    item = wall;					
+
+                    item = wall;
                 }
                 else if (m_Type == typeofLocalizedStatic)
                 {
@@ -590,7 +579,7 @@ namespace Server.Commands
 
                     for (int i = 0; i < comps.Count; ++i)
                     {
-                        AddonComponent comp = (AddonComponent)comps[i];
+                        AddonComponent comp = comps[i];
 
                         if (comp.Offset == Point3D.Zero)
                             comp.ItemID = m_ItemID;
@@ -607,7 +596,7 @@ namespace Server.Commands
                         unlit = true;
                     else if (!unprotected && m_Params[i] == "Unprotected")
                         unprotected = true;
-					
+
                     if (unlit && unprotected)
                         break;
                 }
@@ -983,11 +972,11 @@ namespace Server.Commands
                 if (m_ItemID > 0)
                     item.ItemID = m_ItemID;
             }
-            else if(item is Moongate)
+            else if (item is Moongate)
             {
                 Moongate gate = (Moongate)item;
 
-                foreach(string param in m_Params)
+                foreach (string param in m_Params)
                 {
                     int indexOf = param.IndexOf('=');
 
@@ -997,7 +986,7 @@ namespace Server.Commands
                         gate.Target = Point3D.Parse(param.Substring(++indexOf));
                 }
             }
-            else if(item is TeleportRope)
+            else if (item is TeleportRope)
             {
                 TeleportRope rope = (TeleportRope)item;
 
@@ -1011,7 +1000,7 @@ namespace Server.Commands
                         rope.ToLocation = Point3D.Parse(param.Substring(++indexOf));
                 }
             }
-            else if(item is InstanceExitGate)
+            else if (item is InstanceExitGate)
             {
                 InstanceExitGate gate = (InstanceExitGate)item;
 
@@ -1215,7 +1204,7 @@ namespace Server.Commands
                     }
                     else
                     {
-						WeakEntityCollection.Add(Decorate.Key, item);
+                        WeakEntityCollection.Add(Decorate.Key, item);
                         item.MoveToWorld(loc, maps[j]);
                         ++count;
 
@@ -1275,7 +1264,7 @@ namespace Server.Commands
         {
             using (StreamReader ip = new StreamReader(path))
             {
-                var list = new List<DecorationList>();
+                List<DecorationList> list = new List<DecorationList>();
 
                 for (DecorationList v = Read(ip); v != null; v = Read(ip))
                     list.Add(v);
@@ -1356,20 +1345,8 @@ namespace Server.Commands
         private readonly Point3D m_Location;
         private readonly string m_Extra;
 
-        public Point3D Location
-        {
-            get
-            {
-                return m_Location;
-            }
-        }
-        public string Extra
-        {
-            get
-            {
-                return m_Extra;
-            }
-        }
+        public Point3D Location => m_Location;
+        public string Extra => m_Extra;
 
         public DecorationEntry(string line)
         {

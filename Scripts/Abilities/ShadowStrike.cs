@@ -1,5 +1,3 @@
-using System;
-
 namespace Server.Items
 {
     /// <summary>
@@ -13,20 +11,10 @@ namespace Server.Items
         {
         }
 
-        public override int BaseMana
-        {
-            get
-            {
-                return 20;
-            }
-        }
-        public override double DamageScalar
-        {
-            get
-            {
-                return 1.25;
-            }
-        }
+        public override int BaseMana => 20;
+
+        public override double DamageScalar => 1.25;
+
         public override bool RequiresSecondarySkill(Mobile from)
         {
             return false;
@@ -49,7 +37,7 @@ namespace Server.Items
 
         public override void OnHit(Mobile attacker, Mobile defender, int damage)
         {
-            if (!this.Validate(attacker) || !this.CheckMana(attacker, true))
+            if (!Validate(attacker) || !CheckMana(attacker, true))
                 return;
 
             ClearCurrentAbility(attacker);

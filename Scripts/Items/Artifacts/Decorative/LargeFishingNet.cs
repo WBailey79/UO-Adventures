@@ -1,14 +1,13 @@
-﻿using Server;
+﻿using Server.Targeting;
 using System;
-using Server.Targeting;
 
 namespace Server.Items
 {
     [Flipable(7845, 7846)]
     public class LargeFishingNet : Item
     {
-		public override bool IsArtifact { get { return true; } }
-        public override int LabelNumber { get { return 1149955; } }
+        public override bool IsArtifact => true;
+        public override int LabelNumber => 1149955;
 
         [Constructable]
         public LargeFishingNet()
@@ -66,7 +65,7 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);
+            writer.Write(0);
         }
 
         public override void Deserialize(GenericReader reader)

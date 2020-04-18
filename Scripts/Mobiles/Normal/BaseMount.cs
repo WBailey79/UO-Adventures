@@ -1,9 +1,8 @@
-using System;
-
 using Server.Items;
-using Server.Network;
-using System.Collections.Generic;
 using Server.Multis;
+using Server.Network;
+using System;
+using System.Collections.Generic;
 
 namespace Server.Mobiles
 {
@@ -20,7 +19,7 @@ namespace Server.Mobiles
 
     public abstract class BaseMount : BaseCreature, IMount
     {
-        private static Dictionary<Mobile, BlockEntry> m_Table = new Dictionary<Mobile, BlockEntry>();
+        private static readonly Dictionary<Mobile, BlockEntry> m_Table = new Dictionary<Mobile, BlockEntry>();
         private Mobile m_Rider;
 
         public BaseMount(string name, int bodyID, int itemID, AIType aiType, FightMode fightMode, int rangePerception, int rangeFight, double activeSpeed, double passiveSpeed)
@@ -37,32 +36,14 @@ namespace Server.Mobiles
         {
         }
 
-        public virtual TimeSpan MountAbilityDelay
-        {
-            get
-            {
-                return TimeSpan.Zero;
-            }
-        }
+        public virtual TimeSpan MountAbilityDelay => TimeSpan.Zero;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public DateTime NextMountAbility { get; set; }
 
-        public virtual bool AllowMaleRider
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public virtual bool AllowMaleRider => true;
 
-        public virtual bool AllowFemaleRider
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public virtual bool AllowFemaleRider => true;
 
         [Hue, CommandProperty(AccessLevel.GameMaster)]
         public override int Hue
@@ -229,7 +210,7 @@ namespace Server.Mobiles
 
         public static void SetMountPrevention(Mobile mob, BlockMountType type, TimeSpan duration)
         {
-            SetMountPrevention(mob, null, type, duration);   
+            SetMountPrevention(mob, null, type, duration);
         }
 
         public static void SetMountPrevention(Mobile mob, IMount mount, BlockMountType type, TimeSpan duration)
@@ -353,7 +334,7 @@ namespace Server.Mobiles
 
         public static void ExpireMountPrevention(Mobile m)
         {
-            if(m_Table.ContainsKey(m))
+            if (m_Table.ContainsKey(m))
                 m_Table.Remove(m);
 
             BuffInfo.RemoveBuff(m, BuffIcon.DismountPrevention);
@@ -363,7 +344,7 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.Write((int)1); // version
+            writer.Write(1); // version
 
             writer.Write(NextMountAbility);
 
@@ -399,11 +380,11 @@ namespace Server.Mobiles
         {
             base.OnDeath(c);
 
-            var owner = GetMaster();
+            Mobile owner = GetMaster();
 
             if (owner != null && m_Table.ContainsKey(owner))
             {
-                var entry = m_Table[owner];
+                BlockEntry entry = m_Table[owner];
 
                 if (entry.m_Type >= BlockMountType.RidingSwipe && entry.m_Mount == this)
                 {
@@ -418,7 +399,7 @@ namespace Server.Mobiles
 
             int version = reader.ReadInt();
 
-            switch ( version )
+            switch (version)
             {
                 case 1:
                     {
@@ -639,20 +620,8 @@ namespace Server.Mobiles
         {
         }
 
-        public override double DefaultWeight
-        {
-            get
-            {
-                return 0;
-            }
-        }
-        public IMount Mount
-        {
-            get
-            {
-                return m_Mount;
-            }
-        }
+        public override double DefaultWeight => 0;
+        public IMount Mount => m_Mount;
         public override void OnAfterDelete()
         {
             if (m_Mount != null)
@@ -675,7 +644,7 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.Write((int)0); // version
+            writer.Write(0); // version
 
             writer.Write(m_Mount);
         }
@@ -686,7 +655,7 @@ namespace Server.Mobiles
 
             int version = reader.ReadInt();
 
-            switch ( version )
+            switch (version)
             {
                 case 0:
                     {

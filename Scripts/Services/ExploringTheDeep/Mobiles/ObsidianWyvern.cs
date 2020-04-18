@@ -1,7 +1,7 @@
-using System;
-using Server.Items;
-using System.Collections.Generic;
 using Server.Engines.Quests;
+using Server.Items;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Server.Mobiles
@@ -43,13 +43,11 @@ namespace Server.Mobiles
             SetSkill(SkillName.Wrestling, 110.0, 115.0);
             SetSkill(SkillName.Tactics, 119.6, 125.0);
             SetSkill(SkillName.MagicResist, 115.0, 130.8);
-			SetSkill(SkillName.Parry, 75.0, 85.0);
-			SetSkill(SkillName.DetectHidden, 100.0);            
+            SetSkill(SkillName.Parry, 75.0, 85.0);
+            SetSkill(SkillName.DetectHidden, 100.0);
 
             Fame = 24000;
             Karma = -24000;
-            
-            VirtualArmor = 70;
 
             if (Instances == null)
                 Instances = new List<ObsidianWyvern>();
@@ -77,7 +75,7 @@ namespace Server.Mobiles
 
         public class InternalSelfDeleteTimer : Timer
         {
-            private ObsidianWyvern Mare;
+            private readonly ObsidianWyvern Mare;
 
             public InternalSelfDeleteTimer(Mobile p) : base(TimeSpan.FromMinutes(60))
             {
@@ -103,7 +101,7 @@ namespace Server.Mobiles
 
         public override void OnDeath(Container c)
         {
-            List<DamageStore> rights = GetLootingRights();            
+            List<DamageStore> rights = GetLootingRights();
 
             foreach (Mobile m in rights.Select(x => x.m_Mobile).Distinct())
             {
@@ -113,8 +111,8 @@ namespace Server.Mobiles
 
                     if (pm.ExploringTheDeepQuest == ExploringTheDeepQuestChain.CollectTheComponent)
                     {
-						Item item = new WillemHartesHat();
-						
+                        Item item = new WillemHartesHat();
+
                         if (m.Backpack == null || !m.Backpack.TryDropItem(m, item, false))
                         {
                             m.BankBox.DropItem(item);
@@ -131,12 +129,15 @@ namespace Server.Mobiles
             base.OnDeath(c);
         }
 
-        public override bool ReacquireOnMovement { get { return true; } }
-        public override Poison PoisonImmune { get { return Poison.Deadly; } }
-        public override Poison HitPoison { get { return Poison.Deadly; } }
-        public override bool AutoDispel { get { return true; } }
-        public override bool BardImmune { get { return true; } }
-		public override FoodType FavoriteFood { get { return FoodType.Meat; } }
+        public override bool ReacquireOnMovement => true;
+
+        public override Poison PoisonImmune => Poison.Deadly;
+
+        public override Poison HitPoison => Poison.Deadly;
+
+        public override bool AutoDispel => true;
+
+        public override bool BardImmune => true;
 
         public override void GenerateLoot()
         {
@@ -155,8 +156,7 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
-
+            writer.Write(0); // version
         }
 
         public override void Deserialize(GenericReader reader)
