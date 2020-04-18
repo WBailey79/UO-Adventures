@@ -67,6 +67,7 @@ namespace Server.Misc
 			PackItem(new BankCheck(5000000));
 			PackItem(new HousePlacementTool());
 			PackItem(new SkillBallPlus());
+			PackItem(new LifeStone());
 		}
 
 		private static void AddShirt(Mobile m, int shirtHue)
