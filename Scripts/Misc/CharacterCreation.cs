@@ -8,219 +8,6 @@ using System;
 
 namespace Server.Misc
 {
-<<<<<<< HEAD
-	public class CharacterCreation
-	{
-		private static readonly CityInfo m_NewHavenInfo = new CityInfo(
-			"New Haven",
-			"The Bountiful Harvest Inn",
-			3503,
-			2574,
-			14,
-			Map.Trammel);
-
-		private static readonly CityInfo m_SiegeInfo = new CityInfo(
-			"Britain",
-			"The Wayfarer's Inn",
-			1075074,
-			1602,
-			1591,
-			20,
-			Map.Felucca);
-
-		private static Mobile m_Mobile;
-
-		public static void Initialize()
-		{
-			// Register our event handler
-			EventSink.CharacterCreated += EventSink_CharacterCreated;
-		}
-
-		public static bool VerifyProfession(int profession)
-		{
-			if (profession < 0)
-				return false;
-			if (profession < 4)
-				return true;
-			if (profession < 6)
-				return true;
-			if (profession < 8)
-				return true;
-			return false;
-		}
-
-		private static void AddBackpack(Mobile m)
-		{
-			var pack = m.Backpack;
-
-			if (pack == null)
-			{
-				pack = new Backpack();
-				pack.Movable = false;
-
-				m.AddItem(pack);
-			}
-
-			PackItem(new RedBook("a book", m.Name, 20, true));
-			PackItem(new Gold(50000)); // Starting gold can be customized here
-			PackItem(new Candle());
-			PackItem(new BankCheck(5000000));
-			PackItem(new HousePlacementTool());
-			PackItem(new SkillBallPlus());
-			PackItem(new LifeStone());
-		}
-
-		private static void AddShirt(Mobile m, int shirtHue)
-		{
-			var hue = Utility.ClipDyedHue(shirtHue & 0x3FFF);
-
-			if (m.Race == Race.Elf)
-			{
-				EquipItem(new ElvenShirt(hue), true);
-			}
-			else if (m.Race == Race.Human)
-			{
-				switch (Utility.Random(3))
-				{
-					case 0:
-						EquipItem(new Shirt(hue), true);
-						break;
-					case 1:
-						EquipItem(new FancyShirt(hue), true);
-						break;
-					case 2:
-						EquipItem(new Doublet(hue), true);
-						break;
-				}
-			}
-			else if (m.Race == Race.Gargoyle)
-			{
-				EquipItem(new GargishClothChestArmor(hue));
-			}
-		}
-
-		private static void AddPants(Mobile m, int pantsHue)
-		{
-			var hue = Utility.ClipDyedHue(pantsHue & 0x3FFF);
-
-			if (m.Race == Race.Elf)
-			{
-				EquipItem(new ElvenPants(hue), true);
-			}
-			else if (m.Race == Race.Human)
-			{
-				if (m.Female)
-				{
-					switch (Utility.Random(2))
-					{
-						case 0:
-							EquipItem(new Skirt(hue), true);
-							break;
-						case 1:
-							EquipItem(new Kilt(hue), true);
-							break;
-					}
-				}
-				else
-				{
-					switch (Utility.Random(2))
-					{
-						case 0:
-							EquipItem(new LongPants(hue), true);
-							break;
-						case 1:
-							EquipItem(new ShortPants(hue), true);
-							break;
-					}
-				}
-			}
-			else if (m.Race == Race.Gargoyle)
-			{
-				EquipItem(new GargishClothKiltArmor(hue));
-			}
-		}
-
-		private static void AddShoes(Mobile m)
-		{
-			if (m.Race == Race.Elf)
-				EquipItem(new ElvenBoots(), true);
-			else if (m.Race == Race.Human)
-				EquipItem(new Shoes(Utility.RandomYellowHue()), true);
-		}
-
-		private static Mobile CreateMobile(Account a)
-		{
-			if (a.Count >= a.Limit)
-				return null;
-
-			for (var i = 0; i < a.Length; ++i)
-			{
-				if (a[i] == null)
-					return (a[i] = new PlayerMobile());
-			}
-
-			return null;
-		}
-
-		private static void EventSink_CharacterCreated(CharacterCreatedEventArgs args)
-		{
-			if (!VerifyProfession(args.Profession))
-				args.Profession = 0;
-
-			var state = args.State;
-
-			if (state == null)
-				return;
-
-			var newChar = CreateMobile(args.Account as Account);
-
-			if (newChar == null)
-			{
-				Utility.PushColor(ConsoleColor.Red);
-				Console.WriteLine("Login: {0}: Character creation failed, account full", state);
-				Utility.PopColor();
-				return;
-			}
-
-			args.Mobile = newChar;
-			m_Mobile = newChar;
-
-			newChar.Player = true;
-			newChar.AccessLevel = args.Account.AccessLevel;
-			newChar.Female = args.Female;
-
-		    newChar.Race = args.Race; //Sets body
-
-			newChar.Hue = args.Hue | 0x8000;
-
-			newChar.Hunger = 20;
-
-			var young = false;
-
-			if (newChar is PlayerMobile)
-			{
-				var pm = (PlayerMobile)newChar;
-				
-				pm.AutoRenewInsurance = true;
-
-				var skillcap = Config.Get("PlayerCaps.SkillCap", 1000.0d) / 10;
-				
-				if (skillcap != 100.0)
-				{
-					for (var i = 0; i < Enum.GetNames(typeof(SkillName)).Length; ++i)
-						pm.Skills[i].Cap = skillcap;
-				}
-				
-				pm.Profession = args.Profession;
-
-				if (pm.IsPlayer() && pm.Account.Young && !Siege.SiegeShard)
-					young = pm.Young = true;
-			}
-
-			SetName(newChar, args.Name);
-
-			AddBackpack(newChar);
-=======
     public class CharacterCreation
     {
         private static readonly CityInfo m_NewHavenInfo = new CityInfo(
@@ -273,7 +60,13 @@ namespace Server.Misc
                 m.AddItem(pack);
             }
 
-            PackItem(new Gold(1000)); // Starting gold can be customized here
+			PackItem(new RedBook("a book", m.Name, 20, true));
+			PackItem(new Gold(50000)); // Starting gold can be customized here
+			PackItem(new Candle());
+			PackItem(new BankCheck(5000000));
+			PackItem(new HousePlacementTool());
+			PackItem(new SkillBallPlus());
+			PackItem(new LifeStone());
         }
 
         private static void AddShirt(Mobile m, int shirtHue)
@@ -426,7 +219,6 @@ namespace Server.Misc
             SetName(newChar, args.Name);
 
             AddBackpack(newChar);
->>>>>>> ServUO/master
 
             SetStats(newChar, state, args.Profession, args.Str, args.Dex, args.Int);
             SetSkills(newChar, args.Skills, args.Profession);

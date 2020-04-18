@@ -3662,9 +3662,7 @@ namespace Server.Mobiles
             }
 
             base.OnDeath(c);
-
-<<<<<<< HEAD
-			#region Life Stone Edit Begin
+            #region Life Stone Edit Begin
             for (int i = 0; i < LifeStoneCore.LifeStoneList.Count; i++)
             {
                 if (LifeStoneCore.LifeStoneList[i].LifeStoneOwner == this)
@@ -3676,11 +3674,7 @@ namespace Server.Mobiles
                 }
             }
             #endregion Life Stone Edit End
-
-			m_EquipSnapshot = null;
-=======
             m_EquipSnapshot = null;
->>>>>>> ServUO/master
 
             HueMod = -1;
             NameMod = null;
