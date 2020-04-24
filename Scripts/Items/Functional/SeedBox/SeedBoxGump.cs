@@ -80,7 +80,8 @@ namespace Server.Engines.Plants
                 AddButton(x, y, entry.Image, entry.Image, i + 100, GumpButtonType.Reply, 0);
                 AddItem(x, y + 30, 0xDCF, entry.Seed.Hue);
 
-                AddItemProperty(entry.Seed.Serial);
+                entry.Seed.InvalidateProperties();
+                AddItemProperty(entry.Seed);
 
                 index++;
             }
@@ -128,7 +129,7 @@ namespace Server.Engines.Plants
                             return;
 
                         Refresh();
-                        BaseGump.SendGump(new SeedInfoGump(User, Box, entry, this));
+                        SendGump(new SeedInfoGump(User, Box, entry, this));
                     }
                     break;
             }

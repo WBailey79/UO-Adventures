@@ -638,17 +638,6 @@ namespace Server.Multis
 
             m_Instances.Add(this);
 
-            if (version == 6)
-            {
-                if (MapItem != null)
-                {
-                    Timer.DelayCall(TimeSpan.FromSeconds(10), delegate
-                    {
-                        BoatCourse = new BoatCourse(this, MapItem);
-                    });
-                }
-            }
-
             if (version == 4)
             {
                 Timer.DelayCall(() => Hits = MaxHits);
@@ -1611,7 +1600,7 @@ namespace Server.Multis
                 StopMove(false);
 
                 MapItem = map;
-                NextNavPoint = -1;
+                NextNavPoint = 0;
 
                 BoatCourse = new BoatCourse(this, map);
 
@@ -2018,8 +2007,6 @@ namespace Server.Multis
                     if (dif >= 0 && dif <= 1 && ((landTile.ID >= 168 && landTile.ID <= 171) || (landTile.ID >= 310 && landTile.ID <= 311)))
                         hasWater = true;
 
-                    int z = p.Z;
-
                     for (int i = 0; i < tiles.Length; ++i)
                     {
                         StaticTile tile = tiles[i];
@@ -2271,7 +2258,7 @@ namespace Server.Multis
 
                 return false;
             }
-            else if ((Map != Map.Trammel && Map != Map.Felucca && Map != Map.Tokuno) || NextNavPoint < 0 || NextNavPoint >= BoatCourse.Waypoints.Count)
+            else if ((Map != Map.Trammel && Map != Map.Felucca && Map != Map.Tokuno) || NextNavPoint < 0 || NextNavPoint >= BoatCourse.Waypoints.Count || Region.Find(Location, Map).IsPartOf<CorgulRegion>())
             {
                 if (message && TillerMan != null)
                     TillerManSay(1042551); // I don't see that navpoint, sir.
@@ -2641,9 +2628,9 @@ namespace Server.Multis
         public static void Initialize()
         {
             new UpdateAllTimer().Start();
-            EventSink.WorldSave += new WorldSaveEventHandler(EventSink_WorldSave);
-            EventSink.Disconnected += new DisconnectedEventHandler(EventSink_Disconnected);
-            EventSink.PlayerDeath += new PlayerDeathEventHandler(EventSink_PlayerDeath);
+            EventSink.WorldSave += EventSink_WorldSave;
+            EventSink.Disconnected += EventSink_Disconnected;
+            EventSink.PlayerDeath += EventSink_PlayerDeath;
         }
 
         private static void EventSink_WorldSave(WorldSaveEventArgs e)

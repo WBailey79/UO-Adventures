@@ -8,9 +8,6 @@ namespace Server.Spells.Ninjitsu
     public class DeathStrike : NinjaMove
     {
         private static readonly Hashtable m_Table = new Hashtable();
-        public DeathStrike()
-        {
-        }
 
         public override int BaseMana => 30;
         public override double RequiredSkill => 85.0;
@@ -147,7 +144,7 @@ namespace Server.Spells.Ninjitsu
 
         public static void Initialize()
         {
-            EventSink.Movement += new MovementEventHandler(EventSink_Movement);
+            EventSink.Movement += EventSink_Movement;
         }
 
         public static void EventSink_Movement(MovementEventArgs e)

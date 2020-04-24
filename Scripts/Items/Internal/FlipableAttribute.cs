@@ -9,7 +9,7 @@ namespace Server.Items
     {
         public static void Initialize()
         {
-            CommandSystem.Register("Flip", AccessLevel.GameMaster, new CommandEventHandler(Flip_OnCommand));
+            CommandSystem.Register("Flip", AccessLevel.GameMaster, Flip_OnCommand);
         }
 
         [Usage("Flip")]
@@ -55,9 +55,6 @@ namespace Server.Items
     [AttributeUsage(AttributeTargets.Class)]
     public class DynamicFlipingAttribute : Attribute
     {
-        public DynamicFlipingAttribute()
-        {
-        }
     }
 
     [AttributeUsage(AttributeTargets.Class)]

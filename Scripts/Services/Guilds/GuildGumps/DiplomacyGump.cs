@@ -20,10 +20,6 @@ namespace Server.Guilds
         {
             public static readonly IComparer<Guild> Instance = new NameComparer();
 
-            public NameComparer()
-            {
-            }
-
             public int Compare(Guild x, Guild y)
             {
                 if (x == null && y == null)
@@ -80,10 +76,6 @@ namespace Server.Guilds
         private class AbbrevComparer : IComparer<Guild>
         {
             public static readonly IComparer<Guild> Instance = new AbbrevComparer();
-
-            public AbbrevComparer()
-            {
-            }
 
             public int Compare(Guild x, Guild y)
             {
@@ -269,7 +261,7 @@ namespace Server.Guilds
                 return;
 
             if (AllowAdvancedSearch && info.ButtonID == 8)
-                pm.SendGump(new GuildAdvancedSearchGump(pm, guild, m_Display, new SearchSelectionCallback(AdvancedSearch_Callback)));
+                pm.SendGump(new GuildAdvancedSearchGump(pm, guild, m_Display, AdvancedSearch_Callback));
         }
 
         public void AdvancedSearch_Callback(GuildDisplayType display)

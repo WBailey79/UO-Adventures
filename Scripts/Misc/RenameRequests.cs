@@ -7,7 +7,7 @@ namespace Server.Misc
     {
         public static void Initialize()
         {
-            EventSink.RenameRequest += new RenameRequestEventHandler(EventSink_RenameRequest);
+            EventSink.RenameRequest += EventSink_RenameRequest;
         }
 
         private static void EventSink_RenameRequest(RenameRequestEventArgs e)
@@ -25,7 +25,7 @@ namespace Server.Misc
 
                 if (targ is BaseCreature)
                 {
-                    exceptions = new char[] { ' ' };
+                    exceptions = new[] { ' ' };
                     numExceptions = 5;
                 }
 

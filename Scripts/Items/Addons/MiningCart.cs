@@ -204,7 +204,7 @@ namespace Server.Items
 
             if (!from.InRange(GetWorldLocation(), 2) || !from.InLOS(this) || !((from.Z - Z) > -3 && (from.Z - Z) < 3))
             {
-                from.LocalOverheadMessage(Network.MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+                from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
             }
             else if (house != null && house.HasSecureAccess(from, SecureLevel.Friends))
             {
@@ -248,17 +248,21 @@ namespace Server.Items
                             }
 
                             int amount = Math.Min(10, m_Ore);
-                            ingots.Amount = amount;
 
-                            if (!from.PlaceInBackpack(ingots))
+                            if (ingots != null)
                             {
-                                ingots.Delete();
-                                from.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
-                            }
-                            else
-                            {
-                                PublicOverheadMessage(MessageType.Regular, 0, 1094724, amount.ToString()); // Ore: ~1_COUNT~
-                                m_Ore -= amount;
+                                ingots.Amount = amount;
+
+                                if (!from.PlaceInBackpack(ingots))
+                                {
+                                    ingots.Delete();
+                                    from.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
+                                }
+                                else
+                                {
+                                    PublicOverheadMessage(MessageType.Regular, 0, 1094724, amount.ToString()); // Ore: ~1_COUNT~
+                                    m_Ore -= amount;
+                                }
                             }
                         }
                         else

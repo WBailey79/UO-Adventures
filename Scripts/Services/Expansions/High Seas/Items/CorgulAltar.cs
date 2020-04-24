@@ -1,4 +1,4 @@
-﻿using Server.Mobiles;
+using Server.Mobiles;
 using Server.Regions;
 using Server.Targeting;
 using System;
@@ -8,7 +8,6 @@ namespace Server.Items
 {
     public class CorgulAltar : Container
     {
-
         #region Statics
         private static TimeSpan ExpireTime = TimeSpan.FromMinutes(180);
         private static TimeSpan CompleteTime = TimeSpan.FromMinutes(15);
@@ -189,7 +188,7 @@ namespace Server.Items
                 if (!m_Activated)
                 {
                     SpawnBoss(from);
-                    m_DeadLineTimer = Timer.DelayCall(ExpireTime, new TimerCallback(OnDeadLine));
+                    m_DeadLineTimer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), OnTick);
                     m_DeadLine = DateTime.UtcNow + ExpireTime;
                 }
 
@@ -208,10 +207,28 @@ namespace Server.Items
                 m_KeyStage = 1;
                 from.SendLocalizedMessage(1116585); // Your offering has been accepted. The price of blood will be taken when your -world map- is marked with the secret location.
 
-                m_KeyResetTimer = Timer.DelayCall(TimeSpan.FromSeconds(30), new TimerCallback(ResetKeys));
+                m_KeyResetTimer = Timer.DelayCall(TimeSpan.FromSeconds(30), ResetKeys);
             }
 
             item.Delete();
+        }
+
+        private void OnTick()
+        {
+            if (DateTime.UtcNow > m_DeadLine)
+            {
+                OnDeadLine();
+            }
+            else
+            {
+                for (int i = 0; i < m_IslandMaps.Count; i++)
+                {
+                    if (m_IslandMaps[i] != null)
+                    {
+                        m_IslandMaps[i].InvalidateProperties();
+                    }
+                }
+            }
         }
 
         private void ResetKeys()
@@ -243,7 +260,7 @@ namespace Server.Items
 
         public void OnBossKilled()
         {
-            m_ResetTimer = Timer.DelayCall(CompleteTime, new TimerCallback(Reset));
+            m_ResetTimer = Timer.DelayCall(CompleteTime, Reset);
 
             EndDeadLineTimer();
 
@@ -349,7 +366,7 @@ namespace Server.Items
 
         private void GiveMap(Mobile from)
         {
-            CorgulIslandMap map = new CorgulIslandMap(m_WarpPoint);
+            CorgulIslandMap map = new CorgulIslandMap(m_WarpPoint, this);
             from.AddToBackpack(map);
 
             m_IslandMaps.Add(map);
@@ -414,7 +431,10 @@ namespace Server.Items
                             Item map = reader.ReadItem();
 
                             if (map != null && !map.Deleted && map is CorgulIslandMap)
+                            {
                                 m_IslandMaps.Add(map);
+                                ((CorgulIslandMap)map).Altar = this;
+                            }
                         }
 
                         break;
@@ -443,8 +463,8 @@ namespace Server.Items
                     Rectangle2D bounds = GetRectangle(m_WarpPoint);
                     m_WarpRegion = new CorgulWarpRegion(this, bounds);
                     m_WarpRegion.Register();
-                    TimeSpan ts = m_DeadLine - DateTime.UtcNow;
-                    m_DeadLineTimer = Timer.DelayCall(ts, new TimerCallback(OnDeadLine));
+
+                    m_DeadLineTimer = Timer.DelayCall(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), OnTick);
                 }
             }
         }

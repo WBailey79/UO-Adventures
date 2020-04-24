@@ -88,12 +88,12 @@ namespace Server.Items
 
             double scalar = 1.0;
 
-            if (!Server.Spells.Necromancy.MindRotSpell.GetMindRotScalar(from, ref scalar))
+            if (!Spells.Necromancy.MindRotSpell.GetMindRotScalar(from, ref scalar))
             {
                 scalar = 1.0;
             }
 
-            if (Server.Spells.Mysticism.PurgeMagicSpell.IsUnderCurseEffects(from))
+            if (Spells.Mysticism.PurgeMagicSpell.IsUnderCurseEffects(from))
             {
                 scalar += .5;
             }
@@ -403,11 +403,7 @@ namespace Server.Items
 
         public static void Initialize()
         {
-            EventSink.SetAbility += new SetAbilityEventHandler(EventSink_SetAbility);
-        }
-
-        public WeaponAbility()
-        {
+            EventSink.SetAbility += EventSink_SetAbility;
         }
 
         private static void EventSink_SetAbility(SetAbilityEventArgs e)

@@ -20,7 +20,7 @@ namespace Server.Items
 
             m_Instance = new HighSeasPersistance();
 
-            CommandSystem.Register("RestrictBoats", AccessLevel.GameMaster, new CommandEventHandler(SeaMarketRegion.SetRestriction_OnCommand));
+            CommandSystem.Register("RestrictBoats", AccessLevel.GameMaster, SeaMarketRegion.SetRestriction_OnCommand);
         }
 
         private static HighSeasPersistance m_Instance;
@@ -30,10 +30,6 @@ namespace Server.Items
 
         [CommandProperty(AccessLevel.GameMaster)]
         public CharydbisSpawner CharydbisSpawner { get { return CharydbisSpawner.SpawnInstance; } set { } }
-
-        public HighSeasPersistance()
-        {
-        }
 
         public static void OnSave(WorldSaveEventArgs e)
         {

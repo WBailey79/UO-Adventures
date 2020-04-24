@@ -102,7 +102,7 @@ namespace Server.Items
 
             if (!from.InRange(GetWorldLocation(), 2) || !from.InLOS(this) || !((from.Z - Z) > -3 && (from.Z - Z) < 3))
             {
-                from.LocalOverheadMessage(Network.MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
+                from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
             }
             else if (house != null && house.HasSecureAccess(from, SecureLevel.Friends))
             {
@@ -120,17 +120,21 @@ namespace Server.Items
                     }
 
                     int amount = Math.Min(10, m_ResourceCount);
-                    res.Amount = amount;
 
-                    if (!from.PlaceInBackpack(res))
+                    if (res != null)
                     {
-                        res.Delete();
-                        from.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
-                    }
-                    else
-                    {
-                        ResourceCount -= amount;
-                        PublicOverheadMessage(MessageType.Regular, 0, 1151834, m_ResourceCount.ToString()); // Resources: ~1_COUNT~
+                        res.Amount = amount;
+
+                        if (!from.PlaceInBackpack(res))
+                        {
+                            res.Delete();
+                            from.SendLocalizedMessage(1078837); // Your backpack is full! Please make room and try again.
+                        }
+                        else
+                        {
+                            ResourceCount -= amount;
+                            PublicOverheadMessage(MessageType.Regular, 0, 1151834, m_ResourceCount.ToString()); // Resources: ~1_COUNT~
+                        }
                     }
                 }
                 else

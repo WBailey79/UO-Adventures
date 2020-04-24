@@ -75,6 +75,7 @@ namespace Server.Items
                 Item item = null;
                 switch (Utility.Random(4))
                 {
+                    default:
                     case 0: item = new SolesOfProvidence(); break;
                     case 1: item = new GemologistsSatchel(); break;
                     case 2: item = new RelicFragment(5); break;
@@ -289,7 +290,7 @@ namespace Server.Items
             if (m_Timer != null && m_Timer.Running)
                 return;
 
-            m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), new TimerCallback(DefragTables));
+            m_Timer = Timer.DelayCall(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(1), DefragTables);
             m_Timer.Start();
         }
 

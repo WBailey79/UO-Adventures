@@ -118,11 +118,6 @@ namespace Server.Mobiles
             public bool ShowExtension;
 
             public bool IgnoreUpdate;
-
-
-            public DefaultEntry()
-            {
-            }
         }
         public static ArrayList DefaultEntryList;
 
@@ -613,7 +608,7 @@ namespace Server.Mobiles
 
         public static void Initialize()
         {
-            CommandSystem.Register("XmlAdd", AccessLevel.GameMaster, new CommandEventHandler(XmlAdd_OnCommand));
+            CommandSystem.Register("XmlAdd", AccessLevel.GameMaster, XmlAdd_OnCommand);
         }
 
         [Usage("XmlAdd [-defaults]")]

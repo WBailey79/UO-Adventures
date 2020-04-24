@@ -1,4 +1,4 @@
-﻿using Server.Items;
+using Server.Items;
 using Server.Mobiles;
 using System;
 
@@ -11,10 +11,6 @@ namespace Server.Engines.Quests
 
         public bool Captured { get { return m_Captured; } set { m_Captured = value; } }
         public Mobile CapturedCaptain { get { return m_CapturedCaptain; } set { m_CapturedCaptain = value; } }
-
-        public BountyQuestObjective()
-        {
-        }
 
         public override bool Update(object obj)
         {
@@ -57,7 +53,7 @@ namespace Server.Engines.Quests
             m_Captured = reader.ReadBool();
             m_CapturedCaptain = reader.ReadMobile();
 
-            Timer.DelayCall(TimeSpan.FromSeconds(10), new TimerCallback(ValidateCaught));
+            Timer.DelayCall(TimeSpan.FromSeconds(10), ValidateCaught);
         }
 
         private void ValidateCaught()

@@ -46,8 +46,12 @@ namespace Server.Items
 
             if (m_Target != null)
             {
-                defender.MovingEffect(m_Target, weapon.ItemID, 18, 1, false, false);
-                Timer.DelayCall(TimeSpan.FromMilliseconds(333.0), new TimerCallback(ThrowAgain));
+                if (defender != null)
+                {
+                    defender.MovingEffect(m_Target, weapon.ItemID, 18, 1, false, false);
+                }
+
+                Timer.DelayCall(TimeSpan.FromMilliseconds(333.0), ThrowAgain);
                 m_Mobile = attacker;
             }
 
@@ -63,7 +67,7 @@ namespace Server.Items
                 if (weapon == null)
                     return;
 
-                if (WeaponAbility.GetCurrentAbility(m_Mobile) is MysticArc)
+                if (GetCurrentAbility(m_Mobile) is MysticArc)
                     ClearCurrentAbility(m_Mobile);
 
                 if (weapon.CheckHit(m_Mobile, m_Target))

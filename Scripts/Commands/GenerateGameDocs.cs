@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace Server.Commands
 
         public static void Initialize()
         {
-            CommandSystem.Register("GenGameDocs", AccessLevel.GameMaster, new CommandEventHandler(GenGameDocs_OnCommand));
+            CommandSystem.Register("GenGameDocs", AccessLevel.GameMaster, GenGameDocs_OnCommand);
         }
 
         private static void GenGameDocs_OnCommand(CommandEventArgs e)
@@ -89,7 +89,7 @@ namespace Server.Commands
             if (creature == null)
                 return;
 
-            Server.Items.BambooFlute flute = new Items.BambooFlute();
+            Items.BambooFlute flute = new Items.BambooFlute();
 
             csv.AddRow();
             csv.AddValue("Type", creature.GetType().Name);
@@ -144,10 +144,6 @@ namespace Server.Commands
             private Dictionary<String, String> currentRow = null;
             private readonly HashSet<String> headerSet = new HashSet<string>();
             private readonly List<String> allHeaders = new List<string>();
-
-            public CsvFile()
-            {
-            }
 
             public void AddRow()
             {

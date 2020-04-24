@@ -16,12 +16,12 @@ namespace Server.Misc
     {
         private static readonly bool Enabled = false;
         private static readonly ProfanityAction Action = ProfanityAction.Disallow;// change here what to do when profanity is detected
-        private static readonly char[] m_Exceptions = new char[]
+        private static readonly char[] m_Exceptions = new[]
         {
             ' ', '-', '.', '\'', '"', ',', '_', '+', '=', '~', '`', '!', '^', '*', '\\', '/', ';', ':', '<', '>', '[', ']', '{', '}', '?', '|', '(', ')', '%', '$', '&', '#', '@'
         };
         private static readonly string[] m_StartDisallowed = new string[] { };
-        private static readonly string[] m_Disallowed = new string[]
+        private static readonly string[] m_Disallowed = new[]
         {
             "jigaboo",
             "chigaboo",
@@ -75,7 +75,7 @@ namespace Server.Misc
         public static void Initialize()
         {
             if (Enabled)
-                EventSink.Speech += new SpeechEventHandler(EventSink_Speech);
+                EventSink.Speech += EventSink_Speech;
         }
 
         private static bool OnProfanityDetected(Mobile from, string speech)

@@ -37,7 +37,8 @@ namespace Server
             FixAddonDeco = 0x00000080,
             LifeStealers = 0x00000100,
             LootNerf2 = 0x00000200,
-            RemoveUnused = 0x00000400
+            RemoveUnused = 0x00000400,
+            RemoveUnused2 = 0x00000800,
         }
 
         public static string FilePath = Path.Combine("Saves/Misc", "SpawnerPresistence.bin");
@@ -163,6 +164,12 @@ namespace Server
             {
                 case 12:
                 case 11:
+                    if ((VersionFlag & SpawnerVersion.RemoveUnused2) == 0)
+                    {
+                        RemoveUnused2();
+                        VersionFlag |= SpawnerVersion.RemoveUnused2;
+                    }
+
                     if ((VersionFlag & SpawnerVersion.RemoveUnused) == 0)
                     {
                         RemoveUnused();
@@ -269,6 +276,27 @@ namespace Server
             Console.WriteLine("[Spawner Persistence v{0}] {1}", _Version.ToString(), str);
             Utility.PopColor();
         }
+
+        #region Remove Unused 2
+        public static void RemoveUnused2()
+        {
+            Remove("xmlquestnpc");
+            Remove("HiddenFigure");
+            Remove("JedahEntille");
+            Remove("EnshroudedFigure");
+            Remove("MilitiaFighter");
+            Remove("Seekerofadventure");
+            Remove("Noble");
+            Remove("peasant");
+            Remove("orderguard");
+            Remove("Chaosguard");
+
+            Remove("bridegroom");
+            Remove("merchant");
+            Remove("baseescortable");
+
+        }
+        #endregion
 
         #region Remove Unused
         public static void RemoveUnused()
@@ -413,7 +441,7 @@ namespace Server
         #region Version 11
         public static void AddSphinx()
         {
-            Server.Engines.GenerateForgottenPyramid.Generate(null);
+            Engines.GenerateForgottenPyramid.Generate(null);
             ToConsole("Generated Fortune Sphinx.");
         }
         #endregion
@@ -1082,7 +1110,7 @@ namespace Server
         {
             string filename = "Spawns";
 
-            if (System.IO.Directory.Exists(filename) == true)
+            if (Directory.Exists(filename) == true)
             {
                 List<string> files = null;
                 string[] dirs = null;
@@ -1307,7 +1335,7 @@ namespace Server
         {
             string filename = "Spawns";
 
-            if (System.IO.Directory.Exists(filename) == true)
+            if (Directory.Exists(filename) == true)
             {
                 List<string> files = null;
                 string[] dirs = null;
@@ -1417,7 +1445,7 @@ namespace Server
         /// <param name="filename"></param>
         public static void RemoveSpawnsFromXmlFile(string directory, string filename)
         {
-            if (System.IO.Directory.Exists(directory) == true)
+            if (Directory.Exists(directory) == true)
             {
                 List<string> files = null;
 
@@ -1506,7 +1534,7 @@ namespace Server
         {
             string filename = "Spawns";
 
-            if (System.IO.Directory.Exists(filename) == true)
+            if (Directory.Exists(filename) == true)
             {
                 List<string> files = null;
                 string[] dirs = null;

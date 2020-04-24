@@ -4,12 +4,12 @@ namespace Server.Misc
 {
     public class NameVerification
     {
-        public static readonly char[] SpaceDashPeriodQuote = new char[]
+        public static readonly char[] SpaceDashPeriodQuote = new[]
         {
             ' ', '-', '.', '\''
         };
         public static readonly char[] Empty = new char[0];
-        private static readonly string[] m_StartDisallowed = new string[]
+        private static readonly string[] m_StartDisallowed = new[]
         {
             "seer",
             "counselor",
@@ -18,7 +18,7 @@ namespace Server.Misc
             "lady",
             "lord"
         };
-        private static readonly string[] m_Disallowed = new string[]
+        private static readonly string[] m_Disallowed = new[]
         {
             "jigaboo",
             "chigaboo",
@@ -100,7 +100,7 @@ namespace Server.Misc
         public static string[] Disallowed => m_Disallowed;
         public static void Initialize()
         {
-            CommandSystem.Register("ValidateName", AccessLevel.Administrator, new CommandEventHandler(ValidateName_OnCommand));
+            CommandSystem.Register("ValidateName", AccessLevel.Administrator, ValidateName_OnCommand);
         }
 
         [Usage("ValidateName")]
