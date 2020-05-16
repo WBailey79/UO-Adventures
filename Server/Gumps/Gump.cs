@@ -181,6 +181,11 @@ namespace Server.Gumps
             Add(new GumpTooltip(number));
         }
 
+        public void AddTooltip(int number, string args)
+        {
+            Add(new GumpTooltip(number, args));
+        }
+
         public void AddHtml(int x, int y, int width, int height, string text, bool background, bool scrollbar)
         {
             Add(new GumpHtml(x, y, width, height, text, background, scrollbar));
@@ -429,16 +434,7 @@ namespace Server.Gumps
 
         private Packet Compile(NetState ns)
         {
-            IGumpWriter disp;
-
-            if (ns == null || ns.Unpack)
-            {
-                disp = new DisplayGumpPacked(this);
-            }
-            else
-            {
-                disp = new DisplayGumpFast(this);
-            }
+            IGumpWriter disp = new DisplayGumpPacked(this);
 
             if (!m_Dragable)
             {

@@ -680,8 +680,9 @@ namespace Server.Items
                 {
                     bc = (BaseCreature)Activator.CreateInstance(list[Utility.Random(list.Length)]);
                 }
-                catch
+                catch (Exception e)
                 {
+                    Server.Diagnostics.ExceptionLogging.LogException(e);
                     return null;
                 }
 
@@ -1461,10 +1462,9 @@ namespace Server.Items
 
                         BaseCreature bc = Spawn(m_TreasureMap.Level, m_Chest.Location, m_Chest.Map, null, guardian);
 
-                        bc.Hue = 2725;
-
                         if (bc != null && guardian)
                         {
+                            bc.Hue = 2725;
                             m_Chest.Guardians.Add(bc);
                         }
                     }

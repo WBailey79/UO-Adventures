@@ -383,12 +383,6 @@ namespace Server.Engines.UOStore
                 return;
             }
 
-            if (!user.NetState.UltimaStore)
-            {
-                user.SendMessage("You must update Ultima Online in order to use the in game store.");
-                return;
-            }
-
             if (user.AccessLevel < AccessLevel.Counselor && !CanSearch(user))
             {
                 // Before using the in game store, you must be in a safe log-out location
@@ -803,8 +797,10 @@ namespace Server.Engines.UOStore
                                     Utility.WriteConsoleColor(ConsoleColor.Red, "[Ultima Store]: Bad Constructor: {0}", entry.Key.ItemType.Name);
                                 }
                             }
-                            catch
-                            { }
+                            catch (Exception e)
+                            {
+                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                            }
                         }
                         else
                         {

@@ -299,8 +299,10 @@ namespace Server.Mobiles
 
                         m_From.SendGump(g);
                     }
-                    catch
-                    { }
+                    catch (Exception e)
+                    {
+                        Server.Diagnostics.ExceptionLogging.LogException(e);
+                    }
                 }
                 else
                 {
@@ -759,9 +761,11 @@ namespace Server.Mobiles
 
                                         if (m_FacialHair)
                                         {
+                                            var old = m_From.FacialHairItemID;
+
                                             m_From.FacialHairItemID = itemID;
 
-                                            if (itemID != 0)
+                                            if (itemID != 0 && old == 0)
                                             {
                                                 m_From.FacialHairHue = m_From.HairHue;
                                             }

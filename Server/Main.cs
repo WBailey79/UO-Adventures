@@ -232,8 +232,10 @@ namespace Server
                     EventSink.InvokeCrashed(args);
                     close = args.Close;
                 }
-                catch
-                { }
+                catch (Exception ex)
+                {
+                    Server.Diagnostics.ExceptionLogging.LogException(ex);
+                }
 
                 if (CrashedHandler != null)
                 {
@@ -242,8 +244,10 @@ namespace Server
                         CrashedHandler(args);
                         close = args.Close;
                     }
-                    catch
-                    { }
+                    catch (Exception ex)
+                    {
+                        Server.Diagnostics.ExceptionLogging.LogException(ex);
+                    }
                 }
 
                 if (!close && !Service)
@@ -255,8 +259,10 @@ namespace Server
                             l.Dispose();
                         }
                     }
-                    catch
-                    { }
+                    catch (Exception ex)
+                    {
+                        Server.Diagnostics.ExceptionLogging.LogException(ex);
+                    }
 
                     Console.WriteLine("This exception is fatal, press return to exit");
                     Console.ReadLine();
@@ -442,8 +448,10 @@ namespace Server
                     Console.SetOut(MultiConsoleOut = new MultiTextWriter(Console.Out));
                 }
             }
-            catch
-            { }
+            catch (Exception e)
+            {
+                Server.Diagnostics.ExceptionLogging.LogException(e);
+            }
 
             Thread = Thread.CurrentThread;
             Process = Process.GetCurrentProcess();
@@ -539,44 +547,12 @@ namespace Server
                 UnsafeNativeMethods.SetConsoleCtrlHandler(m_ConsoleEventHandler, true);
             }
 
-#if NETFX_30
-            dotnet = "3.0";
+#if NETFX_472
+            dotnet = "4.7.2";
 #endif
 
-#if NETFX_35
-            dotnet = "3.5";
-#endif
-
-#if NETFX_40
-            dotnet = "4.0";
-#endif
-
-#if NETFX_45
-            dotnet = "4.5";
-#endif
-
-#if NETFX_451
-            dotnet = "4.5.1";
-#endif
-
-#if NETFX_46
-            dotnet = "4.6.0";
-#endif
-
-#if NETFX_461
-            dotnet = "4.6.1";
-#endif
-
-#if NETFX_462
-            dotnet = "4.6.2";
-#endif
-
-#if NETFX_47
-            dotnet = "4.7";
-#endif
-
-#if NETFX_471
-            dotnet = "4.7.1";
+#if NETFX_48
+            dotnet = "4.8";
 #endif
 
             if (String.IsNullOrEmpty(dotnet))

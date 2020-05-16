@@ -566,8 +566,10 @@ namespace Server.Mobiles
                         {
                             ammo = Activator.CreateInstance(kvp.Key) as Item;
                         }
-                        catch
-                        { }
+                        catch (Exception e)
+                        {
+                            Server.Diagnostics.ExceptionLogging.LogException(e);
+                        }
 
                         if (ammo != null)
                         {
@@ -1497,7 +1499,7 @@ namespace Server.Mobiles
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Server.Diagnostics.ExceptionLogging.LogException(e);
             }
             finally
             {
@@ -6380,7 +6382,7 @@ namespace Server.Mobiles
 
             NetState state = NetState;
 
-            if (state != null && state.BuffIcon)
+            if (state != null)
             {
                 foreach (BuffInfo info in m_BuffTable.Values)
                 {
@@ -6409,7 +6411,7 @@ namespace Server.Mobiles
 
             NetState state = NetState;
 
-            if (state != null && state.BuffIcon)
+            if (state != null)
             {
                 state.Send(new AddBuffPacket(this, b));
             }
@@ -6443,7 +6445,7 @@ namespace Server.Mobiles
 
             NetState state = NetState;
 
-            if (state != null && state.BuffIcon)
+            if (state != null)
             {
                 state.Send(new RemoveBuffPacket(this, b));
             }

@@ -67,6 +67,8 @@ namespace Server.Engines.Despise
                     }
                 }
             }
+
+            base.OnKilledBy(mob);
         }
 
         public override void AlterMeleeDamageTo(Mobile to, ref int damage)
@@ -383,7 +385,6 @@ namespace Server.Engines.Despise
         public override bool OnBeforeDeath()
         {
             Summoned = false;
-            PackItem(new Gold(Utility.Random(800, 1000)));
             return base.OnBeforeDeath();
         }
 
@@ -462,7 +463,6 @@ namespace Server.Engines.Despise
         public override bool OnBeforeDeath()
         {
             Summoned = false;
-            PackItem(new Gold(Utility.Random(800, 1000)));
             return base.OnBeforeDeath();
         }
 
