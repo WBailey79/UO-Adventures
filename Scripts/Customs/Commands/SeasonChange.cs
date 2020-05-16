@@ -131,11 +131,7 @@ namespace Server.Gumps
                 {
                     ns.Sequence = 0;
                     ns.Send(Network.SeasonChange.Instantiate(m.GetSeason(), true));
-
-                    if (ns.StygianAbyss)
-                    {
-                        ns.Send(new MobileUpdate(m));
-                    }
+                    
                 }
             }
             from.CloseGump(typeof(SeasonChange));
