@@ -132,8 +132,13 @@ namespace Server.Items
 
         public static void ApplyReforgedProperties(Item item, ReforgedPrefix prefix, ReforgedSuffix suffix, int budget, int perclow, int perchigh, int maxmods, int luckchance, BaseRunicTool tool, ReforgingOption option)
         {
-            List<int> props = new List<int>(ItemPropertyInfo.LookupLootTable(item));
-            ApplyReforgedProperties(item, props, prefix, suffix, budget, perclow, perchigh, maxmods, luckchance, tool, option);
+            var props = new List<int>(ItemPropertyInfo.LookupLootTable(item));
+
+            if (props.Count > 0)
+            {
+                ApplyReforgedProperties(item, props, prefix, suffix, budget, perclow, perchigh, maxmods, luckchance, tool, option);
+            }
+
             ColUtility.Free(props);
         }
 
@@ -1982,7 +1987,7 @@ namespace Server.Items
                 if (mods < RandomItemGenerator.MaxProps - 1 && LootPack.CheckLuck(luckchance))
                     mods++;
 
-                List<int> props = new List<int>(ItemPropertyInfo.LookupLootTable(item));
+                var props = new List<int>(ItemPropertyInfo.LookupLootTable(item));
                 bool powerful = IsPowerful(budget);
 
                 ApplyReforgedProperties(item, props, prefix, suffix, budget, perclow, perchigh, mods, luckchance);

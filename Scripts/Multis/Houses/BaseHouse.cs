@@ -7,7 +7,6 @@ using Server.Gumps;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Multis.Deeds;
 using Server.Network;
 using Server.Regions;
 using Server.Targeting;
@@ -1794,11 +1793,6 @@ namespace Server.Multis
 
             if (door != null)
             {
-                if (from != null)
-                {
-                    door.KeyValue = CreateKeys(from);
-                }
-
                 AddDoor(door, xOffset, yOffset, zOffset);
             }
             else
@@ -1815,32 +1809,6 @@ namespace Server.Multis
             * DoorFacing	2	3	6	7
             */
             return (DoorFacing)((offset / 2 + 2 * (1 + offset / 4)) % 8);
-        }
-
-        public uint CreateKeys(Mobile m)
-        {
-            uint value = Key.RandomValue();
-
-            if (!IsAosRules)
-            {
-                Key packKey = new Key(KeyType.Gold);
-                Key bankKey = new Key(KeyType.Gold);
-
-                packKey.KeyValue = value;
-                bankKey.KeyValue = value;
-
-                packKey.LootType = LootType.Newbied;
-                bankKey.LootType = LootType.Newbied;
-
-                BankBox box = m.BankBox;
-
-                if (!box.TryDropItem(m, bankKey, false))
-                    bankKey.Delete();
-
-                m.AddToBackpack(packKey);
-            }
-
-            return value;
         }
 
         public BaseDoor[] AddSouthDoors(int x, int y, int z)
@@ -2164,12 +2132,10 @@ namespace Server.Multis
                 * You should double-check the security settings on any doors and teleporters in the house.
                 */
 
-                m_House.RemoveKeys(from);
                 m_House.Owner = to;
                 m_House.Bans.Clear();
                 m_House.Friends.Clear();
                 m_House.CoOwners.Clear();
-                m_House.ChangeLocks(to);
                 m_House.LastTraded = DateTime.UtcNow;
 
                 m_House.OnTransfer();
@@ -3088,7 +3054,6 @@ namespace Server.Multis
             writer.Write(BuiltOn);
             writer.Write(LastTraded);
 
-            //writer.WriteItemList(m_Addons, true);
             writer.Write(Addons.Count);
             foreach (KeyValuePair<Item, Mobile> kvp in Addons)
             {
@@ -3337,30 +3302,7 @@ namespace Server.Multis
                         if (version < 14)
                             m_RelativeBanLocation = BaseBanLocation;
 
-                        if (version < 12)
-                        {
-                            VendorRentalContracts = new List<Item>();
-                            InternalizedVendors = new List<Mobile>();
-                        }
-
-                        if (version < 4)
-                            Addons = new Dictionary<Item, Mobile>();
-
-                        if (version < 7)
-                            Access = new List<Mobile>();
-
-                        if (version < 8)
-                            Price = DefaultPrice;
-
                         m_Owner = reader.ReadMobile();
-
-                        if (version < 5)
-                        {
-                            count = reader.ReadInt();
-
-                            for (int i = 0; i < count; i++)
-                                reader.ReadRect2D();
-                        }
 
                         UpdateRegion();
 
@@ -3404,23 +3346,6 @@ namespace Server.Multis
                         for (int i = 0; i < VendorRentalContracts.Count; ++i)
                             VendorRentalContracts[i].IsLockedDown = true;
 
-                        if (version < 3)
-                        {
-                            List<Item> items = reader.ReadStrongItemList();
-                            Secures = new List<SecureInfo>(items.Count);
-
-                            for (int i = 0; i < items.Count; ++i)
-                            {
-                                Container c = items[i] as Container;
-
-                                if (c != null)
-                                {
-                                    c.IsSecure = true;
-                                    Secures.Add(new SecureInfo(c, SecureLevel.CoOwners, Owner));
-                                }
-                            }
-                        }
-
                         MaxLockDowns = reader.ReadInt();
                         MaxSecures = reader.ReadInt();
 
@@ -3440,9 +3365,6 @@ namespace Server.Multis
                         break;
                     }
             }
-
-            if (version <= 1)
-                ChangeSignType(0xBD2);//private house, plain brass sign
 
             if (version < 10)
             {
@@ -3471,8 +3393,6 @@ namespace Server.Multis
                 if (RelocatedEntities.Count > 0)
                     Timer.DelayCall(TimeSpan.Zero, RestoreRelocatedEntities);
 
-                //if (m_Owner == null && m_Friends.Count == 0 && m_CoOwners.Count == 0)
-                //    Timer.DelayCall(TimeSpan.FromSeconds(10.0), new TimerCallback(Delete));
             }
 
             if (version == 19)
@@ -4145,71 +4065,13 @@ namespace Server.Multis
             return (m.Guild == Owner.Guild);
         }
 
-        public void RemoveKeys(Mobile m)
-        {
-            if (Doors != null)
-            {
-                uint keyValue = 0;
-
-                for (int i = 0; keyValue == 0 && i < Doors.Count; ++i)
-                {
-                    BaseDoor door = Doors[i] as BaseDoor;
-
-                    if (door != null)
-                        keyValue = door.KeyValue;
-                }
-
-                Key.RemoveKeys(m, keyValue);
-            }
-        }
-
-        public void ChangeLocks(Mobile m)
-        {
-            uint keyValue = CreateKeys(m);
-
-            if (Doors != null)
-            {
-                for (int i = 0; i < Doors.Count; ++i)
-                {
-                    BaseDoor door = Doors[i] as BaseDoor;
-
-                    if (door != null)
-                        door.KeyValue = keyValue;
-                }
-            }
-        }
-
-        public void RemoveLocks()
-        {
-            if (Doors != null)
-            {
-                for (int i = 0; i < Doors.Count; ++i)
-                {
-                    BaseDoor door = Doors[i] as BaseDoor;
-
-                    if (door != null)
-                    {
-                        door.KeyValue = 0;
-                        door.Locked = false;
-                    }
-                }
-            }
-        }
-
         public virtual HousePlacementEntry ConvertEntry => null;
         public virtual int ConvertOffsetX => 0;
         public virtual int ConvertOffsetY => 0;
         public virtual int ConvertOffsetZ => 0;
 
-        public virtual int DefaultPrice => 0;
-
         [CommandProperty(AccessLevel.GameMaster)]
         public int Price { get; set; }
-
-        public virtual HouseDeed GetDeed()
-        {
-            return null;
-        }
 
         public bool IsFriend(Mobile m)
         {
@@ -4978,8 +4840,8 @@ namespace Server.Multis
             : base(null, house.Map, DefaultPriority, house.Region.Area)
         {
             Register();
-
             m_RegionOwner = regionowner;
+            Timer.DelayCall(house.RestrictedPlacingTime, Unregister);
         }
 
         public override bool AllowHousing(Mobile from, Point3D p)

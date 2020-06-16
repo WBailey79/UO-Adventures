@@ -1152,7 +1152,7 @@ namespace Server.Items
             if (info != null && info.Defender == defender)
                 bonus -= info.DefenseChanceMalus;
 
-            int max = 45 + BaseArmor.GetRefinedDefenseChance(defender);
+            int max = 45 + BaseArmor.GetRefinedDefenseChance(defender) + WhiteTigerFormSpell.GetDefenseCap(defender);
 
             // Defense Chance Increase = 45%
             if (bonus > max)
@@ -1507,7 +1507,7 @@ namespace Server.Items
                     // Successful block removes the Honorable Execution penalty.
                     HonorableExecution.RemovePenalty(defender);
 
-                    if (CounterAttack.IsCountering(defender) && defender.InRange(attacker.Location, 1))
+                    if (CounterAttack.IsCountering(defender))
                     {
                         if (weapon != null)
                         {
@@ -2155,7 +2155,7 @@ namespace Server.Items
             bool sparks = false;
             if (a == null && move == null)
             {
-                if (m_ExtendedWeaponAttributes.BoneBreaker > 0)
+                if (attacker.Skills[SkillName.Tactics].Value >= 60.0 && !AnimalForm.UnderTransformation(attacker) && m_ExtendedWeaponAttributes.BoneBreaker > 0)
                     damage += BoneBreakerContext.CheckHit(attacker, defender);
 
                 if (m_ExtendedWeaponAttributes.HitSwarm > 0 && Utility.Random(100) < m_ExtendedWeaponAttributes.HitSwarm)
@@ -2204,6 +2204,8 @@ namespace Server.Items
 
                 damage += (int)inc;
             }
+
+            damage += WhirlwindAttack.DamageBonus(attacker, defender);
 
             damageGiven = AOS.Damage(
                 defender,

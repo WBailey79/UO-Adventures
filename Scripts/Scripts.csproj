@@ -452,6 +452,102 @@
     <Compile Include="Items\Addons\TheKingsCollection\BullTapestry.cs" />
     <Compile Include="Items\Addons\TheKingsCollection\HorsePainting.cs" />
     <Compile Include="Items\Addons\Craft Addons\GlassKiln.cs" />
+    <Compile Include="Items\Aquariums\AncientAquariumFishingNet.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\ArrowCrab.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\BandedCoralShrimp.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\BangaiCardinalfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\BarrelSponge.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Beaugregory.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\BlackDurgeon.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\BlueHermitCrab.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\ChironexJelly.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\ChocolateChipSeastar.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\CleanerShrimp.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\ClownTriggerfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\EagleRay.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\ElkhornCoral.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\FalseClownfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\FeatherDuster.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Filefish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Fireclam.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\FireCoral.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\FlamingoTongue.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\FrenchAngelfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Frogfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\GiantAnemone.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\GrayAngelfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\HippoTang.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\HorshoeCrab.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\HumpbackGrouper.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\LeafySeaDragon.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\LionsManeJelly.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\MagnificentShrimpgoby.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Mandarinfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\MantisShrimp.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\MoorishIdol.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Octopus.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\OrageElephantEarSponge.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\PicassoTriggerfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\PJCardinalfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\PorcupineFish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\PygmySeahorse.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\QueenTrigger.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\RockBeauty.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Scorpionfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SeaFan.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SeaUrchin.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SergeantMajor.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Spadefish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SpinyLobster.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SpottedBlueRay.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\SpottedParrotfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Squid.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\Squirrelfish.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\StaghornCoral.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\TreeCoral.cs" />
+    <Compile Include="Items\Aquariums\AncientFish\YellowBoxfish.cs" />
+    <Compile Include="Items\Aquariums\Aquarium.cs" />
+    <Compile Include="Items\Aquariums\AquariumFishingNet.cs" />
+    <Compile Include="Items\Aquariums\AquariumFood.cs" />
+    <Compile Include="Items\Aquariums\AquariumGump.cs" />
+    <Compile Include="Items\Aquariums\AquariumState.cs" />
+    <Compile Include="Items\Aquariums\BaseFish.cs" />
+    <Compile Include="Items\Aquariums\FishBowl.cs" />
+    <Compile Include="Items\Aquariums\Fish\AlbinoCourtesanFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\AlbinoFrog.cs" />
+    <Compile Include="Items\Aquariums\Fish\BritainCrownFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\FandancerFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\GoldenBroadtail.cs" />
+    <Compile Include="Items\Aquariums\Fish\Jellyfish.cs" />
+    <Compile Include="Items\Aquariums\Fish\KillerFrog.cs" />
+    <Compile Include="Items\Aquariums\Fish\LongClawCrab.cs" />
+    <Compile Include="Items\Aquariums\Fish\MakotoCourtesanFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\MinocBlueFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\NujelmHoneyFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\PurpleFrog.cs" />
+    <Compile Include="Items\Aquariums\Fish\RedDartFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\Shrimp.cs" />
+    <Compile Include="Items\Aquariums\Fish\SmallMouthSuckerFin.cs" />
+    <Compile Include="Items\Aquariums\Fish\SpeckledCrab.cs" />
+    <Compile Include="Items\Aquariums\Fish\SpinedScratcherFish.cs" />
+    <Compile Include="Items\Aquariums\Fish\SpottedBuccaneer.cs" />
+    <Compile Include="Items\Aquariums\Fish\VesperReefTiger.cs" />
+    <Compile Include="Items\Aquariums\Fish\YellowFinBluebelly.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\BrineShrimp.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\Coral.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\FullMoonFish.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\SeaHorse.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\StrippedFlakeFish.cs" />
+    <Compile Include="Items\Aquariums\Reward Fish\StrippedSosarianSwill.cs" />
+    <Compile Include="Items\Aquariums\Rewards\AquariumMessage.cs" />
+    <Compile Include="Items\Aquariums\Rewards\CaptainBlackheartsFishingPole.cs" />
+    <Compile Include="Items\Aquariums\Rewards\CraftysFishingHat.cs" />
+    <Compile Include="Items\Aquariums\Rewards\FishBones.cs" />
+    <Compile Include="Items\Aquariums\Rewards\IslandStatue.cs" />
+    <Compile Include="Items\Aquariums\Rewards\Shell.cs" />
+    <Compile Include="Items\Aquariums\Rewards\ToyBoat.cs" />
+    <Compile Include="Items\Aquariums\Rewards\WaterloggedBoots.cs" />
+    <Compile Include="Items\Aquariums\VacationWafer.cs" />
     <Compile Include="Items\Artifacts\Decorative\GildedStatue.cs" />
     <Compile Include="Items\Artifacts\Decorative\KingsPainting.cs" />
     <Compile Include="Items\Artifacts\Decorative\MedusasFloorTileAddon.cs" />
@@ -461,7 +557,7 @@
     <Compile Include="Items\Consumables\AnniversaryPromotionalToken.cs" />
     <Compile Include="Items\Consumables\CommissionPlayerVendorDeed.cs" />
     <Compile Include="Items\Consumables\FearEssence.cs" />
-    <Compile Include="Items\Consumables\ShatterPotion.cs" />
+    <Compile Include="Items\Consumables\Potions\ShatterPotion.cs" />
     <Compile Include="Items\Containers\BagOfMysticRegs.cs" />
     <Compile Include="Items\Containers\BoxOfCrystalItems.cs" />
     <Compile Include="Items\Containers\BoxOfShadowItems.cs" />
@@ -483,6 +579,7 @@
     <Compile Include="Items\Addons\BuffetTable.cs" />
     <Compile Include="Items\Addons\FormalDiningTable.cs" />
     <Compile Include="Items\Addons\GadgetryTable.cs" />
+    <Compile Include="Items\Resource\SaltedSerpentSteaks.cs" />
     <Compile Include="Items\StoreBought\DecorativeDungeonSet\DecorativeDungeonSet.cs" />
     <Compile Include="Items\StoreBought\DecorativeKitchenSet.cs" />
     <Compile Include="Items\StoreBought\DecorativeStableSet\DecorativeStableFencing.cs" />
@@ -744,10 +841,10 @@
     <Compile Include="Quests\TieredQuests\PercolemTieredQuests.cs" />
     <Compile Include="Quests\TieredQuests\ThepemTieredQuests.cs" />
     <Compile Include="Quests\TieredQuests\ZosilemTieredQuests.cs" />
-    <Compile Include="Services\Astronomy\21st Anniversary Gifts\Anniversary21Card.cs" />
-    <Compile Include="Services\Astronomy\21st Anniversary Gifts\Anniversary21GiftToken.cs" />
-    <Compile Include="Services\Astronomy\21st Anniversary Gifts\AnniversaryBag21st.cs" />
-    <Compile Include="Services\Astronomy\21st Anniversary Gifts\Giver.cs" />
+    <Compile Include="Services\GiftGiving\21stAnniversary\Anniversary21Card.cs" />
+    <Compile Include="Services\GiftGiving\21stAnniversary\Anniversary21GiftToken.cs" />
+    <Compile Include="Services\GiftGiving\21stAnniversary\AnniversaryBag21st.cs" />
+    <Compile Include="Services\GiftGiving\21stAnniversary\Giver.cs" />
     <Compile Include="Services\Astronomy\AstronomerTitleDeed.cs" />
     <Compile Include="Services\Astronomy\AstronomySystem.cs" />
     <Compile Include="Services\Astronomy\BrassOrrery.cs" />
@@ -869,14 +966,14 @@
     <Compile Include="Items\Artifacts\Equipment\Weapons\FNPitchfork.cs" />
     <Compile Include="Items\Books\RunicAtlas.cs" />
     <Compile Include="Items\Consumables\AlterContract.cs" />
-    <Compile Include="Items\Consumables\BaseAgilityPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseAgilityPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Consumables\BaseRewardTitleDeed.cs" />
     <Compile Include="Items\Consumables\BaseRewardTitleScroll.cs" />
     <Compile Include="Items\Consumables\CreepyCake.cs" />
     <Compile Include="Items\Consumables\ElixirOfRebirth.cs" />
-    <Compile Include="Items\Consumables\EodonPotions.cs" />
+    <Compile Include="Items\Consumables\Potions\EodonPotions.cs" />
     <Compile Include="Items\Consumables\GoldFoil.cs" />
     <Compile Include="Items\Consumables\HarvestWine.cs" />
     <Compile Include="Items\Consumables\Jellybeans.cs" />
@@ -955,13 +1052,13 @@
     <Compile Include="Items\Equipment\Clothing\BaseClothing.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseConflagrationPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseConflagrationPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseConfusionBlastPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseConfusionBlastPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseCurePotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseCurePotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Artifacts\Decorative\BaseDecorationArtifact.cs">
@@ -992,7 +1089,7 @@
     <Compile Include="Items\Equipment\Light\BaseEquipableLight.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseExplosionPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseExplosionPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Functional\ChickenLizardEgg.cs" />
@@ -1051,9 +1148,6 @@
     <Compile Include="Items\Quest\TyballsKey.cs" />
     <Compile Include="Items\Quest\UnicornRibs.cs" />
     <Compile Include="Items\Quest\YellowKey1.cs" />
-    <Compile Include="Items\Resource\BaseFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Items\Resource\HotGoo.cs" />
     <Compile Include="Items\Artifacts\Talismans\FrostguardTalisman.cs" />
     <Compile Include="Items\Artifacts\Talismans\JadeSnakeHead.cs" />
@@ -1102,7 +1196,7 @@
     <Compile Include="Items\Tools\BaseHarvestTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseHealPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseHealPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Decorative\BaseImprisonedMobile.cs">
@@ -1126,13 +1220,13 @@
     <Compile Include="Items\Decorative\BasePiece.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BasePoisonPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BasePoisonPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Weapons\BasePoleArm.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BasePotion.cs">
+    <Compile Include="Items\Consumables\Potions\BasePotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Quivers\BaseQuiver.cs">
@@ -1144,7 +1238,7 @@
     <Compile Include="Items\Consumables\BaseReagent.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseRefreshPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseRefreshPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Tools\BaseRunicTool.cs">
@@ -1165,7 +1259,7 @@
     <Compile Include="Items\Decorative\BaseStatuette.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BaseStrengthPotion.cs">
+    <Compile Include="Items\Consumables\Potions\BaseStrengthPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Suits\BaseSuit.cs">
@@ -1926,14 +2020,6 @@
     <Compile Include="Items\Addons\LoomSouthAddon.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Addons\Aquarium\Rewards\AquariumMessage.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\CaptainBlackheartsFishingPole.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\CraftysFishingHat.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\FishBones.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\IslandStatue.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\Shell.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\ToyBoat.cs" />
-    <Compile Include="Items\Addons\Aquarium\Rewards\WaterloggedBoots.cs" />
     <Compile Include="Misc\Siege.cs" />
     <Compile Include="Misc\SpawnerPersistence.cs" />
     <Compile Include="Misc\UntamedPetsCleaning.cs" />
@@ -2835,8 +2921,8 @@
     <Compile Include="Mobiles\Normal\GargishOutcast.cs" />
     <Compile Include="Mobiles\Normal\GargishRouser.cs" />
     <Compile Include="Mobiles\Normal\VoidManesfistation.cs" />
-    <Compile Include="Items\Consumables\BaseExplodingTarPotion.cs" />
-    <Compile Include="Items\Consumables\ExplodingTarPotion.cs" />
+    <Compile Include="Items\Consumables\Potions\BaseExplodingTarPotion.cs" />
+    <Compile Include="Items\Consumables\Potions\ExplodingTarPotion.cs" />
     <Compile Include="Mobiles\NPCs\Gretchen.cs" />
     <Compile Include="Items\Quest\BagOfJewels.cs" />
     <Compile Include="Items\Quest\DeBoorShield.cs" />
@@ -3020,9 +3106,9 @@
     <Compile Include="Mobiles\NPCs\Zeefzorpul.cs" />
     <Compile Include="Quests\WitchApprentice\Objectives.cs" />
     <Compile Include="Quests\WitchApprentice\WitchApprenticeQuest.cs" />
-    <Compile Include="Services\Armor Refinement\ArmorRefiner.cs" />
-    <Compile Include="Services\Armor Refinement\Gumps.cs" />
-    <Compile Include="Services\Armor Refinement\Items.cs" />
+    <Compile Include="Services\ArmorRefinement\ArmorRefiner.cs" />
+    <Compile Include="Services\ArmorRefinement\Gumps.cs" />
+    <Compile Include="Services\ArmorRefinement\Items.cs" />
     <Compile Include="Services\BasketWeaving\Baskets\BasketCraftable.cs" />
     <Compile Include="Services\BulkOrders\BulkOrderSystem.cs" />
     <Compile Include="Services\BulkOrders\Items\BODRewardTitleDeed.cs" />
@@ -3147,7 +3233,7 @@
     <Compile Include="Services\CleanUpBritannia\PointExchange.cs" />
     <Compile Include="Services\CommunityCollections\CommunityCollectionGump.cs" />
     <Compile Include="Services\Expansions\High Seas\Generate.cs" />
-    <Compile Include="Services\Expansions\High Seas\Gumps\BountyBoard.cs" />
+    <Compile Include="Services\Expansions\High Seas\Quests\ProfessionalBountyQuest\BountyBoard.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Artifacts\CorgulsEnchantedSash.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Artifacts\CorgulsHandbookOnMysticism.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Artifacts\CorgulsHandbookOnTheUndead.cs" />
@@ -3172,7 +3258,6 @@
     <Compile Include="Services\Expansions\High Seas\Items\Cannons and Ammo\Matches.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Cannons and Ammo\PowderCharge.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Cannons and Ammo\Ramrod.cs" />
-    <Compile Include="Services\Expansions\High Seas\Items\Cannons and Ammo\SpecialAmmo.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Cannons and Ammo\Swab.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\CorgulAltar.cs" />
     <Compile Include="Services\Expansions\High Seas\Items\Fish\Bait.cs" />
@@ -3284,20 +3369,20 @@
     <Compile Include="Services\Expansions\Time Of Legends\Myrmidex Invasion\BattleSpawner.cs" />
     <Compile Include="Services\Expansions\Time Of Legends\Myrmidex Invasion\MoonstonePowerGenerator.cs" />
     <Compile Include="Services\Expansions\Time Of Legends\Myrmidex Invasion\System.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Addons\ArmoryAddon.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Addons\BarAddon.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Addons\BelfryAddon.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Addons\FountainAddon.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Addons\OrchardAddon.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Artifacts.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Bosses.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Controller.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Encounters.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\ExitEntry.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Items.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\Mobiles.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\ShadowguardEncounter.cs" />
-    <Compile Include="Services\Expansions\Time Of Legends\Shadowguard\ShadowguardInstance.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Addons\ArmoryAddon.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Addons\BarAddon.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Addons\BelfryAddon.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Addons\FountainAddon.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Addons\OrchardAddon.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Artifacts.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Bosses.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Controller.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Encounters.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\ExitEntry.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Items.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\Mobiles.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\ShadowguardEncounter.cs" />
+    <Compile Include="Services\Dungeons\Shadowguard\ShadowguardInstance.cs" />
     <Compile Include="Services\ExploringTheDeep\Addons\CousteauPerronAddon.cs" />
     <Compile Include="Services\ExploringTheDeep\ExploringTheDeepQuestChain.cs" />
     <Compile Include="Services\ExploringTheDeep\Generate.cs" />
@@ -3527,105 +3612,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Addons\WaterVat.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Aquarium.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\AquariumFishingNet.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\AquariumFood.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\AquariumGump.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\AquariumState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\FishBowl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\AlbinoCourtesanFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\AlbinoFrog.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\BritainCrownFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\FandancerFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\GoldenBroadtail.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\Jellyfish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\KillerFrog.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\LongClawCrab.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\MakotoCourtesanFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\MinocBlueFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\NujelmHoneyFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\PurpleFrog.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\RedDartFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\Shrimp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\SmallMouthSuckerFin.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\SpeckledCrab.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\SpinedScratcherFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\SpottedBuccaneer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\VesperReefTiger.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Fish\YellowFinBluebelly.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\BrineShrimp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\Coral.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\FullMoonFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\SeaHorse.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\StrippedFlakeFish.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\Reward Fish\StrippedSosarianSwill.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Addons\Aquarium\VacationWafer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Artifacts\Equipment\Armor\CastOffZombieSkin.cs">
@@ -4616,9 +4602,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Clothing\Cloaks.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Items\Equipment\Clothing\Gargoyle Accessories.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Clothing\LeatherTalons.cs">
@@ -5775,7 +5758,7 @@
     <Compile Include="Items\Consumables\Cookies.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\Fish Steak.cs">
+    <Compile Include="Items\Consumables\FishSteak.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Tools\BegFishingPole.cs">
@@ -5898,385 +5881,385 @@
     <Compile Include="Items\Equipment\Spellbooks\NecromancerSpellbook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\AgilityPotion.cs">
+    <Compile Include="Items\Consumables\Potions\AgilityPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterAgilityPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterAgilityPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ConflagrationPotion.cs">
+    <Compile Include="Items\Consumables\Potions\ConflagrationPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterConflagrationPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterConflagrationPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ConfusionBlastPotion.cs">
+    <Compile Include="Items\Consumables\Potions\ConfusionBlastPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterConfusionBlastPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterConfusionBlastPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CurePotion.cs">
+    <Compile Include="Items\Consumables\Potions\CurePotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterCurePotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterCurePotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LesserCurePotion.cs">
+    <Compile Include="Items\Consumables\Potions\LesserCurePotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\DarkglowPotion.cs">
+    <Compile Include="Items\Consumables\Potions\DarkglowPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ExplosionPotion.cs">
+    <Compile Include="Items\Consumables\Potions\ExplosionPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterExplosionPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterExplosionPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LesserExplosionPotion.cs">
+    <Compile Include="Items\Consumables\Potions\LesserExplosionPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterHealPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterHealPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HealPotion.cs">
+    <Compile Include="Items\Consumables\Potions\HealPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LesserHealPotion.cs">
+    <Compile Include="Items\Consumables\Potions\LesserHealPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\InvisibilityPotion.cs">
+    <Compile Include="Items\Consumables\Potions\InvisibilityPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\NightSight.cs">
+    <Compile Include="Items\Consumables\Potions\NightSightPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ParasiticPotion.cs">
+    <Compile Include="Items\Consumables\Potions\ParasiticPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\DeadlyPoisonPotion.cs">
+    <Compile Include="Items\Consumables\Potions\DeadlyPoisonPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterPoisonPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterPoisonPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LesserPoisonPotion.cs">
+    <Compile Include="Items\Consumables\Potions\LesserPoisonPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PoisonPotion.cs">
+    <Compile Include="Items\Consumables\Potions\PoisonPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\RefreshPotion.cs">
+    <Compile Include="Items\Consumables\Potions\RefreshPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\TotalRefreshPotion.cs">
+    <Compile Include="Items\Consumables\Potions\TotalRefreshPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterStrengthPotion.cs">
+    <Compile Include="Items\Consumables\Potions\GreaterStrengthPotion.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\StrengthPotion.cs">
+    <Compile Include="Items\Consumables\Potions\StrengthPotion.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Artifacts\Equipment\Spellbooks\Runebook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EarthquakeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EarthquakeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EnergyVortexScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EnergyVortexScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ResurrectionScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ResurrectionScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonAirElementalScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonAirElementalScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonDaemonScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonDaemonScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonEarthElementalScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonEarthElementalScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonFireElementalScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonFireElementalScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonWaterElementalScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonWaterElementalScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BladeSpiritsScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\BladeSpiritsScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\DispelFieldScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\DispelFieldScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\IncognitoScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\IncognitoScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MagicReflectScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MagicReflectScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MindBlastScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MindBlastScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ParalyzeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ParalyzeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PoisonFieldScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PoisonFieldScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonCreatureScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonCreatureScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ClumsyScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ClumsyScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CreateFoodScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CreateFoodScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\FeeblemindScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\FeeblemindScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HealScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\HealScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MagicArrowScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MagicArrowScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\NightSightScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\NightSightScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ReactiveArmorScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ReactiveArmorScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\WeakenScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\WeakenScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ArchcureScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ArchcureScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ArchProtectionScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ArchProtectionScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CurseScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CurseScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\FireFieldScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\FireFieldScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GreaterHealScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\GreaterHealScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LightningScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\LightningScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ManaDrainScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ManaDrainScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\RecallScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\RecallScroll.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Consumables\AnimatedWeaponScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BombardScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\BombardScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CleansingWindsScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CleansingWindsScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EagleStrikeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EagleStrikeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EnchantScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EnchantScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HailStormScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\HailStormScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HealingStoneScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\HealingStoneScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MassSleepScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MassSleepScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\NetherBoltScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\NetherBoltScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\NetherCycloneScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\NetherCycloneScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PurgeMagicScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PurgeMagicScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\RisingColossusScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\RisingColossusScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SleepScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SleepScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SpellPlagueScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SpellPlagueScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SpellTriggerScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SpellTriggerScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\StoneFormScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\StoneFormScroll.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Consumables\AnimateDeadScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BloodOathScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\BloodOathScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CorpseSkinScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CorpseSkinScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CurseWeaponScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CurseWeaponScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EvilOmenScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EvilOmenScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ExorcismScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ExorcismScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HorrificBeastScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\HorrificBeastScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\LichFormScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\LichFormScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MindRotScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MindRotScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PainSpikeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PainSpikeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PoisonStrikeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PoisonStrikeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\StrangleScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\StrangleScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SummonFamiliarScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SummonFamiliarScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\VampiricEmbraceScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\VampiricEmbraceScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\VengefulSpiritScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\VengefulSpiritScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\WitherScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\WitherScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\WraithFormScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\WraithFormScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\AgilityScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\AgilityScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CunningScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CunningScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\CureScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\CureScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\HarmScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\HarmScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MagicTrapScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MagicTrapScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MagicUnTrapScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MagicUnTrapScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ProtectionScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ProtectionScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\StrengthScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\StrengthScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ChainLightningScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ChainLightningScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EnergyFieldScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EnergyFieldScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\FlamestrikeScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\FlamestrikeScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\GateTravelScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\GateTravelScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ManaVampireScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ManaVampireScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MassDispelScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MassDispelScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MeteorStormScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MeteorStormScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PolymorphScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PolymorphScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\DispelScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\DispelScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\EnergyBoltScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\EnergyBoltScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ExplosionScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ExplosionScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\InvisibilityScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\InvisibilityScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MarkScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MarkScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MassCurseScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MassCurseScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\ParalyzeFieldSpell.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\ParalyzeFieldScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\RevealScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\RevealScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SpellScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SpellScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\SpellweavingScrolls.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\SpellweavingScrolls.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\BlessScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\BlessScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\FireballScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\FireballScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\MagicLockScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\MagicLockScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\PoisonScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\PoisonScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\TelekinisisScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\TelekinisisScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\TeleportScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\TeleportScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\UnlockScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\UnlockScroll.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Items\Consumables\WallOfStoneScroll.cs">
+    <Compile Include="Items\Consumables\SpellScrolls\WallOfStoneScroll.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Equipment\Spellbooks\Spellbook.cs">
@@ -8673,7 +8656,6 @@
     <Compile Include="Multis\Houses\Gumps\SetSecureLevelGump.cs" />
     <Compile Include="Multis\Houses\BaseHouse.cs" />
     <Compile Include="Multis\Houses\ComponentVerification.cs" />
-    <Compile Include="Multis\Houses\Deeds.cs" />
     <Compile Include="Multis\Houses\DynamicDecay.cs" />
     <Compile Include="Multis\Houses\HouseFoundation.cs" />
     <Compile Include="Multis\Houses\HousePlacement.cs" />
@@ -9514,6 +9496,7 @@
     <Compile Include="Services\Seasonal Events\ForsakenFoes\Items\AdmiralJacksPumpkinSpiceAle.cs" />
     <Compile Include="Services\Seasonal Events\ForsakenFoes\Items\PumpkinRowboat.cs" />
     <Compile Include="Services\Seasonal Events\TreasuresOfKhaldun\CaddelliteVendor.cs" />
+    <Compile Include="Services\Seasonal Events\TreasuresOfKhaldun\ChestSpawner.cs" />
     <Compile Include="Services\Seasonal Events\TreasuresOfKhaldun\Creatures\CultistAmbusher.cs" />
     <Compile Include="Services\Seasonal Events\TreasuresOfKhaldun\Creatures\KhalAnkur.cs" />
     <Compile Include="Services\Seasonal Events\TreasuresOfKhaldun\Creatures\KhalAnkurWarriors.cs" />
@@ -9601,23 +9584,23 @@
     <Compile Include="Services\Seasonal Events\TreasuresOfTokuno\TreasuresOfTokuno.cs" />
     <Compile Include="Services\Seasonal Events\TreasuresOfTokuno\TreasuresOfTokunoPersistence.cs" />
     <Compile Include="Services\Spawner\SpawnObject.cs" />
-    <Compile Include="Services\Tomb of Kings\Arisen Invasion\ArisenController.cs" />
-    <Compile Include="Services\Tomb of Kings\Chambers\Chamber.cs" />
-    <Compile Include="Services\Tomb of Kings\Chambers\ChamberBarrier.cs" />
-    <Compile Include="Services\Tomb of Kings\Chambers\ChamberLever.cs" />
-    <Compile Include="Services\Tomb of Kings\Chambers\ChamberSpawner.cs" />
-    <Compile Include="Services\Tomb of Kings\Chambers\ChamberSwitch.cs" />
-    <Compile Include="Services\Tomb of Kings\Generation.cs" />
-    <Compile Include="Services\Tomb of Kings\SacredQuestBlocker.cs" />
-    <Compile Include="Services\Tomb of Kings\Serpent%27s Breath\EnergyBarrier.cs" />
-    <Compile Include="Services\Tomb of Kings\Serpent%27s Breath\FireBarrier.cs" />
-    <Compile Include="Services\Tomb of Kings\Serpent%27s Breath\FlameOfChaos.cs" />
-    <Compile Include="Services\Tomb of Kings\Serpent%27s Breath\FlameOfOrder.cs" />
-    <Compile Include="Services\Tomb of Kings\Serpent%27s Breath\SBMessageTrigger.cs" />
-    <Compile Include="Services\Tomb of Kings\ToKBridgeRegion.cs" />
-    <Compile Include="Services\Tomb of Kings\ToKTeleporter.cs" />
-    <Compile Include="Services\Tomb of Kings\TombOfKingsRegion.cs" />
-    <Compile Include="Services\Tomb of Kings\TombOfKingsSecretDoor.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Arisen Invasion\ArisenController.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Chambers\Chamber.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Chambers\ChamberBarrier.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Chambers\ChamberLever.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Chambers\ChamberSpawner.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Chambers\ChamberSwitch.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Generation.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\SacredQuestBlocker.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Serpent%27s Breath\EnergyBarrier.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Serpent%27s Breath\FireBarrier.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Serpent%27s Breath\FlameOfChaos.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Serpent%27s Breath\FlameOfOrder.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\Serpent%27s Breath\SBMessageTrigger.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\ToKBridgeRegion.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\ToKTeleporter.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\TombOfKingsRegion.cs" />
+    <Compile Include="Services\Dungeons\TombOfKings\TombOfKingsSecretDoor.cs" />
     <Compile Include="Services\Town Cryer\Gumps\BaseTownCryerGump.cs" />
     <Compile Include="Services\Town Cryer\Gumps\CreateCityEntryGump.cs" />
     <Compile Include="Services\Town Cryer\Gumps\CreateEMEntryGump.cs" />
@@ -9655,8 +9638,8 @@
     <Compile Include="Services\UltimaStore\SystemConfig.cs" />
     <Compile Include="Services\UltimaStore\UltimaStore.cs" />
     <Compile Include="Services\UltimaStore\UltimaStoreGump.cs" />
-    <Compile Include="Services\Underworld\Navrey%27s Lair\NavreysController.cs" />
-    <Compile Include="Services\Underworld\Navrey%27s Lair\NavreysPillar.cs" />
+    <Compile Include="Services\Dungeons\Underworld\Navrey%27s Lair\NavreysController.cs" />
+    <Compile Include="Services\Dungeons\Underworld\Navrey%27s Lair\NavreysPillar.cs" />
     <Compile Include="Services\Vendor Searching\VendorSearchCriteria.cs" />
     <Compile Include="Services\Vendor Searching\VendorSearch.cs" />
     <Compile Include="Services\Vendor Searching\VendorSearchGump.cs" />
@@ -10414,28 +10397,28 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\TrickOrTreat.cs" />
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalBook.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalBook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalGem.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalGem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalRoomChest.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalRoomChest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalRoomController.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalRoomController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalRoomDoor.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalRoomDoor.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\ExperimentalRoomRewards.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\ExperimentalRoomRewards.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\ExperimentalRoom\Region.cs">
+    <Compile Include="Services\Dungeons\Underworld\ExperimentalRoom\Region.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Generate.cs">
+    <Compile Include="Services\Dungeons\Underworld\Generate.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Items\Addons\FountainOfFortune.cs">
@@ -10447,49 +10430,49 @@
     <Compile Include="Items\Artifacts\Equipment\Clothing\SolesOfProvidence.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\CompassDirectionGump.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\CompassDirectionGump.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\GoldenCompass.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\GoldenCompass.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\Region.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\Region.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\Rewards.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\Rewards.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\RolledMapOfTheUnderworld.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\RolledMapOfTheUnderworld.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\UnderworldPuzzle.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\UnderworldPuzzle.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\Maze of Death\UnderworldPuzzleBox.cs">
+    <Compile Include="Services\Dungeons\Underworld\Maze of Death\UnderworldPuzzleBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\CopperPuzzleKey.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\CopperPuzzleKey.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\GoldPuzzleKey.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\GoldPuzzleKey.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\MagicKey.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\MagicKey.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\MastermindPuzzleItem.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\MastermindPuzzleItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\MazePuzzleItem.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\MazePuzzleItem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\PuzzleBook.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\PuzzleBook.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\PuzzleBox.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\PuzzleBox.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Services\Underworld\PuzzleRoom\PuzzleRoomTeleporter.cs">
+    <Compile Include="Services\Dungeons\Underworld\PuzzleRoom\PuzzleRoomTeleporter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\VeteranRewards\Character Statue Maker\CharacterStatue.cs">
@@ -11314,7 +11297,6 @@
     <Compile Include="VendorInfo\SBHelmetArmor.cs" />
     <Compile Include="VendorInfo\SBHerbalist.cs" />
     <Compile Include="VendorInfo\SBHolyMage.cs" />
-    <Compile Include="VendorInfo\SBHouseDeed.cs" />
     <Compile Include="VendorInfo\SBInfo.cs" />
     <Compile Include="VendorInfo\SBInnKeeper.cs" />
     <Compile Include="VendorInfo\SBJewel.cs" />

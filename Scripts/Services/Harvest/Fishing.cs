@@ -460,14 +460,35 @@ namespace Server.Engines.Harvest
                         else
                         {
                             if (Utility.RandomBool())
+                            {
                                 chest = new MetalGoldenChest();
+                                chest.Name = "metal chest";
+                            }
                             else
+                            {
                                 chest = new WoodenChest();
+                                chest.Name = "wooden chest";
+                            }
                         }
 
                         if (sos.IsAncient)
                         {
-                            chest.Hue = 0x481;
+                            if (.33 > Utility.RandomDouble())
+                            {
+                                chest.ItemID = 0xA30A;
+                            }
+                            else
+                            {
+                                chest.Hue = 0x481;
+                            }
+                        }
+                        else
+                        {
+                            switch (sos.Level)
+                            {
+                                case 1: chest.ItemID = 0xA306; break;
+                                case 3: chest.ItemID = 0xA308; break;
+                            }
                         }
 
                         TreasureMapChest.Fill(from, chest, Math.Max(1, Math.Min(4, sos.Level)), true);
