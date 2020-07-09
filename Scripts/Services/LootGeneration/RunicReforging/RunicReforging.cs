@@ -72,56 +72,70 @@ namespace Server.Items
     {
         public static bool CanReforge(Mobile from, Item item, CraftSystem crsystem)
         {
-            CraftItem crItem = null;
             bool allowableSpecial = m_AllowableTable.ContainsKey(item.GetType());
+            CraftSystem system = null;
 
             if (!allowableSpecial)
             {
-                crItem = CraftItem.GetCraftItem(item);
+                system = CraftSystem.GetSystem(item.GetType());                
             }
-
-            if (crItem == null && !allowableSpecial)
+            else
             {
-                from.SendLocalizedMessage(1152279); // You cannot re-forge that item with this tool.
-                return false;
+                system = m_AllowableTable[item.GetType()];
             }
 
             bool goodtogo = true;
-            int mods = GetTotalMods(item);
-            int maxmods = item is JukaBow ||
-                (item is BaseWeapon && !((BaseWeapon)item).DImodded) ||
-                (item is BaseArmor && ((BaseArmor)item).ArmorAttributes.MageArmor > 0 && BaseArmor.IsMageArmorType((BaseArmor)item)) ? 1 : 0;
 
-            if (item is BaseWeapon &&
-                (((BaseWeapon)item).AosElementDamages[AosElementAttribute.Fire] > 0 ||
-                ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Cold] > 0 ||
-                ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Poison] > 0 ||
-                ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Energy] > 0))
+            if (system == null)
             {
-                mods++;
-            }
-
-            if (mods > maxmods)
-                goodtogo = false;
-            else if (m_AllowableTable.ContainsKey(item.GetType()) && m_AllowableTable[item.GetType()] != crsystem)
-                goodtogo = false;
-            else if (item is IResource && !CraftResources.IsStandard(((IResource)item).Resource))
-                goodtogo = false;
-            else if (item.LootType == LootType.Blessed || item.LootType == LootType.Newbied)
-                goodtogo = false;
-            else if (item is BaseWeapon && Server.Spells.Mysticism.EnchantSpell.IsUnderSpellEffects(from, (BaseWeapon)item))
-                goodtogo = false;
-            else if (item is BaseWeapon && ((BaseWeapon)item).FocusWeilder != null)
-                goodtogo = false;
-            else if (!allowableSpecial && ((item is BaseWeapon && !((BaseWeapon)item).PlayerConstructed) || (item is BaseArmor && !((BaseArmor)item).PlayerConstructed)))
-                goodtogo = false;
-            else if (!allowableSpecial && item is BaseClothing && !(item is BaseHat))
-                goodtogo = false;
-            else if (Imbuing.IsInNonImbueList(item.GetType()))
-                goodtogo = false;
-
-            if (!goodtogo)
                 from.SendLocalizedMessage(1152113); // You cannot reforge that item.
+                goodtogo = false;
+            }
+            else if (system != crsystem)
+            {
+                from.SendLocalizedMessage(1152279); // You cannot re-forge that item with this tool.
+                goodtogo = false;
+            }
+            else
+            {
+                int mods = GetTotalMods(item);
+                int maxmods = item is JukaBow ||
+                    (item is BaseWeapon && !((BaseWeapon)item).DImodded) ||
+                    (item is BaseArmor && ((BaseArmor)item).ArmorAttributes.MageArmor > 0 && BaseArmor.IsMageArmorType((BaseArmor)item)) ? 1 : 0;
+
+                if (item is BaseWeapon &&
+                    (((BaseWeapon)item).AosElementDamages[AosElementAttribute.Fire] > 0 ||
+                    ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Cold] > 0 ||
+                    ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Poison] > 0 ||
+                    ((BaseWeapon)item).AosElementDamages[AosElementAttribute.Energy] > 0))
+                {
+                    mods++;
+                }
+
+                if (mods > maxmods)
+                    goodtogo = false;
+                else if (item is IResource && !CraftResources.IsStandard(((IResource)item).Resource))
+                    goodtogo = false;
+                else if (item.LootType == LootType.Blessed || item.LootType == LootType.Newbied)
+                    goodtogo = false;
+                else if (item is BaseWeapon && Spells.Mysticism.EnchantSpell.IsUnderSpellEffects(from, (BaseWeapon)item))
+                    goodtogo = false;
+                else if (item is BaseWeapon && ((BaseWeapon)item).FocusWeilder != null)
+                    goodtogo = false;
+                else if (!allowableSpecial && (item is IQuality && !((IQuality)item).PlayerConstructed))
+                    goodtogo = false;
+                else if (!allowableSpecial && item is BaseClothing && !(item is BaseHat))
+                    goodtogo = false;
+                else if (!allowableSpecial && item is BaseJewel)
+                    goodtogo = false;
+                else if (Imbuing.IsInNonImbueList(item.GetType()))
+                    goodtogo = false;
+
+                if (!goodtogo)
+                {
+                    from.SendLocalizedMessage(1152113); // You cannot reforge that item.
+                }
+            }
 
             return goodtogo;
         }
@@ -1595,13 +1609,14 @@ namespace Server.Items
 
         private static AosElementAttribute GetRandomElemental()
         {
-            switch (Utility.Random(4))
+            switch (Utility.Random(5))
             {
                 default:
                 case 0: return AosElementAttribute.Fire;
                 case 1: return AosElementAttribute.Cold;
                 case 2: return AosElementAttribute.Poison;
                 case 3: return AosElementAttribute.Energy;
+                case 4: return AosElementAttribute.Chaos;
             }
         }
 
@@ -2732,6 +2747,9 @@ namespace Server.Items
             if (item is BaseArmor)
                 return ((BaseArmor)item).WeaponAttributes;
 
+            if(item is BaseClothing)
+                return ((BaseClothing)item).WeaponAttributes;
+
             return null;
         }
 
@@ -2911,9 +2929,9 @@ namespace Server.Items
         #region Weapon Tables
         public static int[][] ElementalDamageTable = new int[][]
         {
-            new int[] { 40, 60, 60, 70, 80, 90, 100 },
-            new int[] { 50, 60, 70, 80, 90, 100, 100 },
-            new int[] { 60, 70, 80, 90, 100, 100, 100 },
+            new int[] { 60, 70, 80, 100, 100, 100, 100 },
+            new int[] { 80, 100, 100, 100, 100, 100, 100 },
+            new int[] { 100, 100, 100, 100, 100, 100, 100 },
             new int[] {  },
             new int[] { 100, 100, 100, 100, 100, 100, 100 },
             new int[] { 100, 100, 100, 100, 100, 100, 100 },
@@ -3371,17 +3389,27 @@ namespace Server.Items
                         }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1152277); // Both tools must be in your backpack in order to combine them.
+                    }
                 }
-                else
+                else if (item is ICombatEquipment)
                 {
                     if (item.IsChildOf(from.Backpack))
                     {
                         if (RunicReforging.CanReforge(from, item, m_Tool.CraftSystem))
+                        {
                             from.SendGump(new RunicReforgingGump(from, item, m_Tool));
+                        }
                     }
                     else
+                    {
                         from.SendLocalizedMessage(1152271); // The item must be in your backpack to re-forge it.
+                    }
+                }
+                else
+                {
+                    from.SendLocalizedMessage(1152113); // You cannot reforge that item.
                 }
             }
         }

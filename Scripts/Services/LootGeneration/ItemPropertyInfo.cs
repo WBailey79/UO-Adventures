@@ -397,14 +397,21 @@ namespace Server.Items
             Register(55, new ItemPropertyInfo(AosElementAttribute.Energy, 1061162, 100, typeof(MagicalResidue), typeof(Amethyst), typeof(BouraPelt), 1, 1, 15, 1112008,
                 new PropInfo(1, 10, 100, 100), new PropInfo(2, 10, 100, 100), new PropInfo(3, 15, 15, new int[] { 20, 25, 30 }), new PropInfo(4, 15, 15), new PropInfo(5, 15, 15, new int[] { 20, 25, 30 }), new PropInfo(6, 15, 15, new int[] { 20 })));
 
+            // Non-Imbuable
+            Register(56, new ItemPropertyInfo(AosElementAttribute.Chaos, 1151805, 100, 1, 1, 15, 0,
+                new PropInfo(1, 10, 100, 100), new PropInfo(2, 10, 100, 100)));
+
             Register(60, new ItemPropertyInfo("WeaponVelocity", 1080416, 140, typeof(RelicFragment), typeof(Tourmaline), typeof(EssenceDirection), 1, 11, 50, 1112048,
                 new PropInfo(2, 50, 50)));
 
             Register(61, new ItemPropertyInfo(AosAttribute.BalancedWeapon, 1072792, 150, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1112047,
-                new PropInfo(1, 1, 1), new PropInfo(2, 1, 1)));
+               new PropInfo(2, 1, 1)));            
 
             // Non-Imbuable, Non-Loot
             Register(62, new ItemPropertyInfo("SearingWeapon", 1151183, 150, 0, 1, 1));
+
+            Register(63, new ItemPropertyInfo(AosAttribute.BalancedWeapon, 1072792, 100, typeof(RelicFragment), typeof(Amber), typeof(EssenceBalance), 0, 1, 1, 1153740,
+                new PropInfo(1, 1, 1)));
 
             // Slayers
             Register(101, new ItemPropertyInfo(SlayerName.OrcSlaying, 1079741, 100, typeof(MagicalResidue), typeof(Emerald), typeof(WhitePearl), 0, 1, 1, 1111977, new PropInfo(1, 1, 1), new PropInfo(2, 1, 1)));
@@ -1037,6 +1044,7 @@ namespace Server.Items
                 case AosElementAttribute.Cold: return 53;
                 case AosElementAttribute.Poison: return 54;
                 case AosElementAttribute.Energy: return 55;
+                case AosElementAttribute.Chaos: return 56;
             }
 
             return -1;
@@ -1077,7 +1085,7 @@ namespace Server.Items
                 return LootTable[type];
             }
 
-            return null;
+            return new List<int>();
         }
 
         public static void BuildLootTables()
@@ -1195,7 +1203,8 @@ namespace Server.Items
                             return item is BaseWeapon && item.Layer == Layer.TwoHanded;
                         case 220: // Reactive Paralyze Armor
                             return item is BaseShield;
-                        case 61:  // Balanced
+                        case 63:  // Balanced
+                        case 61:
                             return item.Layer == Layer.TwoHanded;
                         case 40:  // UBWS
                             return GetItemType(item) == ItemType.Melee;
