@@ -37,9 +37,11 @@ namespace Server.Mobiles
             if (Instances != null && Instances.Count > 0)
                 return null;
 
-            IceWyrm creature = new IceWyrm();
-            creature.Home = platLoc;
-            creature.RangeHome = 4;
+            IceWyrm creature = new IceWyrm
+            {
+                Home = platLoc,
+                RangeHome = 4
+            };
             creature.MoveToWorld(platLoc, platMap);
 
             return creature;
@@ -49,7 +51,7 @@ namespace Server.Mobiles
         {
             private readonly IceWyrm Mare;
 
-            public InternalSelfDeleteTimer(Mobile p) : base(TimeSpan.FromMinutes(60))
+            public InternalSelfDeleteTimer(Mobile p) : base(TimeSpan.FromMinutes(10))
             {
                 Priority = TimerPriority.FiveSeconds;
                 Mare = ((IceWyrm)p);
@@ -95,13 +97,15 @@ namespace Server.Mobiles
         }
 
         public override bool ReacquireOnMovement => true;
-        public override int TreasureMapLevel => 4;
-        public override int Meat => 20;
-        public override int Hides => 25;
-        public override HideType HideType => HideType.Barbed;
-        public override FoodType FavoriteFood => FoodType.Meat;
-        public override bool CanAngerOnTame => true;
-        public override bool CanRummageCorpses => true;
+
+        public override int Meat => 0;
+		public override int Scales => 0;
+        public override int Hides => 0;
+		
+		public override void GenerateLoot()
+        {
+			// Kept blank to zero out the loot created by it's base class
+        }
 
         public override void OnAfterDelete()
         {

@@ -57,76 +57,73 @@ namespace Server.Misc
         private static readonly bool[] UseAntiMacro =
         {
 			// true if this skill uses the anti-macro code, false if it does not
-			false, // Alchemy = 0,
-			true, // Anatomy = 1,
-			true, // AnimalLore = 2,
-			true, // ItemID = 3,
-			true, // ArmsLore = 4,
-			false, // Parry = 5,
-			true, // Begging = 6,
-			false, // Blacksmith = 7,
-			false, // Fletching = 8,
-			true, // Peacemaking = 9,
-			true, // Camping = 10,
-			false, // Carpentry = 11,
-			false, // Cartography = 12,
-			false, // Cooking = 13,
-			true, // DetectHidden = 14,
-			true, // Discordance = 15,
-			true, // EvalInt = 16,
-			true, // Healing = 17,
-			true, // Fishing = 18,
-			true, // Forensics = 19,
-			true, // Herding = 20,
-			true, // Hiding = 21,
-			true, // Provocation = 22,
-			false, // Inscribe = 23,
-			true, // Lockpicking = 24,
-			true, // Magery = 25,
-			true, // MagicResist = 26,
-			false, // Tactics = 27,
-			true, // Snooping = 28,
-			true, // Musicianship = 29,
-			true, // Poisoning = 30,
-			false, // Archery = 31,
-			true, // SpiritSpeak = 32,
-			true, // Stealing = 33,
-			false, // Tailoring = 34,
-			true, // AnimalTaming = 35,
-			true, // TasteID = 36,
-			false, // Tinkering = 37,
-			true, // Tracking = 38,
-			true, // Veterinary = 39,
-			false, // Swords = 40,
-			false, // Macing = 41,
-			false, // Fencing = 42,
-			false, // Wrestling = 43,
-			true, // Lumberjacking = 44,
-			true, // Mining = 45,
-			true, // Meditation = 46,
-			true, // Stealth = 47,
-			true, // RemoveTrap = 48,
-			true, // Necromancy = 49,
-			false, // Focus = 50,
-			true, // Chivalry = 51
-			true, // Bushido = 52
-			true, //Ninjitsu = 53
-			true, // Spellweaving = 54
-
-			#region Stygian Abyss
-			true, // Mysticism = 55
-			true, // Imbuing = 56
-			false // Throwing = 57
-			#endregion
-		};
+			false, 	// Alchemy = 0,
+			true, 	// Anatomy = 1,
+			true, 	// AnimalLore = 2,
+			true, 	// ItemID = 3,
+			true, 	// ArmsLore = 4,
+			false, 	// Parry = 5,
+			true, 	// Begging = 6,
+			false, 	// Blacksmith = 7,
+			false, 	// Fletching = 8,
+			true, 	// Peacemaking = 9,
+			true, 	// Camping = 10,
+			false, 	// Carpentry = 11,
+			false, 	// Cartography = 12,
+			false, 	// Cooking = 13,
+			true, 	// DetectHidden = 14,
+			true, 	// Discordance = 15,
+			true, 	// EvalInt = 16,
+			true, 	// Healing = 17,
+			true, 	// Fishing = 18,
+			true, 	// Forensics = 19,
+			true, 	// Herding = 20,
+			true, 	// Hiding = 21,
+			true, 	// Provocation = 22,
+			false, 	// Inscribe = 23,
+			true, 	// Lockpicking = 24,
+			true, 	// Magery = 25,
+			true, 	// MagicResist = 26,
+			false, 	// Tactics = 27,
+			true, 	// Snooping = 28,
+			true, 	// Musicianship = 29,
+			true, 	// Poisoning = 30,
+			false, 	// Archery = 31,
+			true, 	// SpiritSpeak = 32,
+			true, 	// Stealing = 33,
+			false, 	// Tailoring = 34,
+			true, 	// AnimalTaming = 35,
+			true, 	// TasteID = 36,
+			false, 	// Tinkering = 37,
+			true, 	// Tracking = 38,
+			true, 	// Veterinary = 39,
+			false, 	// Swords = 40,
+			false, 	// Macing = 41,
+			false, 	// Fencing = 42,
+			false, 	// Wrestling = 43,
+			true, 	// Lumberjacking = 44,
+			true, 	// Mining = 45,
+			true, 	// Meditation = 46,
+			true, 	// Stealth = 47,
+			true, 	// RemoveTrap = 48,
+			true, 	// Necromancy = 49,
+			false, 	// Focus = 50,
+			true, 	// Chivalry = 51
+			true, 	// Bushido = 52
+			true, 	// Ninjitsu = 53
+			true, 	// Spellweaving = 54
+            true, 	// Mysticism = 55
+			true, 	// Imbuing = 56
+			false  // Throwing = 57
+        };
 
         public static void Initialize()
         {
-            Mobile.SkillCheckLocationHandler = XmlSpawnerSkillCheck.Mobile_SkillCheckLocation;
-            Mobile.SkillCheckDirectLocationHandler = XmlSpawnerSkillCheck.Mobile_SkillCheckDirectLocation;
+            Mobile.SkillCheckLocationHandler = Mobile_SkillCheckLocation;
+            Mobile.SkillCheckDirectLocationHandler = Mobile_SkillCheckDirectLocation;
 
-            Mobile.SkillCheckTargetHandler = XmlSpawnerSkillCheck.Mobile_SkillCheckTarget;
-            Mobile.SkillCheckDirectTargetHandler = XmlSpawnerSkillCheck.Mobile_SkillCheckDirectTarget;
+            Mobile.SkillCheckTargetHandler = Mobile_SkillCheckTarget;
+            Mobile.SkillCheckDirectTargetHandler = Mobile_SkillCheckDirectTarget;
         }
 
         public static bool Mobile_SkillCheckLocation(Mobile from, SkillName skillName, double minSkill, double maxSkill)
@@ -178,8 +175,10 @@ namespace Server.Misc
         /// using this currently is UseAllRes for CraftItem.cs
         /// </summary>
         /// <param name="from"></param>
-        /// <param name="skill"></param>
+        /// <param name="maxSkill"></param>
         /// <param name="amount"></param>
+        /// <param name="sk"></param>
+        /// <param name="minSkill"></param>
         /// <returns></returns>
         public static bool CheckSkill(Mobile from, SkillName sk, double minSkill, double maxSkill, int amount)
         {
@@ -311,7 +310,7 @@ namespace Server.Misc
 
         private static bool AllowGain(Mobile from, Skill skill, object obj)
         {
-            if (Server.Engines.VvV.ViceVsVirtueSystem.InSkillLoss(from)) //Changed some time between the introduction of AoS and SE.
+            if (Engines.VvV.ViceVsVirtueSystem.InSkillLoss(from)) //Changed some time between the introduction of AoS and SE.
                 return false;
 
             if (from is PlayerMobile)
@@ -319,7 +318,7 @@ namespace Server.Misc
                 if (skill.Info.SkillID == (int)SkillName.Archery && from.Race == Race.Gargoyle)
                     return false;
 
-                if (skill.Info.SkillID == (int)SkillName.Throwing && @from.Race != Race.Gargoyle)
+                if (skill.Info.SkillID == (int)SkillName.Throwing && from.Race != Race.Gargoyle)
                     return false;
 
                 if (_AntiMacroCode && UseAntiMacro[skill.Info.SkillID])
@@ -397,7 +396,7 @@ namespace Server.Misc
                 #endregion
 
                 #region Skill Masteries
-                else if (from is BaseCreature && !(from is Server.Engines.Despise.DespiseCreature) && (((BaseCreature)from).Controlled || ((BaseCreature)from).Summoned))
+                else if (from is BaseCreature && !(from is Engines.Despise.DespiseCreature) && (((BaseCreature)from).Controlled || ((BaseCreature)from).Summoned))
                 {
                     Mobile master = ((BaseCreature)from).GetMaster();
 
@@ -530,11 +529,13 @@ namespace Server.Misc
             switch (stat)
             {
                 case Stat.Str:
-                    return (from.StrLock == StatLockType.Down && from.RawStr > 10);
+                    return from.StrLock == StatLockType.Down && from.RawStr > 10;
+
                 case Stat.Dex:
-                    return (from.DexLock == StatLockType.Down && from.RawDex > 10);
+                    return from.DexLock == StatLockType.Down && from.RawDex > 10;
+
                 case Stat.Int:
-                    return (from.IntLock == StatLockType.Down && from.RawInt > 10);
+                    return from.IntLock == StatLockType.Down && from.RawInt > 10;
             }
 
             return false;
@@ -551,12 +552,12 @@ namespace Server.Misc
                         {
                             return CanLower(from, Stat.Dex) || CanLower(from, Stat.Int);
                         }
-                        else
-                        {
-                            return true;
-                        }
+
+                        return true;
                     }
+
                     return false;
+
                 case Stat.Dex:
                     if (from.RawDex < from.DexCap)
                     {
@@ -564,12 +565,12 @@ namespace Server.Misc
                         {
                             return CanLower(from, Stat.Str) || CanLower(from, Stat.Int);
                         }
-                        else
-                        {
-                            return true;
-                        }
+
+                        return true;
                     }
+
                     return false;
+
                 case Stat.Int:
                     if (from.RawInt < from.IntCap)
                     {
@@ -577,11 +578,10 @@ namespace Server.Misc
                         {
                             return CanLower(from, Stat.Str) || CanLower(from, Stat.Dex);
                         }
-                        else
-                        {
-                            return true;
-                        }
+
+                        return true;
                     }
+
                     return false;
             }
 
@@ -694,10 +694,10 @@ namespace Server.Misc
                     {
                         if (from is BaseCreature && ((BaseCreature)from).Controlled)
                         {
-                            if ((from.LastStrGain + _PetStatGainDelay) >= DateTime.UtcNow)
+                            if (from.LastStrGain + _PetStatGainDelay >= DateTime.UtcNow)
                                 return false;
                         }
-                        else if ((from.LastStrGain + _StatGainDelay) >= DateTime.UtcNow)
+                        else if (from.LastStrGain + _StatGainDelay >= DateTime.UtcNow)
                             return false;
 
                         from.LastStrGain = DateTime.UtcNow;
@@ -707,10 +707,10 @@ namespace Server.Misc
                     {
                         if (from is BaseCreature && ((BaseCreature)from).Controlled)
                         {
-                            if ((from.LastDexGain + _PetStatGainDelay) >= DateTime.UtcNow)
+                            if (from.LastDexGain + _PetStatGainDelay >= DateTime.UtcNow)
                                 return false;
                         }
-                        else if ((from.LastDexGain + _StatGainDelay) >= DateTime.UtcNow)
+                        else if (from.LastDexGain + _StatGainDelay >= DateTime.UtcNow)
                             return false;
 
                         from.LastDexGain = DateTime.UtcNow;
@@ -720,10 +720,10 @@ namespace Server.Misc
                     {
                         if (from is BaseCreature && ((BaseCreature)from).Controlled)
                         {
-                            if ((from.LastIntGain + _PetStatGainDelay) >= DateTime.UtcNow)
+                            if (from.LastIntGain + _PetStatGainDelay >= DateTime.UtcNow)
                                 return false;
                         }
-                        else if ((from.LastIntGain + _StatGainDelay) >= DateTime.UtcNow)
+                        else if (from.LastIntGain + _StatGainDelay >= DateTime.UtcNow)
                             return false;
 
                         from.LastIntGain = DateTime.UtcNow;

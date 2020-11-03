@@ -20,7 +20,7 @@ namespace Server.Mobiles
         public DateTime NextPay { get; set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public int Pay { get { return PerDayCost(); } }
+        public int Pay => PerDayCost();
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int HoldGold { get; set; }
@@ -367,7 +367,6 @@ namespace Server.Mobiles
 
                 if (!Instance.Hires.Contains(hire))
                 {
-                    Console.WriteLine("ADding hire: {0}", hire);
                     Instance.Hires.Add(hire);
                 }
             }
@@ -381,7 +380,6 @@ namespace Server.Mobiles
 
                 if (Instance.Hires.Contains(hire))
                 {
-                    Console.WriteLine("Removing Hire: {0}", hire);
                     Instance.Hires.Remove(hire);
 
                     if (Instance.Hires.Count == 0)

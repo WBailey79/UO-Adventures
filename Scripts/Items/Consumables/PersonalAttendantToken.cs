@@ -1,6 +1,5 @@
 ﻿using Server.Gumps;
 using Server.Network;
-using System;
 
 namespace Server.Items
 {
@@ -35,7 +34,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            list.Add(1070998, String.Format("#{0}", 1075997));  // Use this to redeem<br>Personal Attendant
+            list.Add(1070998, string.Format("#{0}", 1075997));  // Use this to redeem<br>Personal Attendant
         }
 
         public override void Serialize(GenericWriter writer)

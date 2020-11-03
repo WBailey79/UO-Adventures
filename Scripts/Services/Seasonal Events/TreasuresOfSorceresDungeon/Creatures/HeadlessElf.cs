@@ -1,4 +1,3 @@
-
 using Server.Mobiles;
 
 namespace Server.Engines.SorcerersDungeon
@@ -47,8 +46,8 @@ namespace Server.Engines.SorcerersDungeon
             SetSkill(SkillName.Meditation, 110, 120);
             SetSkill(SkillName.Focus, 120, 130);
 
-            Fame = 12000;
-            Karma = -12000;
+            Fame = 16000;
+            Karma = -16000;
 
             SetMagicalAbility(MagicalAbility.WrestlingMastery);
         }
@@ -58,6 +57,7 @@ namespace Server.Engines.SorcerersDungeon
         {
         }
 
+        public override bool CanFlee => false;
         public override bool AlwaysMurderer => true;
         public override Poison PoisonImmune => Poison.Deadly;
 

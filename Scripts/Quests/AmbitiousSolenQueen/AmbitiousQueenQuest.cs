@@ -6,21 +6,6 @@ namespace Server.Engines.Quests.Ambitious
 {
     public class AmbitiousQueenQuest : QuestSystem
     {
-        private static readonly Type[] m_TypeReferenceTable = new Type[]
-        {
-            typeof(Ambitious.DontOfferConversation),
-            typeof(Ambitious.AcceptConversation),
-            typeof(Ambitious.DuringKillQueensConversation),
-            typeof(Ambitious.GatherFungiConversation),
-            typeof(Ambitious.DuringFungiGatheringConversation),
-            typeof(Ambitious.EndConversation),
-            typeof(Ambitious.FullBackpackConversation),
-            typeof(Ambitious.End2Conversation),
-            typeof(Ambitious.KillQueensObjective),
-            typeof(Ambitious.ReturnAfterKillsObjective),
-            typeof(Ambitious.GatherFungiObjective),
-            typeof(Ambitious.GetRewardObjective)
-        };
         private bool m_RedSolen;
         public AmbitiousQueenQuest(PlayerMobile from, bool redSolen)
             : base(from)
@@ -33,7 +18,6 @@ namespace Server.Engines.Quests.Ambitious
         {
         }
 
-        public override Type[] TypeReferenceTable => m_TypeReferenceTable;
         public override object Name =>
                 // Ambitious Solen Queen Quest
                 1054146;

@@ -10,8 +10,8 @@ namespace Server.Engines.CannedEvil
 {
     public class ChampionSystem
     {
-        private static bool m_Enabled = false;
-        private static bool m_Initialized = false;
+        private static bool m_Enabled;
+        private static bool m_Initialized;
         private static readonly string m_Path = Path.Combine("Saves", "Champions", "ChampionSystem.bin");
         private static readonly string m_ConfigPath = Path.Combine("Config", "ChampionSpawns.xml");
         private static DateTime m_LastRotate;
@@ -82,9 +82,11 @@ namespace Server.Engines.CannedEvil
             m_StatScrollAmount = Config.Get("Champions.StatScrolls", 16);
             m_ScrollChance = Config.Get("Champions.ScrollChance", 0.1d) / 100.0d;
             m_TranscendenceChance = Config.Get("Champions.TranscendenceChance", 50.0d) / 100.0d;
+
             int rank2 = Config.Get("Champions.Rank2RedSkulls", 5);
             int rank3 = Config.Get("Champions.Rank3RedSkulls", 10);
             int rank4 = Config.Get("Champions.Rank4RedSkulls", 10);
+
             for (int i = 0; i < m_Rank.Length; ++i)
             {
                 if (i < rank2)
@@ -96,10 +98,12 @@ namespace Server.Engines.CannedEvil
                 else
                     m_Rank[i] = 3;
             }
+
             m_MaxKill[0] = Config.Get("Champions.Rank1MaxKills", 256);
             m_MaxKill[1] = Config.Get("Champions.Rank2MaxKills", 128);
             m_MaxKill[2] = Config.Get("Champions.Rank3MaxKills", 64);
             m_MaxKill[3] = Config.Get("Champions.Rank4MaxKills", 32);
+
             EventSink.WorldLoad += EventSink_WorldLoad;
             EventSink.WorldSave += EventSink_WorldSave;
         }
@@ -171,6 +175,7 @@ namespace Server.Engines.CannedEvil
         public static void DelSpawns_OnCommand(CommandEventArgs e)
         {
             RemoveSpawns();
+            m_Initialized = false;
             e.Mobile.SendMessage("Champ Spawns Removed!");
         }
 
@@ -193,8 +198,10 @@ namespace Server.Engines.CannedEvil
             {
                 if (node.Name.Equals("spawn"))
                 {
-                    spawn = new ChampionSpawn();
-                    spawn.SpawnName = GetAttr(node, "name", "Unamed Spawner");
+                    spawn = new ChampionSpawn
+                    {
+                        SpawnName = GetAttr(node, "name", "Unamed Spawner")
+                    };
                     string value = GetAttr(node, "type", null);
 
                     if (value == null)
@@ -278,7 +285,7 @@ namespace Server.Engines.CannedEvil
 
         private static void Rotate()
         {
-            Dictionary<String, List<ChampionSpawn>> groups = new Dictionary<string, List<ChampionSpawn>>();
+            Dictionary<string, List<ChampionSpawn>> groups = new Dictionary<string, List<ChampionSpawn>>();
             m_LastRotate = DateTime.UtcNow;
 
             foreach (ChampionSpawn spawn in m_AllSpawns.Where(spawn => spawn != null && !spawn.Deleted))
@@ -342,7 +349,7 @@ namespace Server.Engines.CannedEvil
             private static readonly int[] gTab;
             private static readonly int gWidth;
 
-            public List<ChampionSpawn> Spawners { get; set; }
+            public List<ChampionSpawn> Spawners { get; }
 
             static ChampionSystemGump()
             {

@@ -330,7 +330,7 @@ namespace Server.Spells
         public static bool AddStatBonus(Mobile caster, Mobile target, StatType type, int bonus, TimeSpan duration)
         {
             int offset = bonus;
-            string name = String.Format("[Magic] {0} Buff", type);
+            string name = string.Format("[Magic] {0} Buff", type);
 
             StatMod mod = target.GetStatMod(name);
 
@@ -347,7 +347,7 @@ namespace Server.Spells
 
         public static int GetBuffOffset(Mobile m, StatType type)
         {
-            string name = String.Format("[Magic] {0} Buff", type);
+            string name = string.Format("[Magic] {0} Buff", type);
 
             StatMod mod = m.GetStatMod(name);
 
@@ -372,7 +372,7 @@ namespace Server.Spells
         public static bool AddStatCurse(Mobile caster, Mobile target, StatType type, int curse, TimeSpan duration)
         {
             int offset = curse;
-            string name = String.Format("[Magic] {0} Curse", type);
+            string name = string.Format("[Magic] {0} Curse", type);
 
             StatMod mod = target.GetStatMod(name);
 
@@ -389,7 +389,7 @@ namespace Server.Spells
         {
             int span = (((6 * caster.Skills.EvalInt.Fixed) / 50) + 1);
 
-            if (caster.Spell is CurseSpell && Spells.SkillMasteries.ResilienceSpell.UnderEffects(target))
+            if (caster.Spell is CurseSpell && SkillMasteries.ResilienceSpell.UnderEffects(target))
                 span /= 2;
 
             return TimeSpan.FromSeconds(span);
@@ -397,7 +397,7 @@ namespace Server.Spells
 
         public static int GetCurseOffset(Mobile m, StatType type)
         {
-            string name = String.Format("[Magic] {0} Curse", type);
+            string name = string.Format("[Magic] {0} Curse", type);
 
             StatMod mod = m.GetStatMod(name);
 
@@ -478,84 +478,60 @@ namespace Server.Spells
                 return true;
             }
 
-            if (to.Hidden && to.AccessLevel > from.AccessLevel)
+            if (to.Hidden && to.AccessLevel > from.AccessLevel || Engines.ArenaSystem.PVPArenaSystem.IsFriendly(from, to))
             {
                 return false;
             }
 
-            if (Server.Engines.ArenaSystem.PVPArenaSystem.IsFriendly(from, to))
+            CheckResponsible(ref from);
+            CheckResponsible(ref to);
+
+            var noto = Notoriety.Compute(from, to);
+
+            if (noto == Notoriety.Enemy)
+            {
+                return true;
+            }
+
+            if (IsGuildAllyOrParty(from, to))
             {
                 return false;
             }
 
-            if (from is BaseCreature && ((BaseCreature)from).GetMaster() != null)
+            var toCreature = to as BaseCreature;
+
+            if (toCreature != null && (toCreature.Controlled || toCreature.Summoned))
             {
-                from = ((BaseCreature)from).GetMaster();
-            }
+                var master = toCreature.GetMaster();
 
-            if (to is BaseCreature && ((BaseCreature)to).GetMaster() != null)
-            {
-                to = ((BaseCreature)to).GetMaster();
-            }
-
-            Guild fromGuild = GetGuildFor(from);
-            Guild toGuild = GetGuildFor(to);
-
-            if (fromGuild != null && toGuild != null && (fromGuild == toGuild || fromGuild.IsAlly(toGuild)))
-            {
-                return false;
-            }
-
-            Party p = Party.Get(from);
-
-            if (p != null && p.Contains(to))
-            {
-                return false;
-            }
-
-            if (to is BaseCreature)
-            {
-                BaseCreature c = (BaseCreature)to;
-
-                if (c.Controlled || c.Summoned)
+                if (master == from || IsParty(master, from))
                 {
-                    if (c.ControlMaster == from || c.SummonMaster == from)
-                    {
-                        return false;
-                    }
-
-                    if (p != null && (p.Contains(c.ControlMaster) || p.Contains(c.SummonMaster)))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
-            if (from is BaseCreature)
-            {
-                BaseCreature c = (BaseCreature)from;
+            var fromCreature = from as BaseCreature;
 
-                if (c.Controlled || c.Summoned)
+            if (fromCreature != null)
+            {
+                if (fromCreature.Controlled || fromCreature.Summoned)
                 {
-                    if (c.ControlMaster == to || c.SummonMaster == to)
+                    var master = fromCreature.GetMaster();
+
+                    if (master == to)
                     {
                         return false;
                     }
 
-                    p = Party.Get(to);
-
-                    if (p != null && (p.Contains(c.ControlMaster) || p.Contains(c.SummonMaster)))
+                    if (IsParty(master, to))
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    if (to.Player)
-                    {
-                        return true;
-                    }
-                    if (to is BaseCreature && (((BaseCreature)to).Controlled || ((BaseCreature)to).Summoned) && ((BaseCreature)to).GetMaster() is PlayerMobile)
+                    if (to.Player ||
+                        (toCreature != null && (toCreature.Controlled || toCreature.Summoned) && toCreature.GetMaster() is PlayerMobile))
                     {
                         return true;
                     }
@@ -563,35 +539,69 @@ namespace Server.Spells
             }
 
             // Non-enemy monsters will no longer flag area spells on each other
-            if (from is BaseCreature && to is BaseCreature)
+            if (fromCreature != null && toCreature != null)
             {
-                BaseCreature fromBC = (BaseCreature)from;
-                BaseCreature toBC = (BaseCreature)to;
+                if (fromCreature.GetMaster() is BaseCreature)
+                {
+                    fromCreature = fromCreature.GetMaster() as BaseCreature;
+                }
 
-                if (fromBC.GetMaster() is BaseCreature)
-                    fromBC = fromBC.GetMaster() as BaseCreature;
+                if (toCreature.GetMaster() is BaseCreature)
+                {
+                    toCreature = toCreature.GetMaster() as BaseCreature;
+                }
 
-                if (toBC.GetMaster() is BaseCreature)
-                    toBC = toBC.GetMaster() as BaseCreature;
-
-                if (toBC.IsEnemy(fromBC))   //Natural Enemies
+                if (toCreature.IsEnemy(fromCreature))   //Natural Enemies
                 {
                     return true;
                 }
 
                 //All involved are monsters- no damage. If falls through this statement, normal noto rules apply
-                if (!toBC.Controlled && !toBC.Summoned && !fromBC.Controlled && !fromBC.Summoned) //All involved are monsters- no damage
+                if (!toCreature.Controlled && !toCreature.Summoned && !fromCreature.Controlled && !fromCreature.Summoned) //All involved are monsters- no damage
                 {
                     return false;
                 }
             }
 
-            if (to is BaseCreature && !((BaseCreature)to).Controlled && ((BaseCreature)to).InitialInnocent)
+            if (toCreature != null && !toCreature.Controlled && toCreature.InitialInnocent)
             {
                 return true;
             }
 
-            return (Notoriety.Compute(from, to) != Notoriety.Innocent || from.Murderer);
+            return (noto != Notoriety.Innocent || from.Murderer);
+        }
+
+        public static bool CheckResponsible(ref Mobile m)
+        {
+            var bc = m as BaseCreature;
+
+            if (bc != null && bc.GetMaster() != null)
+            {
+                m = bc.GetMaster();
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsGuildAllyOrParty(Mobile from, Mobile to)
+        {
+            return IsGuild(from, to) || IsParty(from, to);
+        }
+
+        public static bool IsGuild(Mobile from, Mobile to)
+        {
+            Guild fromGuild = GetGuildFor(from);
+            Guild toGuild = GetGuildFor(to);
+
+            return fromGuild != null && toGuild != null && (fromGuild == toGuild || fromGuild.IsAlly(toGuild));
+        }
+
+        public static bool IsParty(Mobile from, Mobile to)
+        {
+            Party p = Party.Get(from);
+
+            return p != null && p.Contains(to);
         }
 
         public static IEnumerable<IDamageable> AcquireIndirectTargets(Mobile caster, IPoint3D p, Map map, int range)
@@ -620,7 +630,7 @@ namespace Server.Spells
                     continue;
                 }
 
-                if (id is Mobile && !SpellHelper.ValidIndirectTarget(caster, (Mobile)id))
+                if (id is Mobile && !ValidIndirectTarget(caster, (Mobile)id))
                 {
                     continue;
                 }
@@ -669,7 +679,7 @@ namespace Server.Spells
 
             Point3D p = new Point3D(caster);
 
-            if (SpellHelper.FindValidSpawnLocation(map, ref p, true))
+            if (FindValidSpawnLocation(map, ref p, true))
             {
                 BaseCreature.Summon(creature, summoned, caster, p, sound, duration);
                 return;
@@ -808,12 +818,12 @@ namespace Server.Spells
                 if (caster.IsPlayer())
                 {
                     // Jail region
-                    if (caster.Region.IsPartOf<Regions.Jail>())
+                    if (caster.Region.IsPartOf<Jail>())
                     {
                         caster.SendLocalizedMessage(1114345); // You'll need a better jailbreak plan than that!
                         return false;
                     }
-                    else if (caster.Region is Regions.GreenAcres)
+                    else if (caster.Region is GreenAcres)
                     {
                         caster.SendLocalizedMessage(502360); // You cannot teleport into that area.
                         return false;
@@ -887,7 +897,7 @@ namespace Server.Spells
                 m.SendLocalizedMessage(1005564, "", 0x22); // Wouldst thou flee during the heat of battle??
                 return false;
             }
-            else if (Server.Misc.WeightOverloading.IsOverloaded(m))
+            else if (WeightOverloading.IsOverloaded(m))
             {
                 m.SendLocalizedMessage(502359, "", 0x22); // Thou art too encumbered to move.
                 return false;
@@ -1363,7 +1373,7 @@ namespace Server.Spells
                 int damageGiven = AOS.Damage(damageable, from, iDamage, phys, fire, cold, pois, nrgy, chaos, direct, dtype);
 
                 if (target != null)
-                    Spells.Mysticism.SpellPlagueSpell.OnMobileDamaged(target);
+                    Mysticism.SpellPlagueSpell.OnMobileDamaged(target);
 
                 if (target != null && target.DFA != DFAlgorithm.Standard)
                 {
@@ -1524,7 +1534,7 @@ namespace Server.Spells
                 }
 
                 if (target != null)
-                    Spells.Mysticism.SpellPlagueSpell.OnMobileDamaged(target);
+                    Mysticism.SpellPlagueSpell.OnMobileDamaged(target);
 
                 if (m_Spell != null)
                     m_Spell.RemoveDelayedDamageContext(m_Target);
@@ -1539,6 +1549,8 @@ namespace Server.Spells
 
     public class TransformationSpellHelper
     {
+        private static readonly string _TimerID = "TransformSpell";
+
         #region Context Stuff
         private static readonly Dictionary<Mobile, TransformContext> m_Table = new Dictionary<Mobile, TransformContext>();
 
@@ -1572,7 +1584,7 @@ namespace Server.Spells
                     m.BodyMod = 0;
                 }
 
-                context.Timer.Stop();
+                TimerRegistry.RemoveFromRegistry(_TimerID, context.Spell);
                 context.Spell.RemoveEffect(m);
             }
         }
@@ -1702,7 +1714,7 @@ namespace Server.Spells
 
                     if (!((Body)transformSpell.Body).IsHuman)
                     {
-                        Mobiles.IMount mt = caster.Mount;
+                        IMount mt = caster.Mount;
 
                         if (mt != null)
                             mt.Rider = null;
@@ -1716,15 +1728,31 @@ namespace Server.Spells
 
                     transformSpell.DoEffect(caster);
 
-                    Timer timer = new TransformTimer(caster, transformSpell);
-                    timer.Start();
+                    TimerRegistry.Register(_TimerID, transformSpell, TimeSpan.FromSeconds(transformSpell.TickRate), TimeSpan.FromSeconds(transformSpell.TickRate), false, transSpell => OnTick(transSpell));
 
-                    AddContext(caster, new TransformContext(timer, mods, ourType, transformSpell));
+                    AddContext(caster, new TransformContext(mods, ourType, transformSpell));
                     return true;
                 }
             }
 
             return false;
+        }
+
+        public static void OnTick(ITransformationSpell spell)
+        {
+            if (spell is Spell s)
+            {
+                var m = s.Caster;
+
+                if (m.Deleted || !m.Alive || m.Body != spell.Body || (m.Hue != spell.Hue && !BestialSetHelper.IsBerserk(m)))
+                {
+                    RemoveContext(m, true);
+                }
+                else
+                {
+                    spell.OnTick(m);
+                }
+            }
         }
     }
 
@@ -1749,50 +1777,19 @@ namespace Server.Spells
 
     public class TransformContext
     {
-        private readonly Timer m_Timer;
         private readonly List<ResistanceMod> m_Mods;
         private readonly Type m_Type;
         private readonly ITransformationSpell m_Spell;
 
-        public Timer Timer => m_Timer;
         public List<ResistanceMod> Mods => m_Mods;
         public Type Type => m_Type;
         public ITransformationSpell Spell => m_Spell;
 
-        public TransformContext(Timer timer, List<ResistanceMod> mods, Type type, ITransformationSpell spell)
+        public TransformContext(List<ResistanceMod> mods, Type type, ITransformationSpell spell)
         {
-            m_Timer = timer;
             m_Mods = mods;
             m_Type = type;
             m_Spell = spell;
-        }
-    }
-
-    public class TransformTimer : Timer
-    {
-        private readonly Mobile m_Mobile;
-        private readonly ITransformationSpell m_Spell;
-
-        public TransformTimer(Mobile from, ITransformationSpell spell)
-            : base(TimeSpan.FromSeconds(spell.TickRate), TimeSpan.FromSeconds(spell.TickRate))
-        {
-            m_Mobile = from;
-            m_Spell = spell;
-
-            Priority = TimerPriority.TwoFiftyMS;
-        }
-
-        protected override void OnTick()
-        {
-            if (m_Mobile.Deleted || !m_Mobile.Alive || m_Mobile.Body != m_Spell.Body || (m_Mobile.Hue != m_Spell.Hue && !BestialSetHelper.IsBerserk(m_Mobile)))
-            {
-                TransformationSpellHelper.RemoveContext(m_Mobile, true);
-                Stop();
-            }
-            else
-            {
-                m_Spell.OnTick(m_Mobile);
-            }
         }
     }
 }

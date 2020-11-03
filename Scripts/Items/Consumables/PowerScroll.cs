@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Server.Items
@@ -95,7 +94,7 @@ namespace Server.Items
                 return 0;
             }
         }
-        public override string DefaultTitle => String.Format("<basefont color=#FFFFFF>Power Scroll ({0} Skill):</basefont>", Value);
+        public override string DefaultTitle => string.Format("<basefont color=#FFFFFF>Power Scroll ({0} Skill):</basefont>", Value);
         public static PowerScroll CreateRandom(int min, int max)
         {
             min /= 5;

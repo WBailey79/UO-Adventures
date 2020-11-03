@@ -128,9 +128,10 @@ namespace Server.Spells.SkillMasteries
 
                     if (casterFocus != null)
                     {
-                        ArcaneFocus f = new ArcaneFocus(casterFocus.LifeSpan, casterFocus.StrengthBonus);
-                        f.CreationTime = casterFocus.CreationTime;
-                        f.Movable = false;
+                        ArcaneFocus f = new ArcaneFocus(casterFocus.TimeLeft, casterFocus.StrengthBonus)
+                        {
+                            Movable = false
+                        };
 
                         PackItem(f);
                     }

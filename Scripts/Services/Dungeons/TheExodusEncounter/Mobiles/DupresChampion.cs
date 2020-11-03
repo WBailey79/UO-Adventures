@@ -1,4 +1,3 @@
-using System;
 using Server.Items;
 
 namespace Server.Mobiles
@@ -36,69 +35,78 @@ namespace Server.Mobiles
             SetSkill(SkillName.Tactics, 195.0, 220.0);
             SetSkill(SkillName.Wrestling, 195.0, 220.0);
 
-            Item cutlass = new Cutlass();
-            cutlass.LootType = LootType.Blessed;
+            Item cutlass = new Cutlass
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(cutlass);
 
-            Item ph = new PlateHelm();
-            ph.LootType = LootType.Blessed;
-            ph.Hue = 0x8A5; // gold
+            Item ph = new PlateHelm
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(ph);
 
-            Item pa = new PlateArms();
-            pa.LootType = LootType.Blessed;
-            pa.Hue = 0x8A5; // gold
+            Item pa = new PlateArms
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(pa);
 
-            Item pg = new PlateGorget();
-            pg.LootType = LootType.Blessed;
-            pg.Hue = 0x8A5; // gold
+            Item pg = new PlateGorget
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(pg);
 
-            Item pgl = new PlateGloves();
-            pgl.LootType = LootType.Blessed;
-            pgl.Hue = 0x8A5; // gold
+            Item pgl = new PlateGloves
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(pgl);
 
-            Item pl = new PlateLegs();
-            pl.LootType = LootType.Blessed;
-            pl.Hue = 0x8A5; // gold
+            Item pl = new PlateLegs
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(pl);
 
-            Item pc = new PlateChest();
-            pc.LootType = LootType.Blessed;
-            pc.Hue = 0x8A5; // gold
+            Item pc = new PlateChest
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x8A5 // gold
+            };
             SetWearable(pc);
 
-            Item mks = new MetalKiteShield();
-            mks.LootType = LootType.Blessed;
-            mks.Hue = 0x776;
+            Item mks = new MetalKiteShield
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x776
+            };
             SetWearable(mks);
 
-            Item bs = new BodySash(0x486); // dark purple
-            bs.LootType = LootType.Blessed;
+            Item bs = new BodySash(0x486)
+            {
+                LootType = LootType.Blessed
+            }; // dark purple
             SetWearable(bs);
 
-            Item cloak = new Cloak(0x486); // dark purple
-            cloak.LootType = LootType.Blessed;
-            SetWearable(cloak);
-        }
-
-        public override void OnKilledBy(Mobile m)
-        {
-            base.OnKilledBy(m);
-
-            if (Utility.RandomDouble() < 0.1)
+            Item cloak = new Cloak(0x486)
             {
-                ExodusChest.GiveRituelItem(m);
-            }
+                LootType = LootType.Blessed
+            }; // dark purple
+            SetWearable(cloak);
         }
 
         public override void GenerateLoot()
         {
-            AddLoot(LootPack.RandomLootItem(new Type[] { typeof(ExodusSummoningRite), typeof(ExodusSacrificalDagger), typeof(RobeofRite), typeof(ExodusSummoningAlter) }, 1.0, 1, false, false));
             AddLoot(LootPack.LootGold(400, 600));
-    }
+        }
 
         public override bool CanBeParagon => false;
 
@@ -120,7 +128,7 @@ namespace Server.Mobiles
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

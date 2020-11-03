@@ -3,7 +3,6 @@ using Server.Gumps;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Prompts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -61,11 +60,11 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Using { get; set; }
 
-        public List<RecipeScrollDefinition> Recipes;
+        public List<RecipeScrollDefinition> Recipes { get; set; }
 
         public RecipeScrollFilter Filter { get; set; }
 
-        public static RecipeScrollDefinition[] Definitions = new RecipeScrollDefinition[]
+        public RecipeScrollDefinition[] Definitions = new RecipeScrollDefinition[]
         {
             new RecipeScrollDefinition(1, 501, Expansion.ML, RecipeSkillName.Tailoring),
             new RecipeScrollDefinition(2, 502, Expansion.ML, RecipeSkillName.Tailoring),
@@ -354,11 +353,10 @@ namespace Server.Items
 
                 if (Recipes.Any(x => x.RecipeID == recipe.RecipeID))
                 {
-
                     Recipes.ForEach(x =>
                     {
                         if (x.RecipeID == recipe.RecipeID)
-                            x.Amount = x.Amount + 1;
+                            x.Amount += 1;
                     });
 
                     InvalidateProperties();
@@ -454,7 +452,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            list.Add(1158849, String.Format("{0}", Recipes.Sum(x => x.Amount))); // Recipes in book: ~1_val~
+            list.Add(1158849, string.Format("{0}", Recipes.Sum(x => x.Amount))); // Recipes in book: ~1_val~
 
             if (BookName != null && BookName.Length > 0)
                 list.Add(1062481, BookName);

@@ -98,7 +98,7 @@ namespace Server.Mobiles
         public void ChangeCombatant()
         {
             ForceReacquire();
-            BeginFlee(TimeSpan.FromSeconds(2.5));
+            ForceFleeUntil = DateTime.UtcNow + TimeSpan.FromSeconds(2.5);
         }
 
         public override void OnThink()
@@ -330,8 +330,8 @@ namespace Server.Mobiles
 
                     m.Location = to;
 
-                    Server.Spells.SpellHelper.Turn(m_Owner, toTeleport);
-                    Server.Spells.SpellHelper.Turn(toTeleport, m_Owner);
+                    Spells.SpellHelper.Turn(m_Owner, toTeleport);
+                    Spells.SpellHelper.Turn(toTeleport, m_Owner);
 
                     m.ProcessDelta();
 
@@ -447,10 +447,11 @@ namespace Server.Mobiles
 
             for (int i = 0; i < newShadowDwellers; ++i)
             {
-                ShadowDweller shadowdweller = new ShadowDweller();
-
-                shadowdweller.Team = Team;
-                shadowdweller.FightMode = FightMode.Closest;
+                ShadowDweller shadowdweller = new ShadowDweller
+                {
+                    Team = Team,
+                    FightMode = FightMode.Closest
+                };
 
                 bool validLocation = false;
                 Point3D loc = Location;

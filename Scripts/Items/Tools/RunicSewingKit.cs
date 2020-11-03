@@ -1,5 +1,4 @@
 using Server.Engines.Craft;
-using System;
 
 namespace Server.Items
 {
@@ -36,7 +35,7 @@ namespace Server.Items
                 int num = CraftResources.GetLocalizationNumber(Resource);
 
                 if (num > 0)
-                    v = String.Format("#{0}", num);
+                    v = string.Format("#{0}", num);
                 else
                     v = CraftResources.GetName(Resource);
             }

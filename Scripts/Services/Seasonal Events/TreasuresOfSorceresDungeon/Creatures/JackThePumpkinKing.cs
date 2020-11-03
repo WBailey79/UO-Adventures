@@ -4,15 +4,15 @@ using System;
 
 namespace Server.Engines.SorcerersDungeon
 {
-    [CorpseName("the corpse of jack the pumpkin king")]
+    [CorpseName("the corpse of Jack the Pumpkin King")]
     public class JackThePumpkinKing : BaseCreature
     {
         [Constructable]
         public JackThePumpkinKing()
             : base(AIType.AI_NecroMage, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
-            Name = "jack";
-            Title = "the pumpkin king";
+            Name = "Jack";
+            Title = "the Pumpkin King";
             Body = 0x190;
             Hue = Race.RandomSkinHue();
 
@@ -20,9 +20,9 @@ namespace Server.Engines.SorcerersDungeon
             SetDex(200);
             SetInt(1200);
 
-            SetHits(26000);
+            SetHits(8000);
 
-            SetDamage(22, 26);
+            SetDamage(21, 27);
 
             SetDamageType(ResistanceType.Physical, 100);
 
@@ -45,8 +45,8 @@ namespace Server.Engines.SorcerersDungeon
             SetSkill(SkillName.Meditation, 120);
             SetSkill(SkillName.Focus, 70, 80);
 
-            Fame = 12000;
-            Karma = -12000;
+            Fame = 16000;
+            Karma = -16000;
 
             SetWearable(new ClothNinjaHood(), 1281);
             SetWearable(new BoneChest(), 1175);
@@ -58,7 +58,6 @@ namespace Server.Engines.SorcerersDungeon
 
         private bool m_InHere;
 
-        // gleefully stolen from DemonKnight
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
             if (from != null && from != this && !m_InHere)
@@ -100,11 +99,12 @@ namespace Server.Engines.SorcerersDungeon
                         continue;
                 }
 
-                UnholyPumpkin bone = new UnholyPumpkin();
-
-                bone.Hue = 0;
-                bone.Name = "unholy pumpkin";
-                bone.ItemID = Utility.RandomMinMax(0xC6A, 0xC6C);
+                UnholyPumpkin bone = new UnholyPumpkin
+                {
+                    Hue = 0,
+                    Name = "unholy pumpkin",
+                    ItemID = Utility.RandomMinMax(0xC6A, 0xC6C)
+                };
 
                 bone.MoveToWorld(new Point3D(x, y, z), map);
             }
@@ -115,6 +115,7 @@ namespace Server.Engines.SorcerersDungeon
         {
         }
 
+        public override bool CanFlee => false;
         public override bool AlwaysMurderer => true;
         public override Poison PoisonImmune => Poison.Deadly;
 
@@ -202,7 +203,7 @@ namespace Server.Engines.SorcerersDungeon
             public SpawnTimer(Item item)
                 : base(TimeSpan.FromSeconds(Utility.RandomMinMax(5, 10)))
             {
-                Priority = TimerPriority.FiftyMS;
+                Priority = TimerPriority.OneSecond;
 
                 m_Item = item;
             }

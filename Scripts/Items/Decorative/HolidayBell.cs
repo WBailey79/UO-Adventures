@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Server.Items
+﻿namespace Server.Items
 {
     public class HolidayBell : Item
     {
@@ -82,7 +80,7 @@ namespace Server.Items
                 m_Maker = value;
             }
         }
-        public override string DefaultName => String.Format("A Holiday Bell From {0}", Giver);
+        public override string DefaultName => string.Format("A Holiday Bell From {0}", Giver);
         public override void OnDoubleClick(Mobile from)
         {
             if (!from.InRange(GetWorldLocation(), 2))

@@ -2,7 +2,6 @@ using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Multis;
 using Server.Network;
-using System;
 
 namespace Server.Items
 {
@@ -333,7 +332,7 @@ namespace Server.Items
         {
             base.AddNameProperty(list);
 
-            if (!String.IsNullOrEmpty(EngravedText))
+            if (!string.IsNullOrEmpty(EngravedText))
             {
                 list.Add(1072305, Utility.FixHtml(EngravedText)); // Engraved: ~1_INSCRIPTION~
             }

@@ -1,6 +1,5 @@
 using Server.Gumps;
 using Server.Network;
-using System;
 
 namespace Server.Items
 {
@@ -31,7 +30,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            list.Add(1070998, String.Format("#{0}", 1158657)); // Use this to redeem<br>your ~1_PROMO~
+            list.Add(1070998, string.Format("#{0}", 1158657)); // Use this to redeem<br>your ~1_PROMO~
         }
 
         public override void OnDoubleClick(Mobile from)

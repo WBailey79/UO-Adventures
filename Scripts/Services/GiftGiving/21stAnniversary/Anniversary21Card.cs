@@ -1,5 +1,3 @@
-using System;
-
 namespace Server.Items
 {
     [Flipable(0x9C14, 0x9C15)]
@@ -8,7 +6,7 @@ namespace Server.Items
         [CommandProperty(AccessLevel.GameMaster)]
         public string Args { get; set; }
 
-        private readonly string[] _Staff = new string[] { Server.Misc.ServerList.ServerName };
+        private readonly string[] _Staff = new string[] { Misc.ServerList.ServerName };
 
         [Constructable]
         public Anniversary21Card()
@@ -21,7 +19,7 @@ namespace Server.Items
         {
             Hue = 85;
 
-            Args = String.Format("{0}\t{1}", _Staff[Utility.Random(_Staff.Length)], m != null ? m.Name : "you");
+            Args = string.Format("{0}\t{1}", _Staff[Utility.Random(_Staff.Length)], m != null ? m.Name : "you");
         }
 
         public override void AddNameProperty(ObjectPropertyList list)

@@ -1,5 +1,4 @@
 using Server.Mobiles;
-using System;
 
 namespace Server.Spells.SkillMasteries
 {
@@ -16,7 +15,7 @@ namespace Server.Spells.SkillMasteries
 
         public override SkillName CastSkill => SkillName.Macing;
         public override SkillName DamageSkill => SkillName.Tactics;
-        public override bool CheckManaBeforeCast { get { return !HasSpell(Caster, GetType()); } }
+        public override bool CheckManaBeforeCast => !HasSpell(Caster, GetType());
 
         private int _HPBonus;
 
@@ -67,7 +66,7 @@ namespace Server.Spells.SkillMasteries
 
                 BeginTimer();
 
-                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Toughness, 1155985, 1155986, String.Format("{0}\t{1}", _HPBonus.ToString(), ScaleMana((int)UpKeep)))); // Hit Point Increase: ~1_VAL~.<br>Mana Upkeep Cost: ~2_VAL~.
+                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Toughness, 1155985, 1155986, string.Format("{0}\t{1}", _HPBonus.ToString(), ScaleMana((int)UpKeep)))); // Hit Point Increase: ~1_VAL~.<br>Mana Upkeep Cost: ~2_VAL~.
             }
 
             FinishSequence();

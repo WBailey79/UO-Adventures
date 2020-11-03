@@ -6,24 +6,6 @@ namespace Server.Engines.Quests.Matriarch
 {
     public class SolenMatriarchQuest : QuestSystem
     {
-        private static readonly Type[] m_TypeReferenceTable = new Type[]
-        {
-            typeof(Matriarch.DontOfferConversation),
-            typeof(Matriarch.AcceptConversation),
-            typeof(Matriarch.DuringKillInfiltratorsConversation),
-            typeof(Matriarch.GatherWaterConversation),
-            typeof(Matriarch.DuringWaterGatheringConversation),
-            typeof(Matriarch.ProcessFungiConversation),
-            typeof(Matriarch.DuringFungiProcessConversation),
-            typeof(Matriarch.FullBackpackConversation),
-            typeof(Matriarch.EndConversation),
-            typeof(Matriarch.KillInfiltratorsObjective),
-            typeof(Matriarch.ReturnAfterKillsObjective),
-            typeof(Matriarch.GatherWaterObjective),
-            typeof(Matriarch.ReturnAfterWaterObjective),
-            typeof(Matriarch.ProcessFungiObjective),
-            typeof(Matriarch.GetRewardObjective)
-        };
         private bool m_RedSolen;
         public SolenMatriarchQuest(PlayerMobile from, bool redSolen)
             : base(from)
@@ -36,7 +18,6 @@ namespace Server.Engines.Quests.Matriarch
         {
         }
 
-        public override Type[] TypeReferenceTable => m_TypeReferenceTable;
         public override object Name =>
                 // Solen Matriarch Quest
                 1054147;

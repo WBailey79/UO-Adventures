@@ -339,10 +339,6 @@ namespace Server.Mobiles
                 }
             }
 
-            if (!m_Mobile.StunReady && m_Mobile.Skills[SkillName.Wrestling].Value >= 80.0 &&
-                m_Mobile.Skills[SkillName.Anatomy].Value >= 80.0)
-                EventSink.InvokeStunRequest(new StunRequestEventArgs(m_Mobile));
-
             if (!m_Mobile.InRange(c, m_Mobile.RangePerception))
             {
                 // They are somewhat far away, can we find something else?
@@ -367,24 +363,17 @@ namespace Server.Mobiles
                 }
             }
 
-            if (!m_Mobile.Controlled && !m_Mobile.Summoned && m_Mobile.CanFlee)
+            if (!m_Mobile.Controlled && !m_Mobile.Summoned && m_Mobile.CheckCanFlee())
             {
-                if (m_Mobile.Hits < m_Mobile.HitsMax * 20 / 100)
-                {
-                    // We are low on health, should we flee?
-                    if (Utility.Random(100) <= Math.Max(10, 10 + c.Hits - m_Mobile.Hits))
-                    {
-                        m_Mobile.DebugSay("I am going to flee from {0}", c.Name);
-                        Action = ActionType.Flee;
-                        return true;
-                    }
-                }
+                m_Mobile.DebugSay("I am going to flee from {0}", c.Name);
+                Action = ActionType.Flee;
+                return true;
             }
 
             if (m_Mobile.Spell == null && DateTime.UtcNow > m_NextCastTime && m_Mobile.InRange(c, 12))
             {
                 // We are ready to cast a spell
-                Spell spell = null;
+                Spell spell;
                 Mobile toDispel = FindDispelTarget(true);
 
                 if (m_Mobile.Poisoned) // Top cast priority is cure
@@ -488,7 +477,7 @@ namespace Server.Mobiles
         {
             Mobile c = m_Mobile.Combatant as Mobile;
 
-            if ((m_Mobile.Mana > 20 || m_Mobile.Mana == m_Mobile.ManaMax) && m_Mobile.Hits > m_Mobile.HitsMax / 2)
+            if (m_Mobile.CheckBreakFlee())
             {
                 // If I have a target, go back and fight them
                 if (c != null && m_Mobile.GetDistanceToSqrt(c) <= m_Mobile.RangePerception * 2)
@@ -600,7 +589,7 @@ namespace Server.Mobiles
                     {
                         double prio = m_Mobile.GetDistanceToSqrt(m);
 
-                        if (!activeOnly && (inactive == null || prio < inactPrio))
+                        if (inactive == null || prio < inactPrio)
                         {
                             inactive = m;
                             inactPrio = prio;
@@ -652,9 +641,6 @@ namespace Server.Mobiles
             if (m_Mobile.Hits < m_Mobile.HitsMax - 50)
             {
                 spell = new GreaterHealSpell(m_Mobile, null);
-
-                if (spell == null)
-                    spell = new HealSpell(m_Mobile, null);
             }
             else if (m_Mobile.Hits < m_Mobile.HitsMax - 10)
                 spell = new HealSpell(m_Mobile, null);

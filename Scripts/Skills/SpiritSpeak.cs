@@ -35,6 +35,7 @@ namespace Server.SkillHandlers
         {
             if (Table == null || !Table.ContainsKey(m))
             {
+                m.RevealingAction();
                 m.Freeze(TimeSpan.FromSeconds(1));
 
                 m.Animate(AnimationType.Spell, 1);
@@ -91,7 +92,7 @@ namespace Server.SkillHandlers
 
         private class SpiritSpeakTimerNew : Timer
         {
-            public Mobile Caster { get; set; }
+            public Mobile Caster { get; }
 
             public SpiritSpeakTimerNew(Mobile m)
                 : base(TimeSpan.FromSeconds(1))
@@ -113,7 +114,8 @@ namespace Server.SkillHandlers
                         toChannel = (Corpse)objs;
                         break;
                     }
-                    else if (objs is Engines.Khaldun.SageHumbolt)
+
+                    if (objs is Engines.Khaldun.SageHumbolt)
                     {
                         if (((Engines.Khaldun.SageHumbolt)objs).OnSpiritSpeak(Caster))
                         {

@@ -1,5 +1,3 @@
-using System;
-
 namespace Server.Items
 {
     public class WrongBedrollBase : Item
@@ -99,7 +97,7 @@ namespace Server.Items
                         if (Utility.RandomBool())
                         {
                             from.AddToBackpack(soap);
-                            from.SendLocalizedMessage(1152268, String.Format("soap"));
+                            from.SendLocalizedMessage(1152268, string.Format("soap"));
                         }
                         else
                         {

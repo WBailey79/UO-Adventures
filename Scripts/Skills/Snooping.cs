@@ -3,7 +3,6 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using System;
 
 namespace Server.SkillHandlers
 {
@@ -67,7 +66,7 @@ namespace Server.SkillHandlers
 
                     if (map != null)
                     {
-                        string message = String.Format("You notice {0} peeking into your belongings!", from.Name);
+                        string message = string.Format("You notice {0} peeking into your belongings!", from.Name);
 
                         root.Send(new AsciiMessage(-1, -1, MessageType.Label, 946, 3, "", message));
                     }

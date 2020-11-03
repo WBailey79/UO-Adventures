@@ -5,32 +5,7 @@ namespace Server.Engines.Quests.Hag
 {
     public class WitchApprenticeQuest : QuestSystem
     {
-        private static readonly Type[] m_TypeReferenceTable = new Type[]
-        {
-            typeof(Hag.FindApprenticeObjective),
-            typeof(Hag.FindGrizeldaAboutMurderObjective),
-            typeof(Hag.KillImpsObjective),
-            typeof(Hag.FindZeefzorpulObjective),
-            typeof(Hag.ReturnRecipeObjective),
-            typeof(Hag.FindIngredientObjective),
-            typeof(Hag.ReturnIngredientsObjective),
-            typeof(Hag.DontOfferConversation),
-            typeof(Hag.AcceptConversation),
-            typeof(Hag.HagDuringCorpseSearchConversation),
-            typeof(Hag.ApprenticeCorpseConversation),
-            typeof(Hag.MurderConversation),
-            typeof(Hag.HagDuringImpSearchConversation),
-            typeof(Hag.ImpDeathConversation),
-            typeof(Hag.ZeefzorpulConversation),
-            typeof(Hag.RecipeConversation),
-            typeof(Hag.HagDuringIngredientsConversation),
-            typeof(Hag.BlackheartFirstConversation),
-            typeof(Hag.BlackheartNoPirateConversation),
-            typeof(Hag.BlackheartPirateConversation),
-            typeof(Hag.EndConversation),
-            typeof(Hag.RecentlyFinishedConversation)
-        };
-        private static readonly Point3D[] m_ZeefzorpulLocations = new Point3D[]
+        private static readonly Point3D[] m_ZeefzorpulLocations =
         {
             new Point3D(1226, 1573, 0),
             new Point3D(1929, 1148, 0),
@@ -63,7 +38,6 @@ namespace Server.Engines.Quests.Hag
         {
         }
 
-        public override Type[] TypeReferenceTable => m_TypeReferenceTable;
         public override object Name =>
                 // "The Witch's Apprentice"
                 1055042;

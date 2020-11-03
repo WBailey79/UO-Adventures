@@ -52,6 +52,21 @@ namespace Server.Items
         public static void Initialize()
         {
             CommandSystem.Register("CheckFillables", AccessLevel.Administrator, CheckFillables_OnCommand);
+
+            CheckPostLoad();
+        }
+
+        private static List<FillableContainer> _PostLoadCheck = new List<FillableContainer>();
+
+        public static void CheckPostLoad()
+        {
+            for (int i = 0; i < _PostLoadCheck.Count; i++)
+            {
+                _PostLoadCheck[i].CheckRespawn();
+            }
+
+            ColUtility.Free(_PostLoadCheck);
+            _PostLoadCheck = null;
         }
 
         public static void CheckFillables_OnCommand(CommandEventArgs e)
@@ -77,9 +92,10 @@ namespace Server.Items
             m.SendMessage("Fixed {0} fillable containers, while {1} failed.", count, fail);
         }
 
+        private static readonly string _RespawnTimerID = "FillableContainerTimer";
+
         protected FillableContent m_Content;
         protected DateTime m_NextRespawnTime;
-        protected Timer m_RespawnTimer;
 
         public FillableContainer(int itemID)
             : base(itemID)
@@ -121,8 +137,7 @@ namespace Server.Items
 
                 if (m_NextRespawnTime > DateTime.UtcNow)
                 {
-                    TimeSpan delay = m_NextRespawnTime - DateTime.UtcNow;
-                    m_RespawnTimer = Timer.DelayCall(delay, Respawn);
+                    StartTimer(m_NextRespawnTime - DateTime.UtcNow);
                 }
             }
         }
@@ -163,6 +178,16 @@ namespace Server.Items
             }
         }
 
+        private void StartTimer(TimeSpan delay)
+        {
+            TimerRegistry.Register(_RespawnTimerID, this, delay, TimeSpan.FromMinutes(1), fc => fc.Respawn());
+        }
+
+        private void RemoveTimer()
+        {
+            TimerRegistry.RemoveFromRegistry(_RespawnTimerID, this);
+        }
+
         public override void OnMapChange()
         {
             base.OnMapChange();
@@ -191,17 +216,6 @@ namespace Server.Items
             CheckRespawn();
         }
 
-        public override void OnAfterDelete()
-        {
-            base.OnAfterDelete();
-
-            if (m_RespawnTimer != null)
-            {
-                m_RespawnTimer.Stop();
-                m_RespawnTimer = null;
-            }
-        }
-
         public int GetItemsCount()
         {
             int count = 0;
@@ -220,19 +234,14 @@ namespace Server.Items
 
             if (canSpawn)
             {
-                if (m_RespawnTimer == null)
+                if (!TimerRegistry.HasTimer(_RespawnTimerID, this))
                 {
-                    int mins = Utility.RandomMinMax(MinRespawnMinutes, MaxRespawnMinutes);
-                    TimeSpan delay = TimeSpan.FromMinutes(mins);
-
-                    m_NextRespawnTime = DateTime.UtcNow + delay;
-                    m_RespawnTimer = Timer.DelayCall(delay, Respawn);
+                    StartTimer(TimeSpan.FromMinutes(Utility.RandomMinMax(MinRespawnMinutes, MaxRespawnMinutes)));
                 }
             }
-            else if (m_RespawnTimer != null)
+            else
             {
-                m_RespawnTimer.Stop();
-                m_RespawnTimer = null;
+                RemoveTimer();
             }
         }
 
@@ -243,12 +252,6 @@ namespace Server.Items
 
         public void Respawn(bool all)
         {
-            if (m_RespawnTimer != null)
-            {
-                m_RespawnTimer.Stop();
-                m_RespawnTimer = null;
-            }
-
             if (m_Content == null || Deleted)
                 return;
 
@@ -367,7 +370,7 @@ namespace Server.Items
 
             writer.Write((int)ContentType);
 
-            if (m_RespawnTimer != null)
+            if (TimerRegistry.HasTimer(_RespawnTimerID, this))
             {
                 writer.Write(true);
                 writer.WriteDeltaTime(m_NextRespawnTime);
@@ -409,12 +412,11 @@ namespace Server.Items
                         {
                             m_NextRespawnTime = reader.ReadDeltaTime();
 
-                            TimeSpan delay = m_NextRespawnTime - DateTime.UtcNow;
-                            m_RespawnTimer = Timer.DelayCall(delay > TimeSpan.Zero ? delay : TimeSpan.Zero, Respawn);
+                            StartTimer(m_NextRespawnTime - DateTime.UtcNow);
                         }
                         else
                         {
-                            CheckRespawn();
+                            _PostLoadCheck.Add(this);
                         }
 
                         break;
@@ -605,9 +607,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadEncodedInt();
-
-            if (version == 0 && Weight == 3)
-                Weight = -1;
         }
     }
 
@@ -646,8 +645,10 @@ namespace Server.Items
                 }
                 else
                 {
-                    WaterBarrel barrel = new WaterBarrel();
-                    barrel.Movable = false;
+                    WaterBarrel barrel = new WaterBarrel
+                    {
+                        Movable = false
+                    };
                     barrel.MoveToWorld(Location, Map);
 
                     WorldLocation = Location;
@@ -753,9 +754,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-
-            if (version == 0 && Weight == 25)
-                Weight = -1;
         }
     }
 
@@ -785,9 +783,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-
-            if (version == 0 && Weight == 25)
-                Weight = -1;
         }
     }
 
@@ -817,9 +812,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-
-            if (version == 0 && Weight == 2)
-                Weight = -1;
         }
     }
 
@@ -1025,7 +1017,6 @@ namespace Server.Items
                 new FillableEntry(8, typeof(SmithHammer)),
                 new FillableEntry(8, typeof(Tongs)),
                 new FillableEntry(8, typeof(SledgeHammer)),
-                //new FillableEntry( 8, typeof( IronOre ) ), TODO: Smaller ore
                 new FillableEntry(8, typeof(IronIngot)),
                 new FillableEntry(1, typeof(IronWire)),
                 new FillableEntry(1, typeof(SilverWire)),
@@ -1111,11 +1102,6 @@ namespace Server.Items
                 new FillableEntry(1, typeof(LightYarn)),
                 new FillableEntry(1, typeof(LightYarnUnraveled)),
                 new FillableEntry(1, typeof(SpoolOfThread)),
-                // Four different types
-                //new FillableEntry( 1, typeof( FoldedCloth ) ),
-                //new FillableEntry( 1, typeof( FoldedCloth ) ),
-                //new FillableEntry( 1, typeof( FoldedCloth ) ),
-                //new FillableEntry( 1, typeof( FoldedCloth ) ),
                 new FillableEntry(1, typeof(Dyes)),
                 new FillableEntry(2, typeof(Leather))
             });
@@ -1224,7 +1210,6 @@ namespace Server.Items
                 new FillableEntry(10, typeof(Garlic)),
                 new FillableEntry(10, typeof(Ginseng)),
                 new FillableEntry(10, typeof(MandrakeRoot)),
-                new FillableEntry(1, typeof(DeadWood)),
                 new FillableEntry(1, typeof(WhiteDriedFlowers)),
                 new FillableEntry(1, typeof(GreenDriedFlowers)),
                 new FillableEntry(1, typeof(DriedOnions)),
@@ -1368,7 +1353,6 @@ namespace Server.Items
                 new FillableEntry(2, typeof(Pickaxe)),
                 new FillableEntry(2, typeof(Shovel)),
                 new FillableEntry(2, typeof(IronIngot)),
-                //new FillableEntry( 2, typeof( IronOre ) ),	TODO: Smaller Ore
                 new FillableEntry(1, typeof(ForgedMetal))
             });
         public static FillableContent Observatory = new FillableContent(
@@ -1405,13 +1389,6 @@ namespace Server.Items
                 new FillableEntry(1, typeof(CheeseSlice)),
                 new FillableEntry(1, typeof(Eggs)),
                 new FillableEntry(4, typeof(Fish)),
-                new FillableEntry(1, typeof(DirtyFrypan)),
-                new FillableEntry(1, typeof(DirtyPan)),
-                new FillableEntry(1, typeof(DirtyKettle)),
-                new FillableEntry(1, typeof(DirtySmallRoundPot)),
-                new FillableEntry(1, typeof(DirtyRoundPot)),
-                new FillableEntry(1, typeof(DirtySmallPot)),
-                new FillableEntry(1, typeof(DirtyPot)),
                 new FillableEntry(1, typeof(Apple)),
                 new FillableEntry(2, typeof(Banana)),
                 new FillableEntry(2, typeof(Bananas)),
@@ -1561,22 +1538,18 @@ namespace Server.Items
             new FillableEntry[]
             {
                 new FillableEntry(1, typeof(Lockpick)),
-                //new FillableEntry( 1, typeof( KeyRing ) ),
                 new FillableEntry(2, typeof(Clock)),
                 new FillableEntry(2, typeof(ClockParts)),
                 new FillableEntry(2, typeof(AxleGears)),
                 new FillableEntry(2, typeof(Gears)),
                 new FillableEntry(2, typeof(Hinge)),
-                //new FillableEntry( 1, typeof( ArrowShafts ) ),
                 new FillableEntry(2, typeof(Sextant)),
                 new FillableEntry(2, typeof(SextantParts)),
                 new FillableEntry(2, typeof(Axle)),
                 new FillableEntry(2, typeof(Springs)),
                 new FillableEntry(5, typeof(TinkerTools)),
                 new FillableEntry(4, typeof(Key)),
-                new FillableEntry(1, typeof(DecoArrowShafts)),
-                new FillableEntry(1, typeof(Lockpicks)),
-                new FillableEntry(1, typeof(ToolKit))
+                new FillableEntry(1, typeof(Lockpicks))
             });
         public static FillableContent Veterinarian = new FillableContent(
             1,
@@ -1589,7 +1562,6 @@ namespace Server.Items
                 new FillableEntry(1, typeof(Bandage)),
                 new FillableEntry(1, typeof(MortarPestle)),
                 new FillableEntry(1, typeof(LesserHealPotion)),
-                //new FillableEntry( 1, typeof( Wheat ) ),
                 new FillableEntry(1, typeof(Carrot))
             });
         public static FillableContent Weaponsmith = new FillableContent(

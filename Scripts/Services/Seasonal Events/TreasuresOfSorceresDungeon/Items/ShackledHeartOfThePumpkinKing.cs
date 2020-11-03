@@ -31,8 +31,8 @@ namespace Server.Items
 
         private class InternalTimer : Timer
         {
-            public Mobile Owner { get; set; }
-            public ShackledHeartOfThePumpkinKing Heart { get; set; }
+            public Mobile Owner { get; }
+            public ShackledHeartOfThePumpkinKing Heart { get; }
 
             public int Ticks { get; set; }
 
@@ -56,8 +56,10 @@ namespace Server.Items
                 {
                     Owner.PlaySound(0x133);
 
-                    Blood blood = new Blood();
-                    blood.ItemID = Utility.Random(0x122A, 5);
+                    Blood blood = new Blood
+                    {
+                        ItemID = Utility.Random(0x122A, 5)
+                    };
                     blood.MoveToWorld(Owner.Location, Owner.Map);
                 }
             }

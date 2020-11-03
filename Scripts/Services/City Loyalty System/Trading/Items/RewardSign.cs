@@ -1,5 +1,3 @@
-using System;
-
 namespace Server.Items
 {
     public class RewardSign : Sign, IEngravable
@@ -16,7 +14,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            if (!String.IsNullOrEmpty(EngravedText))
+            if (!string.IsNullOrEmpty(EngravedText))
             {
                 list.Add(1072305, EngravedText); // Engraved: ~1_INSCRIPTION~
             }

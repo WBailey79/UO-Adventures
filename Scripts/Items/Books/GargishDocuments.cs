@@ -1,7 +1,6 @@
 using Server.ContextMenus;
 using Server.Gumps;
 using Server.Multis;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Items
@@ -32,7 +31,7 @@ namespace Server.Items
         public override void AddNameProperty(ObjectPropertyList list)
         {
             if (Title is int)
-                list.Add(1150928, String.Format("#{0}", (int)Title));  // Gargish Document - ~1_NAME~
+                list.Add(1150928, string.Format("#{0}", (int)Title));  // Gargish Document - ~1_NAME~
             else if (Title is string)
                 list.Add(1150928, (string)Title);
             else
@@ -73,7 +72,7 @@ namespace Server.Items
 
         public override void AddNameProperty(ObjectPropertyList list)
         {
-            list.Add(1150928, String.Format("#{0}", Title));  // Gargish Document - ~1_NAME~
+            list.Add(1150928, string.Format("#{0}", Title));  // Gargish Document - ~1_NAME~
         }
 
         public GargishDocumentNote(Serial serial) : base(serial)

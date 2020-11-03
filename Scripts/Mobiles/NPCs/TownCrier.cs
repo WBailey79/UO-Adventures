@@ -17,7 +17,7 @@ namespace Server.Mobiles
         List<TownCrierEntry> Entries { get; }
         TownCrierEntry GetRandomEntry();
 
-        TownCrierEntry AddEntry(string[] lines, TimeSpan duration);
+        TownCrierEntry AddEntry(TextDefinition[] lines, TimeSpan duration);
 
         void RemoveEntry(TownCrierEntry entry);
     }
@@ -76,7 +76,7 @@ namespace Server.Mobiles
             return m_Entries[Utility.Random(m_Entries.Count)];
         }
 
-        public TownCrierEntry AddEntry(string[] lines, TimeSpan duration)
+        public TownCrierEntry AddEntry(TextDefinition[] lines, TimeSpan duration)
         {
             if (m_Entries == null)
                 m_Entries = new List<TownCrierEntry>();
@@ -183,10 +183,10 @@ namespace Server.Mobiles
 
     public class TownCrierEntry
     {
-        private readonly string[] m_Lines;
+        private readonly TextDefinition[] m_Lines;
         private readonly DateTime m_ExpireTime;
 
-        public TownCrierEntry(string[] lines, TimeSpan duration)
+        public TownCrierEntry(TextDefinition[] lines, TimeSpan duration)
         {
             m_Lines = lines;
 
@@ -198,7 +198,7 @@ namespace Server.Mobiles
             m_ExpireTime = DateTime.UtcNow + duration;
         }
 
-        public string[] Lines => m_Lines;
+        public TextDefinition[] Lines => m_Lines;
 
         public DateTime ExpireTime => m_ExpireTime;
 
@@ -209,11 +209,18 @@ namespace Server.Mobiles
             int version = reader.ReadInt();
 
             int count = reader.ReadInt();
-            m_Lines = new string[count];
+            m_Lines = new TextDefinition[count];
 
             for (int i = 0; i < count; i++)
             {
-                m_Lines[i] = reader.ReadString();
+                if (version == 0)
+                {
+                    m_Lines[i] = reader.ReadString();
+                }
+                else
+                {
+                    m_Lines[i] = TextDefinition.Deserialize(reader);
+                }
             }
 
             m_ExpireTime = reader.ReadDateTime();
@@ -221,12 +228,12 @@ namespace Server.Mobiles
 
         public void Serialize(GenericWriter writer)
         {
-            writer.Write(0);
+            writer.Write(1);
 
             writer.Write(Lines.Length);
-            foreach (string str in Lines)
+            foreach (var str in Lines)
             {
-                writer.Write(str);
+                TextDefinition.Serialize(writer, str);
             }
 
             writer.Write(m_ExpireTime);
@@ -258,7 +265,7 @@ namespace Server.Mobiles
             from.SendMessage("Duration set to: {0}", ts);
             from.SendMessage("Enter the first line to shout:");
 
-            from.Prompt = new TownCrierLinesPrompt(m_Owner, null, new List<String>(), ts);
+            from.Prompt = new TownCrierLinesPrompt(m_Owner, null, new List<TextDefinition>(), ts);
         }
 
         public override void OnCancel(Mobile from)
@@ -272,9 +279,9 @@ namespace Server.Mobiles
     {
         private readonly ITownCrierEntryList m_Owner;
         private readonly TownCrierEntry m_Entry;
-        private readonly List<String> m_Lines;
+        private readonly List<TextDefinition> m_Lines;
         private readonly TimeSpan m_Duration;
-        public TownCrierLinesPrompt(ITownCrierEntryList owner, TownCrierEntry entry, List<String> lines, TimeSpan duration)
+        public TownCrierLinesPrompt(ITownCrierEntryList owner, TownCrierEntry entry, List<TextDefinition> lines, TimeSpan duration)
         {
             m_Owner = owner;
             m_Entry = entry;
@@ -393,7 +400,10 @@ namespace Server.Mobiles
                             if (j > 0)
                                 sb.Append("<br>");
 
-                            sb.Append(tce.Lines[j]);
+                            if (!string.IsNullOrEmpty(tce.Lines[j].String))
+                            {
+                                sb.Append(tce.Lines[j].String);
+                            }
                         }
 
                         AddHtml(8, 35 + (i * 85), 254, 80, sb.ToString(), true, true);
@@ -428,7 +438,7 @@ namespace Server.Mobiles
                     m_From.SendMessage("Editing entry #{0}.", index + 1);
                     m_From.SendMessage("Push <ESC> to delete this entry.");
                     m_From.SendMessage("Enter the first line to shout:");
-                    m_From.Prompt = new TownCrierLinesPrompt(m_Owner, tce, new List<String>(), ts);
+                    m_From.Prompt = new TownCrierLinesPrompt(m_Owner, tce, new List<TextDefinition>(), ts);
                 }
             }
         }
@@ -440,7 +450,8 @@ namespace Server.Mobiles
 
         private List<TownCrierEntry> m_Entries;
         private Timer m_NewsTimer;
-        private Timer m_AutoShoutTimer;
+
+        private static readonly string _AutoShoutTimerID = "AutoShoutTimer";
 
         [Constructable]
         public TownCrier()
@@ -541,11 +552,10 @@ namespace Server.Mobiles
 
         public void ForceBeginAutoShout()
         {
-            if (m_AutoShoutTimer == null)
-                m_AutoShoutTimer = Timer.DelayCall(TimeSpan.FromMinutes(1.0), TimeSpan.FromMinutes(5.0), AutoShout_Callback);
+            TimerRegistry.Register(_AutoShoutTimerID, this, TimeSpan.FromMinutes(5.0), TimeSpan.FromMinutes(1.0), false, tc => tc.AutoShout_Callback());
         }
 
-        public TownCrierEntry AddEntry(string[] lines, TimeSpan duration)
+        public TownCrierEntry AddEntry(TextDefinition[] lines, TimeSpan duration)
         {
             if (m_Entries == null)
                 m_Entries = new List<TownCrierEntry>();
@@ -554,8 +564,7 @@ namespace Server.Mobiles
 
             m_Entries.Add(tce);
 
-            if (m_AutoShoutTimer == null)
-                m_AutoShoutTimer = Timer.DelayCall(TimeSpan.FromMinutes(1.0), TimeSpan.FromMinutes(5.0), AutoShout_Callback);
+            TimerRegistry.Register(_AutoShoutTimerID, this, TimeSpan.FromMinutes(5.0), TimeSpan.FromMinutes(1.0), false, tc => tc.AutoShout_Callback());
 
             return tce;
         }
@@ -567,8 +576,7 @@ namespace Server.Mobiles
 
             m_Entries.Add(entry);
 
-            if (m_AutoShoutTimer == null)
-                m_AutoShoutTimer = Timer.DelayCall(TimeSpan.FromMinutes(1.0), TimeSpan.FromMinutes(5.0), AutoShout_Callback);
+            TimerRegistry.Register(_AutoShoutTimerID, this, TimeSpan.FromMinutes(5.0), TimeSpan.FromMinutes(1.0), false, tc => tc.AutoShout_Callback());
         }
 
         public void RemoveEntry(TownCrierEntry tce)
@@ -583,10 +591,7 @@ namespace Server.Mobiles
 
             if (m_Entries == null && GlobalTownCrierEntryList.Instance.IsEmpty)
             {
-                if (m_AutoShoutTimer != null)
-                    m_AutoShoutTimer.Stop();
-
-                m_AutoShoutTimer = null;
+                TimerRegistry.RemoveFromRegistry(_AutoShoutTimerID, this);
             }
         }
 
@@ -706,10 +711,7 @@ namespace Server.Mobiles
 
             if (tce == null)
             {
-                if (m_AutoShoutTimer != null)
-                    m_AutoShoutTimer.Stop();
-
-                m_AutoShoutTimer = null;
+                TimerRegistry.RemoveFromRegistry(_AutoShoutTimerID, this);
             }
             else if (m_NewsTimer == null)
             {
@@ -734,7 +736,15 @@ namespace Server.Mobiles
             }
             else
             {
-                PublicOverheadMessage(MessageType.Regular, 0x3B2, false, tce.Lines[index]);
+                if (!string.IsNullOrEmpty(tce.Lines[index].String))
+                {
+                    PublicOverheadMessage(MessageType.Regular, 0x3B2, false, tce.Lines[index].String);
+                }
+                else if (tce.Lines[index].Number > 0)
+                {
+                    PublicOverheadMessage(MessageType.Regular, 0x3B2, tce.Lines[index].Number);
+                }
+
                 states[1] = index + 1;
             }
         }

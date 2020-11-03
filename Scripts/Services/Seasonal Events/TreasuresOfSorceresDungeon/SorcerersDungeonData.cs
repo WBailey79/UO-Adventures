@@ -1,7 +1,7 @@
 using Server.Engines.Points;
-using Server.Engines.SeasonalEvents;
 using Server.Items;
 using Server.Mobiles;
+
 using System;
 using System.Collections.Generic;
 
@@ -15,11 +15,7 @@ namespace Server.Engines.SorcerersDungeon
         public override double MaxPoints => double.MaxValue;
         public override bool ShowOnLoyaltyGump => false;
 
-        public bool Enabled { get; set; }
-
         private readonly TextDefinition m_Name = null;
-
-        public bool InSeason => SeasonalEventSystem.IsActive(EventType.SorcerersDungeon);
 
         public SorcerersDungeonData()
         {
@@ -28,7 +24,7 @@ namespace Server.Engines.SorcerersDungeon
 
         public override void SendMessage(PlayerMobile from, double old, double points, bool quest)
         {
-            from.SendLocalizedMessage(1156902, ((int)points).ToString()); // You have turned in ~1_COUNT~ artifacts of the Kotl
+            from.SendLocalizedMessage(1157615, ((int)points).ToString()); // You have turned in ~1_COUNT~ artifacts of Enchanted Origin
         }
 
         public override void ProcessKill(Mobile victim, Mobile damager)
@@ -43,7 +39,7 @@ namespace Server.Engines.SorcerersDungeon
                 TOSDSpawner.Instance.OnCreatureDeath(bc);
             }
 
-            if (!Enabled || bc.Controlled || bc.Summoned || !damager.Alive)
+            if (!SorcerersDungeonEvent.Instance.Running || bc.Controlled || bc.Summoned || !damager.Alive)
                 return;
 
             Region r = bc.Region;
@@ -92,14 +88,12 @@ namespace Server.Engines.SorcerersDungeon
             }
         }
 
-        public Dictionary<Mobile, int> DungeonPoints { get; set; }
+        public Dictionary<Mobile, int> DungeonPoints { get; }
 
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0);
-
-            writer.Write(Enabled);
+            writer.Write(1);
 
             if (TOSDSpawner.Instance != null)
             {
@@ -126,7 +120,10 @@ namespace Server.Engines.SorcerersDungeon
 
             int version = reader.ReadInt();
 
-            Enabled = reader.ReadBool();
+            if (version == 0)
+            {
+                reader.ReadBool();
+            }
 
             if (reader.ReadInt() == 0)
             {

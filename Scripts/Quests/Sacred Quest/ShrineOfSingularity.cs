@@ -28,36 +28,40 @@ namespace Server.Items
         {
             PlayerMobile pm = e.Mobile as PlayerMobile;
 
-            if (pm != null && !e.Handled && pm.InRange(Location, 2) && e.Speech.ToLower().Trim() == "unorus")
+            if (pm.AbyssEntry)
+            {
+                pm.SendLocalizedMessage(1112697);  //You enter a state of peaceful contemplation, focusing on the meaning of Singularity.
+            }
+            else if (!e.Handled && pm.InRange(Location, 2) && e.Speech.ToLower().Trim() == "unorus" && QuestHelper.CheckDoneOnce(pm, typeof(TheArisenQuest), null, false))
             {
                 e.Handled = true;
                 e.Mobile.PlaySound(0xF9);
 
-                QuestOfSingularity quest = GetSingularityQuest(pm);
+                var quest = QuestHelper.GetQuest<QuestOfSingularity>(pm);
 
                 if (HasDelay(pm) && pm.AccessLevel == AccessLevel.Player)
+                {
                     pm.PublicOverheadMessage(MessageType.Regular, 0x47E, 1112685); // You need more time to contemplate the Book of Circles before trying again.
-                else if (pm.AbyssEntry)
-                    pm.SendLocalizedMessage(1112697);  //You enter a state of peaceful contemplation, focusing on the meaning of Singularity.
+                }
                 else if (quest == null)
                 {
-                    quest = new QuestOfSingularity();
-
-                    quest.Owner = pm;
-                    quest.Quester = this;
+                    quest = new QuestOfSingularity
+                    {
+                        Owner = pm,
+                        Quester = this
+                    };
 
                     pm.SendGump(new MondainQuestGump(quest));
                 }
                 else if (quest.Completed)
+                {
                     pm.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.Complete, false, true));
+                }
                 else if (!pm.HasGump(typeof(QAndAGump)))
+                {
                     pm.SendGump(new QAndAGump(pm, quest));
+                }
             }
-        }
-
-        private QuestOfSingularity GetSingularityQuest(PlayerMobile pm)
-        {
-            return QuestHelper.GetQuest(pm, typeof(QuestOfSingularity)) as QuestOfSingularity;
         }
 
         private static readonly Dictionary<Mobile, DateTime> m_RestartTable = new Dictionary<Mobile, DateTime>();
@@ -108,12 +112,16 @@ namespace Server.Items
 
             if (version == 0)
             {
-                Item book = new BookOfCircles();
-                book.Movable = false;
+                Item book = new BookOfCircles
+                {
+                    Movable = false
+                };
                 book.MoveToWorld(new Point3D(1000, 3991, -33), Map.TerMur);
 
-                book = new ShrineMantra();
-                book.Movable = false;
+                book = new ShrineMantra
+                {
+                    Movable = false
+                };
                 book.MoveToWorld(new Point3D(994, 3991, -33), Map.TerMur);
             }
 

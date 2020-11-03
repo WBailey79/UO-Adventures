@@ -7,10 +7,10 @@ namespace Server.Gumps
     public abstract class BaseRewardGump : Gump
     {
         public int Index { get; private set; }
-        public Mobile Owner { get; private set; }
-        public PlayerMobile User { get; private set; }
+        public Mobile Owner { get; }
+        public PlayerMobile User { get; }
         public int Page { get; private set; }
-        public int Title { get; private set; }
+        public int Title { get; }
 
         public double Points { get; protected set; }
         public List<CollectionItem> Collection { get; protected set; }
@@ -69,7 +69,7 @@ namespace Server.Gumps
 
         protected virtual void AddPoints()
         {
-            AddLabel(230, 65, 0x64, String.Format(((int)Points).ToString()));
+            AddLabel(230, 65, 0x64, string.Format(((int)Points).ToString()));
         }
 
         public void DisplayRewardPage()
@@ -88,7 +88,7 @@ namespace Server.Gumps
                 if (Points >= item.Points)
                 {
                     AddButton(35, offset + height / 2 - 5, 0x837, 0x838, 200 + Index, GumpButtonType.Reply, 0);
-                    AddTooltip(item.Tooltip);
+                    TextDefinition.AddTooltip(this, item.Tooltip);
                 }
 
                 int y = offset - item.Y;
@@ -107,8 +107,8 @@ namespace Server.Gumps
 
                 if (i != null)
                     AddItemProperty(i.Serial);
-                else if (item.Tooltip > 0)
-                    AddTooltip(item.Tooltip);
+                else
+                    TextDefinition.AddTooltip(this, item.Tooltip);
 
                 AddLabel(80 + max, offset + height / 2 - 10, Points >= item.Points ? 0x64 : 0x21, item.Points.ToString("N0"));
 

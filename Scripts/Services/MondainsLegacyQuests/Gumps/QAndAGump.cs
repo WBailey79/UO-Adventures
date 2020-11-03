@@ -1,6 +1,5 @@
 using Server.Engines.Quests;
 using Server.Network;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Gumps
@@ -61,7 +60,7 @@ namespace Server.Gumps
                 if (selection is int)
                     AddHtmlLocalized(80, 102 + (i * 40), 200, 18, (int)selection, 0x0, false, false);
                 else
-                    AddHtml(80, 102 + (i * 40), 200, 18, String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, selection), false, false);
+                    AddHtml(80, 102 + (i * 40), 200, 18, string.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, selection), false, false);
             }
         }
 

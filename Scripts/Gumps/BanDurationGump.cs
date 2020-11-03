@@ -88,8 +88,6 @@ namespace Server.Gumps
             TimeSpan duration;
             bool shouldSet;
 
-            string fromString = from.ToString();
-
             switch (info.ButtonID)
             {
                 case 0:
@@ -123,7 +121,7 @@ namespace Server.Gumps
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
 
@@ -145,7 +143,7 @@ namespace Server.Gumps
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
 
@@ -167,7 +165,7 @@ namespace Server.Gumps
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
 
@@ -189,7 +187,7 @@ namespace Server.Gumps
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
 
@@ -211,7 +209,7 @@ namespace Server.Gumps
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
 
@@ -243,7 +241,7 @@ namespace Server.Gumps
                     a.SetBanTags(from, DateTime.UtcNow, duration);
 
                     if (comment != null)
-                        a.Comments.Add(new AccountComment(from.RawName, String.Format("Duration: {0}, Comment: {1}", ((duration == TimeSpan.MaxValue) ? "Infinite" : duration.ToString()), comment)));
+                        a.Comments.Add(new AccountComment(from.RawName, string.Format("Duration: {0}, Comment: {1}", ((duration == TimeSpan.MaxValue) ? "Infinite" : duration.ToString()), comment)));
                 }
 
                 if (duration == TimeSpan.MaxValue)

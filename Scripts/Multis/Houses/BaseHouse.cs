@@ -1137,6 +1137,16 @@ namespace Server.Multis
             return FindHouseAt(e.Location, e.Map, 16);
         }
 
+        public static BaseHouse FindHouseAt(IPoint3D p, Map map)
+        {
+            if (p == null)
+            {
+                return null;
+            }
+
+            return FindHouseAt(new Point3D(p), map, 16);
+        }
+
         public static BaseHouse FindHouseAt(Point3D loc, Map map, int height)
         {
             if (map == null || map == Map.Internal)
@@ -1241,6 +1251,40 @@ namespace Server.Multis
         {
             typeof(PotionKeg)
         };
+
+        public virtual bool IsStairArea(IPoint3D p)
+        {
+            bool frontStairs;
+            return IsStairArea(p, out frontStairs);
+        }
+
+        public virtual bool IsStairArea(IPoint3D p, out bool frontStairs)
+        {
+            frontStairs = false;
+            MultiComponentList mcl = Components;
+
+            int x = p.X - (X + mcl.Min.X);
+            int y = p.Y - (Y + mcl.Min.Y);
+            frontStairs = false;
+
+            if (x < 0 || x >= mcl.Width || y < 0 || y >= mcl.Height)
+            {
+                return false;
+            }
+
+            var id = mcl.List.FirstOrDefault(entry =>
+                p.X - X == entry.m_OffsetX &&
+                p.Y - Y == entry.m_OffsetY &&
+                (p.Z - TileData.ItemTable[entry.m_ItemID].CalcHeight) - Z == entry.m_OffsetZ).m_ItemID;
+
+            if (id <= 0 || (!HouseFoundation.IsStair(id) && !HouseFoundation.IsStairBlock(id)))
+            {
+                return false;
+            }
+
+            frontStairs = mcl.Tiles[x][y].Length == 1;
+            return true;
+        }
 
         public virtual bool IsInside(Point3D p, int height)
         {
@@ -1747,7 +1791,7 @@ namespace Server.Multis
                 * Offset		0	2	4	6	8	10	12	14
                 * DoorFacing	2	3	2	3	6	7	6	7
                 */
-                int offset = itemID - 0x436E;
+            int offset = itemID - 0x436E;
                 DoorFacing facing = (DoorFacing)((offset / 2 + 2 * ((1 + offset / 4) % 2)) % 8);
                 door = new GenericHouseDoor(facing, itemID, 0xEA, 0xF1, false);
             }
@@ -1869,9 +1913,10 @@ namespace Server.Multis
 
             if (m_Trash == null || m_Trash.Deleted)
             {
-                m_Trash = new TrashBarrel();
-
-                m_Trash.Movable = false;
+                m_Trash = new TrashBarrel
+                {
+                    Movable = false
+                };
                 m_Trash.MoveToWorld(from.Location, from.Map);
 
                 from.SendLocalizedMessage(502121); /* You have a new trash barrel.
@@ -2059,7 +2104,7 @@ namespace Server.Multis
                 bool valid = m_House != null && Sextant.Format(m_House.Location, m_House.Map, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth);
 
                 if (valid)
-                    location = String.Format("{0}° {1}'{2}, {3}° {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W");
+                    location = string.Format("{0}° {1}'{2}, {3}° {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W");
                 else
                     location = "unknown";
 
@@ -2129,6 +2174,7 @@ namespace Server.Multis
                 m_House.Bans.Clear();
                 m_House.Friends.Clear();
                 m_House.CoOwners.Clear();
+                m_House.Secures.ForEach(x => { x.Owner = to; });
                 m_House.LastTraded = DateTime.UtcNow;
 
                 m_House.OnTransfer();
@@ -2658,10 +2704,12 @@ namespace Server.Multis
                 }
             }
 
-            StrongBox sb = new StrongBox(from, this);
-            sb.Movable = false;
-            sb.IsLockedDown = false;
-            sb.IsSecure = true;
+            StrongBox sb = new StrongBox(from, this)
+            {
+                Movable = false,
+                IsLockedDown = false,
+                IsSecure = true
+            };
             Secures.Add(new SecureInfo(sb, SecureLevel.CoOwners, from));
             sb.MoveToWorld(from.Location, from.Map);
         }
@@ -4007,7 +4055,7 @@ namespace Server.Multis
                     }
                     else
                     {
-                        m.SendMessage("You already own {0} houses, you may not place any more!", BaseHouse.AccountHouseLimit.ToString());
+                        m.SendMessage("You already own {0} houses, you may not place any more!", AccountHouseLimit.ToString());
                     }
                 }
 

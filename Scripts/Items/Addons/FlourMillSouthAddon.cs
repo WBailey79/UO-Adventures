@@ -72,8 +72,6 @@ namespace Server.Items
         {
             List<AddonComponent> components = Components;
 
-            int[][] stageTable = m_StageTable;
-
             for (int i = 0; i < components.Count; ++i)
             {
                 AddonComponent component = components[i] as AddonComponent;
@@ -137,9 +135,10 @@ namespace Server.Items
 
             if (from != null && !from.Deleted && !Deleted && IsFull)
             {
-                SackFlour flour = new SackFlour();
-
-                flour.ItemID = (Utility.RandomBool() ? 4153 : 4165);
+                SackFlour flour = new SackFlour
+                {
+                    ItemID = (Utility.RandomBool() ? 4153 : 4165)
+                };
 
                 if (from.PlaceInBackpack(flour))
                 {

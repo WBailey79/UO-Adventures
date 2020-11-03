@@ -37,8 +37,10 @@ namespace Server.Misc
 
             if (pack == null)
             {
-                pack = new Backpack();
-                pack.Movable = false;
+                pack = new Backpack
+                {
+                    Movable = false
+                };
 
                 m.AddItem(pack);
             }
@@ -610,14 +612,15 @@ namespace Server.Misc
                             EquipItem(new GargishPlateKilt());
                         }
 
-                        Spellbook book = new BookOfChivalry((ulong)0x3FF);
-                        book.LootType = LootType.Blessed;
+                        Spellbook book = new BookOfChivalry((ulong)0x3FF)
+                        {
+                            LootType = LootType.Blessed
+                        };
                         PackItem(book);
 
                         addSkillItems = false;
                         break;
                     }
-
                 case 6: // Samurai
                     {
                         if (elf || human)
@@ -1060,7 +1063,6 @@ namespace Server.Misc
                 case SkillName.Chivalry:
                     {
                         PackItem(new BookOfChivalry((ulong)0x3FF));
-
                         break;
                     }
                 case SkillName.DetectHidden:
@@ -1094,8 +1096,10 @@ namespace Server.Misc
 
                         if (elf)
                         {
-                            Item i = new Circlet();
-                            i.Hue = hue;
+                            Item i = new Circlet
+                            {
+                                Hue = hue
+                            };
                             EquipItem(i);
                         }
                         else if (human)
@@ -1178,8 +1182,10 @@ namespace Server.Misc
                         PackScroll(1);
                         PackScroll(2);
 
-                        Spellbook book = new Spellbook((ulong)0x382A8C38);
-                        book.LootType = LootType.Blessed;
+                        Spellbook book = new Spellbook((ulong)0x382A8C38)
+                        {
+                            LootType = LootType.Blessed
+                        };
                         EquipItem(book);
 
                         if (elf)
@@ -1222,8 +1228,10 @@ namespace Server.Misc
                         // RunUO fix
                         Spellbook
                             book = new NecromancerSpellbook(
-                                (ulong)0x8981); // animate dead, evil omen, pain spike, summon familiar, wraith form
-                        book.LootType = LootType.Blessed;
+                                (ulong)0x8981)
+                            {
+                                LootType = LootType.Blessed
+                            }; // animate dead, evil omen, pain spike, summon familiar, wraith form
                         PackItem(book);
 
                         break;

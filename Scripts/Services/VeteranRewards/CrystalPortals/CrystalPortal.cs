@@ -6,7 +6,6 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Spells;
-using System;
 using System.Collections.Generic;
 #endregion
 
@@ -71,7 +70,7 @@ namespace Server.Items
                 return false;
             }
 
-            if (Server.Engines.VvV.VvVSigil.ExistsOn(m))
+            if (Engines.VvV.VvVSigil.ExistsOn(m))
             {
                 if (message)
                 {
@@ -121,7 +120,7 @@ namespace Server.Items
                 return false;
             }
 
-            if (Server.Engines.CityLoyalty.CityTradeSystem.HasTrade(m))
+            if (Engines.CityLoyalty.CityTradeSystem.HasTrade(m))
             {
                 if (message)
                 {
@@ -228,7 +227,7 @@ namespace Server.Items
 
         public static void ResolveDest(Mobile from, string name, ref Point3D loc, ref Map map)
         {
-            if (String.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(name))
             {
                 return;
             }

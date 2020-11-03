@@ -34,7 +34,6 @@ namespace Server.Engines.Help
                 if (entry != null && entry.Handler == null)
                 {
                     m_From.SendLocalizedMessage(1005307, "", 0x35); // Removed help request.
-                    entry.AddResponse(entry.Sender, "[Canceled]");
                     PageQueue.Remove(entry);
                 }
                 else
@@ -206,6 +205,10 @@ namespace Server.Engines.Help
                         {
                             from.Location = house.BanLocation;
                         }
+                        else if (CityLoyalty.CityTradeSystem.HasTrade(from))
+                        {
+                            from.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
+                        }
                         else if (from.Region.IsPartOf<Regions.Jail>())
                         {
                             from.SendLocalizedMessage(1114345, "", 0x35); // You'll need a better jailbreak plan than that!
@@ -262,6 +265,10 @@ namespace Server.Engines.Help
                             if (from.Region.IsPartOf<Regions.Jail>())
                             {
                                 from.SendLocalizedMessage(1114345, "", 0x35); // You'll need a better jailbreak plan than that!
+                            }
+                            else if (CityLoyalty.CityTradeSystem.HasTrade(from))
+                            {
+                                from.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
                             }
                             else if (from.Region.IsPartOf("Haven Island"))
                             {

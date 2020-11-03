@@ -15,7 +15,7 @@ namespace Server.Mobiles
 
         [Constructable]
         public HarborMaster()
-            : base(AIType.AI_Animal, FightMode.None, 10, 1, 0.2, 0.4)
+            : base(AIType.AI_Melee, FightMode.None, 10, 1, 0.2, 0.4)
         {
             InitStats(31, 41, 51);
 
@@ -113,10 +113,11 @@ namespace Server.Mobiles
                         else
                         {
                             KeyType[] Types = Enum.GetValues(typeof(KeyType)).Cast<KeyType>().ToArray();
-                            Key packKey = new Key(Types[Utility.Random(Types.Length)], boat.PPlank.KeyValue, boat);
-
-                            packKey.MaxRange = 10;
-                            packKey.Name = "a ship key";
+                            Key packKey = new Key(Types[Utility.Random(Types.Length)], boat.PPlank.KeyValue, boat)
+                            {
+                                MaxRange = 10,
+                                Name = "a ship key"
+                            };
 
                             m_From.AddToBackpack(packKey);
                         }

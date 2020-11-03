@@ -36,11 +36,13 @@ namespace Server.Engines.CityLoyalty
             EquipItem(new FancyShirt(1932));
             EquipItem(new LongPants(1));
 
-            Boots boots = new Boots();
-            boots.Hue = 1;
+            Boots boots = new Boots
+            {
+                Hue = 1
+            };
             EquipItem(boots);
 
-            CantWalk = true;
+            Frozen = true;
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -153,6 +155,8 @@ namespace Server.Engines.CityLoyalty
         {
             base.Deserialize(reader);
             int v = reader.ReadInt();
+			
+			Frozen = true;
         }
     }
 }

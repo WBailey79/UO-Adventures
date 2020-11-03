@@ -1,7 +1,6 @@
 using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Guilds
@@ -17,9 +16,9 @@ namespace Server.Guilds
             {
                 if (x == null && y == null)
                     return 0;
-                else if (x == null)
+                if (x == null)
                     return -1;
-                else if (y == null)
+                if (y == null)
                     return 1;
 
                 return Insensitive.Compare(x.Name, y.Name);
@@ -34,9 +33,9 @@ namespace Server.Guilds
             {
                 if (x == null && y == null)
                     return 0;
-                else if (x == null)
+                if (x == null)
                     return -1;
-                else if (y == null)
+                if (y == null)
                     return 1;
 
                 NetState aState = x.NetState;
@@ -44,9 +43,9 @@ namespace Server.Guilds
 
                 if (aState == null && bState == null)
                     return x.LastOnline.CompareTo(y.LastOnline);
-                else if (aState == null)
+                if (aState == null)
                     return 1;
-                else if (bState == null)
+                if (bState == null)
                     return -1;
                 else
                     return 0;
@@ -61,9 +60,9 @@ namespace Server.Guilds
             {
                 if (x == null && y == null)
                     return 0;
-                else if (x == null)
+                if (x == null)
                     return -1;
-                else if (y == null)
+                if (y == null)
                     return 1;
 
                 return Insensitive.Compare(x.GuildTitle, y.GuildTitle);
@@ -78,9 +77,9 @@ namespace Server.Guilds
             {
                 if (x == null && y == null)
                     return 0;
-                else if (x == null)
+                if (x == null)
                     return -1;
-                else if (y == null)
+                if (y == null)
                     return 1;
 
                 return x.GuildRank.Rank.CompareTo(y.GuildRank.Rank);
@@ -89,16 +88,16 @@ namespace Server.Guilds
 
         #endregion
 
-        private static readonly InfoField<PlayerMobile>[] m_Fields = new InfoField<PlayerMobile>[]
+        private static readonly InfoField<PlayerMobile>[] m_Fields =
         {
-            new InfoField<PlayerMobile>(1062955, 130, GuildRosterGump.NameComparer.Instance), //Name
-            new InfoField<PlayerMobile>(1062956, 80, GuildRosterGump.RankComparer.Instance), //Rank
-            new InfoField<PlayerMobile>(1062952, 80, GuildRosterGump.LastOnComparer.Instance), //Last On
-            new InfoField<PlayerMobile>(1062953, 150, GuildRosterGump.TitleComparer.Instance)//Guild Title
+            new InfoField<PlayerMobile>(1062955, 130, NameComparer.Instance), //Name
+            new InfoField<PlayerMobile>(1062956, 80, RankComparer.Instance), //Rank
+            new InfoField<PlayerMobile>(1062952, 80, LastOnComparer.Instance), //Last On
+            new InfoField<PlayerMobile>(1062953, 150, TitleComparer.Instance)//Guild Title
         };
 
         public GuildRosterGump(PlayerMobile pm, Guild g)
-            : this(pm, g, GuildRosterGump.LastOnComparer.Instance, true, "", 0)
+            : this(pm, g, LastOnComparer.Instance, true, "", 0)
         {
         }
 
@@ -126,7 +125,7 @@ namespace Server.Guilds
         {
             TextDefinition[] defs = new TextDefinition[aryLength];
 
-            string name = String.Format("{0} {1}{2}",
+            string name = string.Format("{0} {1}{2}",
                 pm.Name,
                 Engines.VvV.ViceVsVirtueSystem.IsVvV(pm) ? "VvV" : "",
                 (player.GuildFealty == pm && player.GuildFealty != guild.Leader) ? " *" : "");
@@ -139,7 +138,7 @@ namespace Server.Guilds
             defs[0] = name;
             defs[1] = pm.GuildRank.Name;
             defs[2] = (pm.NetState != null) ? new TextDefinition(1063015) : new TextDefinition(pm.LastOnline.ToString("yyyy-MM-dd"));
-            defs[3] = (pm.GuildTitle == null) ? "" : pm.GuildTitle;
+            defs[3] = pm.GuildTitle ?? "";
 
             return defs;
         }

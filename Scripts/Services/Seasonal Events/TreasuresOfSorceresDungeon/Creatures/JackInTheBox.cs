@@ -1,4 +1,3 @@
-
 using Server.Items;
 using Server.Mobiles;
 
@@ -43,8 +42,8 @@ namespace Server.Engines.SorcerersDungeon
             SetSkill(SkillName.Meditation, 120);
             SetSkill(SkillName.Focus, 70, 80);
 
-            Fame = 12000;
-            Karma = -12000;
+            Fame = 16000;
+            Karma = -16000;
 
             SetWeaponAbility(WeaponAbility.ArmorIgnore);
             SetWeaponAbility(WeaponAbility.BleedAttack);
@@ -55,6 +54,7 @@ namespace Server.Engines.SorcerersDungeon
         {
         }
 
+        public override bool CanFlee => false;
         public override bool AlwaysMurderer => true;
         public override Poison PoisonImmune => Poison.Deadly;
 

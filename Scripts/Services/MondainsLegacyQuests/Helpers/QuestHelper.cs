@@ -52,7 +52,7 @@ namespace Server.Engines.Quests
                 // give it 10 tries to generate quest
                 for (int i = 0; i < 10; i++)
                 {
-                    quest = Construct(quests[Utility.Random(quests.Length)]) as BaseQuest;
+                    quest = Construct(quests[Utility.Random(quests.Length)]);
                 }
             }
 
@@ -153,11 +153,11 @@ namespace Server.Engines.Quests
                         string str;
 
                         if (ts.TotalDays > 1)
-                            str = String.Format("I cannot offer this quest again for about {0} more days.", ts.TotalDays);
+                            str = string.Format("I cannot offer this quest again for about {0} more days.", ts.TotalDays);
                         else if (ts.TotalHours > 1)
-                            str = String.Format("I cannot offer this quest again for about {0} more hours.", ts.TotalHours);
+                            str = string.Format("I cannot offer this quest again for about {0} more hours.", ts.TotalHours);
                         else if (ts.TotalMinutes > 1)
-                            str = String.Format("I cannot offer this quest again for about {0} more minutes.", ts.TotalMinutes);
+                            str = string.Format("I cannot offer this quest again for about {0} more minutes.", ts.TotalMinutes);
                         else
                             str = "I can offer this quest again very soon.";
 
@@ -219,15 +219,15 @@ namespace Server.Engines.Quests
 
                         if (ts.Days > 0)
                         {
-                            player.SendLocalizedMessage(1158377, String.Format("{0}\t{1}", ts.Days.ToString(), "day[s]"));
+                            player.SendLocalizedMessage(1158377, string.Format("{0}\t{1}", ts.Days.ToString(), "day[s]"));
                         }
                         else if (ts.Hours > 0)
                         {
-                            player.SendLocalizedMessage(1158377, String.Format("{0}\t{1}", ts.Hours.ToString(), "hour[s]"));
+                            player.SendLocalizedMessage(1158377, string.Format("{0}\t{1}", ts.Hours.ToString(), "hour[s]"));
                         }
                         else
                         {
-                            player.SendLocalizedMessage(1158377, String.Format("{0}\t{1}", ts.Minutes.ToString(), "minute[s]"));
+                            player.SendLocalizedMessage(1158377, string.Format("{0}\t{1}", ts.Minutes.ToString(), "minute[s]"));
                         }
 
                         return false;
@@ -290,11 +290,11 @@ namespace Server.Engines.Quests
             }
 
             /*for (int i = 0; i < quests.Length; i ++)
-            { 
+            {
                 for (int j = 0; j < player.Quests.Count; j ++)
                 {
                     BaseQuest quest = player.Quests[j];
-					
+
                     if (quests[i].IsAssignableFrom(quest.GetType()))
                     {
                         if (quest.Completed)
@@ -306,7 +306,7 @@ namespace Server.Engines.Quests
                             player.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.InProgress, false));
                             quest.InProgress();
                         }
-							
+
                         return true;
                     }
                 }
@@ -330,7 +330,10 @@ namespace Server.Engines.Quests
                 if (quest.Completed)
                 {
                     if (quest.Complete == null && !AnyRewards(quest))
-                        quest.GiveRewards();
+                    {
+                        if (TryDeleteItems(quest))
+                            quest.GiveRewards();
+                    }
                     else
                         player.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.Complete, false, true));
                 }
@@ -346,17 +349,17 @@ namespace Server.Engines.Quests
             /*for (int i = 0; i < player.Quests.Count; i ++)
             {
                 BaseQuest quest = player.Quests[i];
-				
+
                 if (quest.Quester == null && quest.QuesterType == null)
                     continue;
 
                 if (quest.QuesterType == quester.GetType())
                 {
-                    if (quest.Completed)		
+                    if (quest.Completed)
                     {
                         if (quest.Complete == null && !AnyRewards(quest))
                             quest.GiveRewards();
-                        else 
+                        else
                             player.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.Complete, false, true));
                     }
                     else
@@ -364,7 +367,7 @@ namespace Server.Engines.Quests
                         player.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.InProgress, false));
                         quest.InProgress();
                     }
-						
+
                     return true;
                 }
             }*/
@@ -403,7 +406,7 @@ namespace Server.Engines.Quests
                         {
                             if (quest.Completed)
                             {
-                                player.SendLocalizedMessage(1046258, null, 0x23); // Your quest is complete.												
+                                player.SendLocalizedMessage(1046258, null, 0x23); // Your quest is complete.
                                 player.PlaySound(quest.CompleteSound);
 
                                 quest.OnCompleted();
@@ -472,7 +475,7 @@ namespace Server.Engines.Quests
                 obj.Complete();
             }
 
-            from.SendLocalizedMessage(1046258, null, 0x23); // Your quest is complete.							
+            from.SendLocalizedMessage(1046258, null, 0x23); // Your quest is complete.
             from.SendGump(new MondainQuestGump(quest, MondainQuestGump.Section.Complete, false, true));
             from.PlaySound(quest.CompleteSound);
 
@@ -644,7 +647,7 @@ namespace Server.Engines.Quests
                         {
                             obtain.CurProgress -= item.Amount;
                             item.QuestItem = false;
-                            from.SendLocalizedMessage(1074769); // An item must be in your backpack (and not in a container within) to be toggled as a quest item. 	
+                            from.SendLocalizedMessage(1074769); // An item must be in your backpack (and not in a container within) to be toggled as a quest item.
                             return;
                         }
                     }
@@ -654,7 +657,7 @@ namespace Server.Engines.Quests
 
                         if (deliver.Delivery != null && deliver.Delivery.IsAssignableFrom(item.GetType()))
                         {
-                            from.SendLocalizedMessage(1074813);  // You have failed to complete your delivery.							
+                            from.SendLocalizedMessage(1074813);  // You have failed to complete your delivery.
                             DeleteItems(from, deliver.Delivery, deliver.MaxProgress, false);
                             deliver.Fail();
                             item.Delete();
@@ -821,18 +824,19 @@ namespace Server.Engines.Quests
             return false;
         }
 
-        public static object Construct(Type type)
+        public static BaseQuest Construct(Type type)
         {
             if (type == null)
+            {
                 return null;
+            }
 
             try
             {
-                return Activator.CreateInstance(type);
+                return Activator.CreateInstance(type) as BaseQuest;
             }
-            catch (Exception e)
+            catch
             {
-                Server.Diagnostics.ExceptionLogging.LogException(e);
                 return null;
             }
         }
@@ -928,7 +932,7 @@ namespace Server.Engines.Quests
             if (!Owner.From.Alive)
                 return;
 
-            Owner.From.SendLocalizedMessage(1072352); // Target the item you wish to toggle Quest Item status on <ESC> to cancel			
+            Owner.From.SendLocalizedMessage(1072352); // Target the item you wish to toggle Quest Item status on <ESC> to cancel
             Owner.From.BeginTarget(-1, false, TargetFlags.None, ToggleQuestItem_Callback);
         }
 

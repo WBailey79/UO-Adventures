@@ -1,11 +1,14 @@
 using Server.ContextMenus;
+using Server.Engines.CityLoyalty;
 using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
 using Server.Spells;
 using Server.Targeting;
+
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Server.Multis
 {
@@ -382,7 +385,12 @@ namespace Server.Multis
                 from.SendLocalizedMessage(1019004); // You are not allowed to travel there.
                 return false;
             }
-            else if (Server.Engines.CityLoyalty.CityTradeSystem.HasTrade(from))
+            else if (Region.FindRegions(dest, destMap).Any(r => r.Name == "Abyss") && from is PlayerMobile && !((PlayerMobile)from).AbyssEntry)
+            {
+                from.SendLocalizedMessage(1112226); // Thou must be on a Sacred Quest to pass through.
+                return false;
+            }
+            else if (CityTradeSystem.HasTrade(from))
             {
                 from.SendLocalizedMessage(1151733); // You cannot do that while carrying a Trade Order.
                 return false;
@@ -406,7 +414,7 @@ namespace Server.Multis
             if (IsChildOf(m.Backpack))
             {
                 m.SendLocalizedMessage(1114918); // Select a House Teleporter to link to.
-                m.BeginTarget(-1, false, Server.Targeting.TargetFlags.None, (from, targeted) =>
+                m.BeginTarget(-1, false, TargetFlags.None, (from, targeted) =>
                 {
                     if (targeted is HouseTeleporterTile)
                     {
@@ -489,9 +497,8 @@ namespace Server.Multis
                     Point3D p = target.GetWorldTop();
                     Map map = target.Map;
 
-                    Server.Mobiles.BaseCreature.TeleportPets(m, p, map);
-
-                    m.MoveToWorld(p, map);
+                    BaseCreature.TeleportPets(m, p, map);
+                    m.MoveToWorld(p, map);                   
 
                     if (!m.Hidden || m.IsPlayer())
                     {

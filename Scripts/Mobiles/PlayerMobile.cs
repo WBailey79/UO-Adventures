@@ -18,7 +18,6 @@ using Server.Guilds;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
-using Server.Movement;
 using Server.Multis;
 using Server.Network;
 using Server.Regions;
@@ -35,6 +34,7 @@ using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Spells.SkillMasteries;
 using Server.Targeting;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -412,9 +412,6 @@ namespace Server.Mobiles
         public DateTime LastOnline { get { return m_LastOnline; } set { m_LastOnline = value; } }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public long LastMoved => LastMoveTime;
-
-        [CommandProperty(AccessLevel.GameMaster)]
         public TimeSpan NpcGuildGameTime { get { return m_NpcGuildGameTime; } set { m_NpcGuildGameTime = value; } }
 
         public int ExecutesLightningStrike { get { return m_ExecutesLightningStrike; } set { m_ExecutesLightningStrike = value; } }
@@ -568,7 +565,7 @@ namespace Server.Mobiles
                         }
                         catch (Exception e)
                         {
-                            Server.Diagnostics.ExceptionLogging.LogException(e);
+                            Diagnostics.ExceptionLogging.LogException(e);
                         }
 
                         if (ammo != null)
@@ -590,16 +587,16 @@ namespace Server.Mobiles
 
                             if (name != null && ammo.Amount > 1)
                             {
-                                name = String.Format("{0}s", name);
+                                name = string.Format("{0}s", name);
                             }
 
                             if (name == null)
                             {
-                                name = String.Format("#{0}", ammo.LabelNumber);
+                                name = string.Format("#{0}", ammo.LabelNumber);
                             }
 
                             PlaceInBackpack(ammo);
-                            SendLocalizedMessage(1073504, String.Format("{0}\t{1}", ammo.Amount, name)); // You recover ~1_NUM~ ~2_AMMO~.
+                            SendLocalizedMessage(1073504, string.Format("{0}\t{1}", ammo.Amount, name)); // You recover ~1_NUM~ ~2_AMMO~.
                         }
                     }
                 }
@@ -636,10 +633,8 @@ namespace Server.Mobiles
         [CommandProperty(AccessLevel.GameMaster)]
         public TimeSpan DisguiseTimeLeft => DisguiseTimers.TimeRemaining(this);
 
-        private DateTime m_PeacedUntil;
-
         [CommandProperty(AccessLevel.GameMaster)]
-        public DateTime PeacedUntil { get { return m_PeacedUntil; } set { m_PeacedUntil = value; } }
+        public DateTime PeacedUntil { get; set; }
 
         [CommandProperty(AccessLevel.Decorator)]
         public override string TitleName
@@ -649,7 +644,7 @@ namespace Server.Mobiles
                 string name;
 
                 if (Fame >= 10000)
-                    name = String.Format("{0} {1}", Female ? "Lady" : "Lord", RawName);
+                    name = string.Format("{0} {1}", Female ? "Lady" : "Lord", RawName);
                 else
                     name = RawName;
 
@@ -856,7 +851,6 @@ namespace Server.Mobiles
         private static void Targeted_Skill(TargetedSkillEventArgs e)
         {
             Mobile from = e.Mobile;
-            int SkillId = e.SkillID;
             IEntity target = e.Target;
 
             if (from == null || target == null)
@@ -888,9 +882,9 @@ namespace Server.Mobiles
         {
             PlayerMobile pm = e.Mobile as PlayerMobile;
 
-            if (pm.IsStaff() || Core.TickCount - pm.NextActionTime >= 0)
+            if (pm != null && pm.Backpack != null && pm.Alive && e.List != null && e.List.Count > 0)
             {
-                if (pm != null && pm.Backpack != null && pm.Alive && e.List != null && e.List.Count > 0)
+                if (pm.IsStaff() || Core.TickCount - pm.NextActionTime >= 0)
                 {
                     Container pack = pm.Backpack;
 
@@ -922,22 +916,22 @@ namespace Server.Mobiles
                         }
                     });
 
-                    pm.NextActionTime = Core.TickCount + (Mobile.ActionDelay * e.List.Count);
+                    pm.NextActionTime = Core.TickCount + (ActionDelay * e.List.Count);
                 }
-            }
-            else
-            {
-                pm.SendActionMessage();
-            }
+	            else
+	            {
+	                pm.SendActionMessage();
+	            }
+	        }
         }
 
         public static void UnequipMacro(UnequipMacroEventArgs e)
         {
             PlayerMobile pm = e.Mobile as PlayerMobile;
 
-            if (pm.IsStaff() || Core.TickCount - pm.NextActionTime >= 0)
+            if (pm != null && pm.Backpack != null && pm.Alive && e.List != null && e.List.Count > 0)
             {
-                if (pm != null && pm.Backpack != null && pm.Alive && e.List != null && e.List.Count > 0)
+                if (pm.IsStaff() || Core.TickCount - pm.NextActionTime >= 0)
                 {
                     Container pack = pm.Backpack;
 
@@ -951,14 +945,14 @@ namespace Server.Mobiles
                         }
                     }
 
-                    pm.NextActionTime = Core.TickCount + Mobile.ActionDelay;
+                    pm.NextActionTime = Core.TickCount + ActionDelay;
                     ColUtility.Free(worn);
                 }
-            }
-            else
-            {
-                pm.SendActionMessage();
-            }
+	            else
+	            {
+	                pm.SendActionMessage();
+	            }
+	        }
         }
         #endregion
 
@@ -1010,12 +1004,16 @@ namespace Server.Mobiles
             if (type != ResistanceType.Physical && 60 < max && CurseSpell.UnderEffect(this))
             {
                 max -= 10;
-                //max = 60;
             }
 
             if ((type == ResistanceType.Fire || type == ResistanceType.Poison) && CorpseSkinSpell.IsUnderEffects(this))
             {
                 max = CorpseSkinSpell.GetResistMalus(this);
+            }
+
+            if (type == ResistanceType.Physical && MagicReflectSpell.HasReflect(this))
+            {
+                max -= 5;
             }
 
             return max;
@@ -1273,14 +1271,6 @@ namespace Server.Mobiles
                 from.Map = Map.Felucca;
             }
 
-            //TODO: Move to fellowship data event sink
-            if (((from.Map == Map.Trammel && from.Region.IsPartOf("Blackthorn Castle")) || PointsSystem.FellowshipData.Enabled && from.Region.IsPartOf("BlackthornDungeon") || from.Region.IsPartOf("Ver Lor Reg")) && from.Player && from.AccessLevel == AccessLevel.Player && from.CharacterOut)
-            {
-                StormLevelGump menu = new StormLevelGump(from);
-                menu.BeginClose();
-                from.SendGump(menu);
-            }
-
             if (from.NetState != null && from.NetState.IsEnhancedClient && from.Mount is EtherealMount)
             {
                 Timer.DelayCall(TimeSpan.FromSeconds(1), mount =>
@@ -1379,7 +1369,7 @@ namespace Server.Mobiles
 
                             if (name == null)
                             {
-                                name = String.Format("#{0}", weapon.LabelNumber);
+                                name = string.Format("#{0}", weapon.LabelNumber);
                             }
 
                             from.SendLocalizedMessage(1062001, name); // You can no longer wield your ~1_WEAPON~
@@ -1428,7 +1418,7 @@ namespace Server.Mobiles
 
                             if (name == null)
                             {
-                                name = String.Format("#{0}", armor.LabelNumber);
+                                name = string.Format("#{0}", armor.LabelNumber);
                             }
 
                             if (armor is BaseShield)
@@ -1476,7 +1466,7 @@ namespace Server.Mobiles
 
                             if (name == null)
                             {
-                                name = String.Format("#{0}", clothing.LabelNumber);
+                                name = string.Format("#{0}", clothing.LabelNumber);
                             }
 
                             from.SendLocalizedMessage(1062002, name); // You can no longer wear your ~1_ARMOR~
@@ -1504,6 +1494,11 @@ namespace Server.Mobiles
                     #endregion
                 }
 
+                if (from.Mount is VvVMount && !ViceVsVirtueSystem.IsVvV(from))
+                {
+                    from.Mount.Rider = null;
+                }
+
                 if (moved)
                 {
                     from.SendLocalizedMessage(500647); // Some equipment has been moved to your backpack.
@@ -1511,7 +1506,7 @@ namespace Server.Mobiles
             }
             catch (Exception e)
             {
-                Server.Diagnostics.ExceptionLogging.LogException(e);
+                Diagnostics.ExceptionLogging.LogException(e);
             }
             finally
             {
@@ -1688,7 +1683,7 @@ namespace Server.Mobiles
 
                 if (curWeight > MaxWeight)
                 {
-                    SendLocalizedMessage(1019035, true, String.Format(" : {0} / {1}", curWeight, MaxWeight));
+                    SendLocalizedMessage(1019035, true, string.Format(" : {0} / {1}", curWeight, MaxWeight));
                 }
             }
         }
@@ -1801,12 +1796,6 @@ namespace Server.Mobiles
 
             if (m_DesignContext != null || (target is PlayerMobile && ((PlayerMobile)target).m_DesignContext != null))
             {
-                return false;
-            }
-
-            if (Peaced && !ignorePeaceCheck)
-            {
-                //!+ TODO: message
                 return false;
             }
 
@@ -1932,10 +1921,7 @@ namespace Server.Mobiles
         public override int StamMax => base.StamMax + AosAttributes.GetValue(this, AosAttribute.BonusStam);
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public override int ManaMax => base.ManaMax + AosAttributes.GetValue(this, AosAttribute.BonusMana) +
-                       (Race == Race.Elf ? 20 : 0) +
-                       MasteryInfo.IntuitionBonus(this) +
-                       UraliTranceTonic.GetManaBuff(this);
+        public override int ManaMax => base.ManaMax + AosAttributes.GetValue(this, AosAttribute.BonusMana) + (Race == Race.Elf ? 20 : 0) + MasteryInfo.IntuitionBonus(this) + UraliTranceTonic.GetManaBuff(this);
         #endregion
 
         #region Stat Getters/Setters
@@ -2011,30 +1997,17 @@ namespace Server.Mobiles
 
             int speed = ComputeMovementSpeed(d);
 
-            bool res;
+            bool result = base.Move(d);
 
-            if (!Alive)
-            {
-                MovementImpl.IgnoreMovableImpassables = true;
-            }
-
-            res = base.Move(d);
-
-            MovementImpl.IgnoreMovableImpassables = false;
-
-            if (!res)
-            {
-                return false;
-            }
-
-            m_NextMovementTime += speed;
-
-            if (!Siege.SiegeShard && Core.TickCount - NextPassiveDetectHidden >= 0)
+            if (result && !Siege.SiegeShard && Core.TickCount - NextPassiveDetectHidden >= 0)
             {
                 DetectHidden.DoPassiveDetect(this);
                 NextPassiveDetectHidden = Core.TickCount + (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
             }
-            return true;
+
+            m_NextMovementTime += speed;
+
+            return result;
         }
 
         public override bool CheckMovement(Direction d, out int newZ)
@@ -2075,7 +2048,7 @@ namespace Server.Mobiles
             {
                 if (Hits <= HitsMax / 2)
                 {
-                    BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.Berserk, 1080449, 1115021, String.Format("{0}\t{1}", GetRacialBerserkBuff(false), GetRacialBerserkBuff(true)), false));
+                    BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.Berserk, 1080449, 1115021, string.Format("{0}\t{1}", GetRacialBerserkBuff(false), GetRacialBerserkBuff(true)), false));
                     Delta(MobileDelta.WeaponDamage);
                 }
                 else if (oldValue < Hits && Hits > HitsMax / 2)
@@ -2124,7 +2097,7 @@ namespace Server.Mobiles
 
             BestialSetHelper.OnHeal(this, from, ref amount);
 
-            if (amount > 0 && from != null && from != this)
+            if (amount > 0 && from != this)
             {
                 for (int i = Aggressed.Count - 1; i >= 0; i--)
                 {
@@ -2395,7 +2368,7 @@ namespace Server.Mobiles
             {
                 Mobile prot = m_JusticeProtectors[i];
 
-                string args = String.Format("{0}\t{1}", Name, prot.Name);
+                string args = string.Format("{0}\t{1}", Name, prot.Name);
 
                 prot.SendLocalizedMessage(1049371, args);
                 // The protective relationship between ~1_PLAYER1~ and ~2_PLAYER2~ has been ended.
@@ -2562,19 +2535,6 @@ namespace Server.Mobiles
 
             SendLocalizedMessage(1060881, "", 0x23); // You have selected to automatically reinsure all insured items upon death
             AutoRenewInsurance = true;
-        }
-
-        private void CancelRenewInventoryInsurance()
-        {
-            if (!CheckAlive())
-            {
-                return;
-            }
-
-            if (!HasGump(typeof(CancelRenewInventoryInsuranceGump)))
-            {
-                SendGump(new CancelRenewInventoryInsuranceGump(this, null));
-            }
         }
 
         #region Siege Bless Item
@@ -3420,7 +3380,7 @@ namespace Server.Mobiles
 
             if (willKill && from is PlayerMobile)
             {
-                Timer.DelayCall(TimeSpan.FromSeconds(10), ((PlayerMobile)@from).RecoverAmmo);
+                Timer.DelayCall(TimeSpan.FromSeconds(10), ((PlayerMobile)from).RecoverAmmo);
             }
 
             #region Mondain's Legacy
@@ -4005,22 +3965,14 @@ namespace Server.Mobiles
 
             m_AutoStabled = new List<Mobile>();
 
-            #region Mondain's Legacy
-            //m_Quests = new List<BaseQuest>();
-            //m_Chains = new Dictionary<QuestChain, BaseChain>();
             m_DoneQuests = new List<QuestRestartInfo>();
             m_Collections = new Dictionary<Collection, int>();
             m_RewardTitles = new List<object>();
-
-            m_PeacedUntil = DateTime.UtcNow;
-            #endregion
 
             m_VisList = new List<Mobile>();
             m_PermaFlags = new List<Mobile>();
             m_AntiMacroTable = new Hashtable();
             m_RecentlyReported = new List<Mobile>();
-
-            //m_BOBFilter = new BOBFilter();
 
             m_GameTime = TimeSpan.Zero;
             m_ShortTermElapse = TimeSpan.FromHours(8.0);
@@ -4122,7 +4074,7 @@ namespace Server.Mobiles
 
         private static void SendToStaffMessage(Mobile from, string format, params object[] args)
         {
-            SendToStaffMessage(from, String.Format(format, args));
+            SendToStaffMessage(from, string.Format(format, args));
         }
 
         #region Poison
@@ -4297,11 +4249,6 @@ namespace Server.Mobiles
             }
         }
 
-        private void RevertHair()
-        {
-            SetHairMods(-1, -1);
-        }
-
         public BOBFilter BOBFilter => BulkOrderSystem.GetBOBFilter(this);
 
         public override void Deserialize(GenericReader reader)
@@ -4312,7 +4259,9 @@ namespace Server.Mobiles
 
             switch (version)
             {
-                case 40: // Version 40, moved gauntlet points, virtua artys and TOT turn ins to PointsSystem
+                case 42: // upgraded quest serialization
+                case 41: // removed PeacedUntil - no need to serialize this
+                case 40: // Version 40, moved gauntlet points, virtua artys and TOT convert to PointsSystem
                 case 39: // Version 39, removed ML quest save/load
                 case 38:
                     NextGemOfSalvationUse = reader.ReadDateTime();
@@ -4408,7 +4357,10 @@ namespace Server.Mobiles
                     }
                 case 28:
                     {
-                        m_PeacedUntil = reader.ReadDateTime();
+                        if (version < 41)
+                        {
+                            reader.ReadDateTime();
+                        }
 
                         goto case 27;
                     }
@@ -4510,7 +4462,13 @@ namespace Server.Mobiles
 
                             for (int i = 0; i < count; ++i)
                             {
-                                Type questType = QuestSerializer.ReadType(QuestSystem.QuestTypes, reader);
+                                Type questType;
+
+                                if (version >= 42)
+                                    questType = reader.ReadObjectType();
+                                else
+                                    questType = QuestSerializer.ReadQuestType(reader);
+
                                 DateTime restartTime;
 
                                 if (version < 17)
@@ -4661,15 +4619,6 @@ namespace Server.Mobiles
             }
 
             #region Mondain's Legacy
-            /*if (m_Quests == null)
-			{
-				m_Quests = new List<BaseQuest>();
-			}
-
-			if (m_Chains == null)
-			{
-				m_Chains = new Dictionary<QuestChain, BaseChain>();
-			}*/
 
             if (m_DoneQuests == null)
             {
@@ -4778,7 +4727,7 @@ namespace Server.Mobiles
 
             base.Serialize(writer);
 
-            writer.Write(40); // version
+            writer.Write(42); // version
 
             writer.Write(NextGemOfSalvationUse);
 
@@ -4848,7 +4797,6 @@ namespace Server.Mobiles
             #endregion
 
             // Version 28
-            writer.Write(m_PeacedUntil);
             writer.Write(m_AnkhNextUse);
             writer.Write(m_AutoStabled, true);
 
@@ -4895,7 +4843,7 @@ namespace Server.Mobiles
                 {
                     QuestRestartInfo restartInfo = m_DoneQuests[i];
 
-                    QuestSerializer.Write(restartInfo.QuestType, QuestSystem.QuestTypes, writer);
+                    writer.WriteObjectType(restartInfo.QuestType);
                     writer.Write(restartInfo.RestartTime);
                 }
             }
@@ -5075,7 +5023,7 @@ namespace Server.Mobiles
         {
             base.GetProperties(list);
 
-            JollyRogerData.DisplayTitle(this, list);
+            Engines.JollyRoger.JollyRogerData.DisplayTitle(this, list);
 
             if (m_SubtitleSkillTitle != null)
                 list.Add(1042971, m_SubtitleSkillTitle);
@@ -5120,7 +5068,7 @@ namespace Server.Mobiles
             {
                 VvVPlayerEntry entry = PointsSystem.ViceVsVirtue.GetPlayerEntry<VvVPlayerEntry>(this);
 
-                list.Add(String.Format("Kills: {0} / Deaths: {1} / Assists: {2}", // no cliloc for this!
+                list.Add(string.Format("Kills: {0} / Deaths: {1} / Assists: {2}", // no cliloc for this!
                     entry == null ? "0" : entry.Kills.ToString(), entry == null ? "0" : entry.Deaths.ToString(), entry == null ? "0" : entry.Assists.ToString()));
 
                 list.Add(1060415, AosAttributes.GetValue(this, AosAttribute.AttackChance).ToString()); // hit chance increase ~1_val~%
@@ -5218,22 +5166,10 @@ namespace Server.Mobiles
 
         #region Mondain's Legacy
         public List<BaseQuest> Quests => MondainQuestData.GetQuests(this);
-
         public Dictionary<QuestChain, BaseChain> Chains => MondainQuestData.GetChains(this);
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool Peaced
-        {
-            get
-            {
-                if (m_PeacedUntil > DateTime.UtcNow)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
+        public bool Peaced => PeacedUntil > DateTime.UtcNow;
 
         private Dictionary<Collection, int> m_Collections;
         private List<object> m_RewardTitles;
@@ -5428,7 +5364,7 @@ namespace Server.Mobiles
 
             string suffix = "";
 
-            if (PropertyTitle && Title != null && Title.Length > 0)
+            if (PropertyTitle && !string.IsNullOrEmpty(Title))
             {
                 suffix = Title;
             }
@@ -5453,11 +5389,11 @@ namespace Server.Mobiles
                     }
                     else if (suffix.Length > 0)
                     {
-                        suffix = String.Format("{0} {1}", suffix, m_OverheadTitle);
+                        suffix = string.Format("{0} {1}", suffix, m_OverheadTitle);
                     }
                     else
                     {
-                        suffix = String.Format("{0}", m_OverheadTitle);
+                        suffix = string.Format("{0}", m_OverheadTitle);
                     }
                 }
             }
@@ -5465,15 +5401,15 @@ namespace Server.Mobiles
             {
                 if (vvv)
                 {
-                    suffix = String.Format("[{0}] [VvV]", Utility.FixHtml(guild.Abbreviation));
+                    suffix = string.Format("[{0}] [VvV]", Utility.FixHtml(guild.Abbreviation));
                 }
                 else if (suffix.Length > 0)
                 {
-                    suffix = String.Format("{0} [{1}]", suffix, Utility.FixHtml(guild.Abbreviation));
+                    suffix = string.Format("{0} [{1}]", suffix, Utility.FixHtml(guild.Abbreviation));
                 }
                 else
                 {
-                    suffix = String.Format("[{0}]", Utility.FixHtml(guild.Abbreviation));
+                    suffix = string.Format("[{0}]", Utility.FixHtml(guild.Abbreviation));
                 }
             }
             else if (vvv)
@@ -5785,7 +5721,7 @@ namespace Server.Mobiles
                 }
                 else
                 {
-                    suffix = String.Concat(suffix, " (Young)");
+                    suffix = string.Concat(suffix, " (Young)");
                 }
             }
 

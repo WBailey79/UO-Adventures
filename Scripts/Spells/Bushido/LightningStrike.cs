@@ -1,5 +1,4 @@
 using Server.Mobiles;
-using System;
 
 namespace Server.Spells.Bushido
 {
@@ -86,7 +85,7 @@ namespace Server.Spells.Bushido
 
             m.Delta(MobileDelta.WeaponDamage);
 
-            BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.LightningStrike, 1060599, 1153811, String.Format("50\t{0}", criticalChance)));
+            BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.LightningStrike, 1060599, 1153811, string.Format("50\t{0}", criticalChance)));
         }
 
         public override void OnClearMove(Mobile attacker)

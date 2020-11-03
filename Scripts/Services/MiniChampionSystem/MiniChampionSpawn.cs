@@ -14,6 +14,8 @@ namespace Server.Engines.MiniChamps
         }
 
         private static readonly List<MiniChamp> Controllers = new List<MiniChamp>();
+        private static readonly string m_TimerID = "MiniChampTimer";
+        private static readonly string m_RestartTimerID = "MiniChampRestartTimer";
 
         [Usage("GenMiniChamp")]
         [Description("MiniChampion Generator")]
@@ -26,75 +28,102 @@ namespace Server.Engines.MiniChamps
 
             Map map = Map.TerMur;
 
-            MiniChamp MiniChamp = new MiniChamp();
-
-            MiniChamp.Type = MiniChampType.CrimsonVeins;
+            MiniChamp MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.CrimsonVeins
+            };
             MiniChamp.MoveToWorld(new Point3D(974, 161, -10), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.AbyssalLair;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.AbyssalLair
+            };
             MiniChamp.MoveToWorld(new Point3D(987, 328, 11), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.DiscardedCavernClanRibbon;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.DiscardedCavernClanRibbon
+            };
             MiniChamp.MoveToWorld(new Point3D(915, 501, -11), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.DiscardedCavernClanScratch;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.DiscardedCavernClanScratch
+            };
             MiniChamp.MoveToWorld(new Point3D(950, 552, -13), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.DiscardedCavernClanChitter;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.DiscardedCavernClanChitter
+            };
             MiniChamp.MoveToWorld(new Point3D(980, 491, -11), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.EnslavedGoblins;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.EnslavedGoblins
+            };
             MiniChamp.MoveToWorld(new Point3D(578, 799, -45), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.FairyDragonLair;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.FairyDragonLair
+            };
             MiniChamp.MoveToWorld(new Point3D(887, 273, 4), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.FireTemple;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.FireTemple
+            };
             MiniChamp.MoveToWorld(new Point3D(546, 760, -91), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.LandsoftheLich;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.LandsoftheLich
+            };
             MiniChamp.MoveToWorld(new Point3D(530, 658, 9), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.LavaCaldera;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.LavaCaldera
+            };
             MiniChamp.MoveToWorld(new Point3D(578, 900, -72), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.PassageofTears;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.PassageofTears
+            };
             MiniChamp.MoveToWorld(new Point3D(684, 579, -14), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.SecretGarden;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.SecretGarden
+            };
             MiniChamp.MoveToWorld(new Point3D(434, 701, 29), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.Type = MiniChampType.SkeletalDragon;
+            MiniChamp = new MiniChamp
+            {
+                Type = MiniChampType.SkeletalDragon
+            };
             MiniChamp.MoveToWorld(new Point3D(677, 824, -108), map);
             MiniChamp.Active = true;
 
-            MiniChamp = new MiniChamp();
-            MiniChamp.BossSpawnPoint = new Point3D(384, 1931, 50);
-            MiniChamp.Type = MiniChampType.MeraktusTheTormented;
+            MiniChamp = new MiniChamp
+            {
+                BossSpawnPoint = new Point3D(384, 1931, 50),
+                Type = MiniChampType.MeraktusTheTormented
+            };
             MiniChamp.MoveToWorld(new Point3D(395, 1913, 12), Map.Malas);
             MiniChamp.Active = true;
 
@@ -108,7 +137,6 @@ namespace Server.Engines.MiniChamps
         private int m_Level;
         private int m_SpawnRange;
         private TimeSpan m_RestartDelay;
-        private Timer m_Timer, m_RestartTimer;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public Point3D BossSpawnPoint { get; set; }
@@ -178,16 +206,7 @@ namespace Server.Engines.MiniChamps
 
             m_Active = true;
 
-            if (m_Timer != null)
-                m_Timer.Stop();
-
-            m_Timer = new SliceTimer(this);
-            m_Timer.Start();
-
-            if (m_RestartTimer != null)
-                m_RestartTimer.Stop();
-
-            m_RestartTimer = null;
+            StartTimer();
 
             AdvanceLevel();
             InvalidateProperties();
@@ -204,16 +223,20 @@ namespace Server.Engines.MiniChamps
             ClearSpawn();
             Despawn();
 
-            if (m_Timer != null)
-                m_Timer.Stop();
+            TimerRegistry.RemoveFromRegistry(m_TimerID, this);
+            TimerRegistry.RemoveFromRegistry(m_RestartTimerID, this);
 
-            m_Timer = null;
-
-            if (m_RestartTimer != null)
-                m_RestartTimer.Stop();
-
-            m_RestartTimer = null;
             InvalidateProperties();
+        }
+
+        private void StartTimer()
+        {
+            TimerRegistry.Register(m_TimerID, this, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1), false, spawner => spawner.OnSlice());
+        }
+
+        private void StartRestartTimer()
+        {
+            TimerRegistry.Register(m_RestartTimerID, this, m_RestartDelay, spawner => spawner.Start());
         }
 
         public void Despawn()
@@ -307,7 +330,7 @@ namespace Server.Engines.MiniChamps
             {
                 Stop();
 
-                m_RestartTimer = Timer.DelayCall(m_RestartDelay, Start);
+                StartRestartTimer();
             }
         }
 
@@ -440,12 +463,11 @@ namespace Server.Engines.MiniChamps
 
                         if (m_Active)
                         {
-                            m_Timer = new SliceTimer(this);
-                            m_Timer.Start();
+                            StartTimer();
                         }
                         else
                         {
-                            m_RestartTimer = Timer.DelayCall(m_RestartDelay, Start);
+                            StartRestartTimer();
                         }
 
                         break;
@@ -453,22 +475,6 @@ namespace Server.Engines.MiniChamps
             }
 
             Controllers.Add(this);
-        }
-    }
-
-    public class SliceTimer : Timer
-    {
-        private readonly MiniChamp m_Controller;
-
-        public SliceTimer(MiniChamp controller)
-            : base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
-        {
-            m_Controller = controller;
-        }
-
-        protected override void OnTick()
-        {
-            m_Controller.OnSlice();
         }
     }
 }

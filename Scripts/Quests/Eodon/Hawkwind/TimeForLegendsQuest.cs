@@ -8,13 +8,6 @@ namespace Server.Engines.Quests.TimeLord
 {
     public class TimeForLegendsQuest : QuestSystem
     {
-        private readonly Type[] _TypeReferenceTable = new Type[]
-        {
-            typeof(TimeForLegendsObjective)
-        };
-
-        public override Type[] TypeReferenceTable => _TypeReferenceTable;
-
         public override object Name => 1156338;  		// A Time For Legends
         public override object OfferMessage => 1156339; 	/*Greetings Brave Traveler!<br><br>Throughout my travels in time I have forever 
 																		  encountered those who've reached the pinnacle of their profession.  These Legends 
@@ -57,12 +50,11 @@ namespace Server.Engines.Quests.TimeLord
 
             SkillMasteryPrimer primer = new SkillMasteryPrimer(Mastery, 1);
 
-            if (primer != null)
-                From.AddToBackpack(primer);
+            From.AddToBackpack(primer);
         }
 
         public static Type[] Targets => _Targets;
-        private static readonly Type[] _Targets = new Type[]
+        private static readonly Type[] _Targets =
         {
             typeof(Semidar), typeof(Mephitis), typeof(Rikktor), typeof(LordOaks), typeof(Neira), typeof(Barracoon), typeof(Serado), typeof(Meraktus), typeof(Ilhenir),
             typeof(Twaulo), typeof(AbyssalInfernal), typeof(PrimevalLich), typeof(CorgulTheSoulBinder), typeof(CorgulTheSoulBinder) /*dragon turtle*/,
@@ -90,7 +82,7 @@ namespace Server.Engines.Quests.TimeLord
 
             TargetOfTheDay = _Targets[Utility.Random(_Targets.Length)];
 
-            Server.Commands.CommandSystem.Register("NewTargetOfTheDay", AccessLevel.GameMaster, e =>
+            Commands.CommandSystem.Register("NewTargetOfTheDay", AccessLevel.GameMaster, e =>
                 {
                     TargetOfTheDay = _Targets[Utility.Random(_Targets.Length)];
 

@@ -60,6 +60,8 @@ namespace Server.Items
             typeof(EssenceOrder),   typeof(EssencePassion),   typeof(EssencePersistence), typeof(EssenceSingularity)
         };
 
+        private static readonly TimeSpan _DeleteTime = TimeSpan.FromHours(3);
+
         private List<Item> m_Lifted = new List<Item>();
 
         private ChestQuality _Quality;
@@ -75,14 +77,13 @@ namespace Server.Items
         {
             Owner = owner;
             Level = level;
-            DeleteTime = DateTime.UtcNow + TimeSpan.FromHours(3.0);
+            DeleteTime = DateTime.UtcNow + _DeleteTime;
 
             Temporary = temporary;
             Guardians = new List<Mobile>();
             AncientGuardians = new List<Mobile>();
 
-            Timer = new DeleteTimer(this, DeleteTime);
-            Timer.Start();
+            TimerRegistry.Register("TreasureMapChest", this, _DeleteTime, chest => chest.Delete());
         }
 
         public TreasureMapChest(Serial serial)
@@ -418,21 +419,18 @@ namespace Server.Items
                     else if (0.15 > Utility.RandomDouble())
                         special = GetRandomSpecial(level, cont.Map);
                 }
-                else if (.10 > Utility.RandomDouble())
+                else if (0.10 > Utility.RandomDouble())
                 {
                     special = GetRandomSpecial(level, cont.Map);
-                }
-
-                if (Engines.Points.PointsSystem.JollyRogerData.Enabled && .30 > Utility.RandomDouble())
-                {
-                    cont.DropItem(new MysteriousFragment());
                 }
             }
 
             if (arty != null)
             {
-                Container pack = new Backpack();
-                pack.Hue = 1278;
+                Container pack = new Backpack
+                {
+                    Hue = 1278
+                };
 
                 pack.DropItem(arty);
                 cont.DropItem(pack);
@@ -503,7 +501,7 @@ namespace Server.Items
 
         public static Item GetRandomRecipe()
         {
-            List<Server.Engines.Craft.Recipe> recipes = new List<Server.Engines.Craft.Recipe>(Server.Engines.Craft.Recipe.Recipes.Values);
+            List<Engines.Craft.Recipe> recipes = new List<Engines.Craft.Recipe>(Engines.Craft.Recipe.Recipes.Values);
 
             return new RecipeScroll(recipes[Utility.Random(recipes.Count)]);
         }
@@ -591,37 +589,41 @@ namespace Server.Items
         {
             ExecuteTrap(from);
 
-            if (!AncientGuardians.Any(g => g.Alive))
+            if (!AncientGuardians.Any(g => g != null && g.Alive))
             {
                 BaseCreature spawn = TreasureMap.Spawn(Level, GetWorldLocation(), Map, from, false);
-                spawn.NoLootOnDeath = true;
 
-                spawn.Name = "Ancient Chest Guardian";
-                spawn.Title = "(Guardian)";
-                spawn.Tamable = false;
-
-                if (spawn.HitsMaxSeed >= 0)
-                    spawn.HitsMaxSeed = (int)(spawn.HitsMaxSeed * Paragon.HitsBuff);
-
-                spawn.RawStr = (int)(spawn.RawStr * Paragon.StrBuff);
-                spawn.RawInt = (int)(spawn.RawInt * Paragon.IntBuff);
-                spawn.RawDex = (int)(spawn.RawDex * Paragon.DexBuff);
-
-                spawn.Hits = spawn.HitsMax;
-                spawn.Mana = spawn.ManaMax;
-                spawn.Stam = spawn.StamMax;
-
-                spawn.Hue = 1960;
-
-                for (int i = 0; i < spawn.Skills.Length; i++)
+                if (spawn != null)
                 {
-                    Skill skill = spawn.Skills[i];
+                    spawn.NoLootOnDeath = true;
 
-                    if (skill.Base > 0.0)
-                        skill.Base *= Paragon.SkillsBuff;
+                    spawn.Name = "Ancient Chest Guardian";
+                    spawn.Title = "(Guardian)";
+                    spawn.Tamable = false;
+
+                    if (spawn.HitsMaxSeed >= 0)
+                        spawn.HitsMaxSeed = (int)(spawn.HitsMaxSeed * Paragon.HitsBuff);
+
+                    spawn.RawStr = (int)(spawn.RawStr * Paragon.StrBuff);
+                    spawn.RawInt = (int)(spawn.RawInt * Paragon.IntBuff);
+                    spawn.RawDex = (int)(spawn.RawDex * Paragon.DexBuff);
+
+                    spawn.Hits = spawn.HitsMax;
+                    spawn.Mana = spawn.ManaMax;
+                    spawn.Stam = spawn.StamMax;
+
+                    spawn.Hue = 1960;
+
+                    for (int i = 0; i < spawn.Skills.Length; i++)
+                    {
+                        Skill skill = spawn.Skills[i];
+
+                        if (skill.Base > 0.0)
+                            skill.Base *= Paragon.SkillsBuff;
+                    }
+
+                    AncientGuardians.Add(spawn);
                 }
-
-                AncientGuardians.Add(spawn);
             }
         }
 
@@ -704,10 +706,9 @@ namespace Server.Items
                     }
             }
 
-            if (!Temporary)
+            if (!Temporary && DeleteTime > DateTime.UtcNow)
             {
-                Timer = new DeleteTimer(this, DeleteTime);
-                Timer.Start();
+                TimerRegistry.Register("TreasureMapChest", this, DeleteTime - DateTime.UtcNow, chest => chest.Delete());
             }
             else
             {
@@ -791,7 +792,7 @@ namespace Server.Items
                 AOS.Damage(from, damage, 0, 100, 0, 0, 0);
 
                 // Your skin blisters from the heat!
-                from.LocalOverheadMessage(Network.MessageType.Regular, 0x2A, 503000);
+                from.LocalOverheadMessage(MessageType.Regular, 0x2A, 503000);
 
                 Effects.SendLocationEffect(from.Location, from.Map, 0x36BD, 15, 10);
                 Effects.PlaySound(from.Location, from.Map, 0x307);
@@ -940,22 +941,6 @@ namespace Server.Items
                     return;
 
                 m_Chest.BeginRemove(m_From);
-            }
-        }
-
-        private class DeleteTimer : Timer
-        {
-            private readonly Item m_Item;
-            public DeleteTimer(Item item, DateTime time)
-                : base(time - DateTime.UtcNow)
-            {
-                m_Item = item;
-                Priority = TimerPriority.OneMinute;
-            }
-
-            protected override void OnTick()
-            {
-                m_Item.Delete();
             }
         }
     }

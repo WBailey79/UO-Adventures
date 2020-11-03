@@ -4,12 +4,11 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Targeting;
-using System;
 using System.Collections.Generic;
 
 namespace Server.Items
 {
-    [FlipableAttribute(0x4513, 0x4514)]
+    [Flipable(0x4513, 0x4514)]
     public class ChickenCoop : Item, ISecurable, IChopable
     {
         public static readonly int MaxStables = 3;
@@ -161,7 +160,7 @@ namespace Server.Items
                         continue;
 
                     AddButton(15, 39 + (i * 20), 10006, 10006, i + 1, GumpButtonType.Reply, 0);
-                    AddHtml(32, 35 + (i * 20), 275, 18, String.Format("<BASEFONT COLOR=#C0C0EE>{0}</BASEFONT>", pet.Name), false, false);
+                    AddHtml(32, 35 + (i * 20), 275, 18, string.Format("<BASEFONT COLOR=#C0C0EE>{0}</BASEFONT>", pet.Name), false, false);
                 }
             }
 
@@ -312,12 +311,10 @@ namespace Server.Items
             {
                 from.SendLocalizedMessage(502673); // I can not stable summoned creatures.
             }
-            #region Mondain's Legacy
             else if (pet.Allured)
             {
                 from.SendLocalizedMessage(1048053); // You can't stable that!
             }
-            #endregion
             else if (pet.Body.IsHuman)
             {
                 from.SendLocalizedMessage(502672); // HA HA HA! Sorry, I am not an inn.
@@ -479,9 +476,6 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
-
-            if (Weight == 1)
-                Weight = 20;
 
             m_Level = (SecureLevel)reader.ReadInt();
 

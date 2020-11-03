@@ -13,8 +13,8 @@ namespace Server.Gumps
         public object State { get; set; }
         public string Arguments { get; set; }
 
-        public int ConfirmLocalization { get; private set; }
-        public int CloseLocalization { get; private set; }
+        public int ConfirmLocalization { get; }
+        public int CloseLocalization { get; }
 
         public ConfirmCallbackGump(
             PlayerMobile user,
@@ -72,9 +72,9 @@ namespace Server.Gumps
                 {
                     AddHtmlLocalized(25, 25, 200, 20, Title.Number, 0x7D00, false, false);
                 }
-                else if (!String.IsNullOrEmpty(Title.String))
+                else if (!string.IsNullOrEmpty(Title.String))
                 {
-                    AddHtml(25, 25, 200, 20, String.Format("<basefont color=#FF0000>{0}", Title.String), false, false);
+                    AddHtml(25, 25, 200, 20, string.Format("<basefont color=#FF0000>{0}", Title.String), false, false);
                 }
             }
 
@@ -91,9 +91,9 @@ namespace Server.Gumps
                     AddHtmlLocalized(25, 55, 300, 120, Body.Number, 0xFFFFFF, false, false);
                 }
             }
-            else if (!String.IsNullOrEmpty(Body.String))
+            else if (!string.IsNullOrEmpty(Body.String))
             {
-                AddHtml(25, 55, 300, 120, String.Format("<BASEFONT COLOR=#FFFFFF>{0}</BASEFONT>", Body.String), false, false);
+                AddHtml(25, 55, 300, 120, string.Format("<BASEFONT COLOR=#FFFFFF>{0}</BASEFONT>", Body.String), false, false);
             }
 
             AddRadio(25, 175, 0x25F8, 0x25FB, true, 1);
@@ -136,8 +136,8 @@ namespace Server.Gumps
         public T State { get; set; }
         public string Arguments { get; set; }
 
-        public int ConfirmLocalization { get; private set; }
-        public int CloseLocalization { get; private set; }
+        public int ConfirmLocalization { get; }
+        public int CloseLocalization { get; }
 
         public GenericConfirmCallbackGump(
             PlayerMobile user,
@@ -193,9 +193,9 @@ namespace Server.Gumps
             {
                 AddHtmlLocalized(25, 25, 200, 20, Title.Number, 0x7D00, false, false);
             }
-            else if (!String.IsNullOrEmpty(Title.String))
+            else if (!string.IsNullOrEmpty(Title.String))
             {
-                AddHtml(25, 25, 200, 20, String.Format("<basefont color=#FF0000>{0}", Title.String), false, false);
+                AddHtml(25, 25, 200, 20, string.Format("<basefont color=#FF0000>{0}", Title.String), false, false);
             }
 
             AddImage(25, 45, 0xBBF);
@@ -211,9 +211,9 @@ namespace Server.Gumps
                     AddHtmlLocalized(25, 55, 300, 120, Body.Number, 0xFFFFFF, false, false);
                 }
             }
-            else if (!String.IsNullOrEmpty(Body.String))
+            else if (!string.IsNullOrEmpty(Body.String))
             {
-                AddHtml(25, 55, 300, 120, String.Format("<BASEFONT COLOR=#FFFFFF>{0}</BASEFONT>", Body.String), false, false);
+                AddHtml(25, 55, 300, 120, string.Format("<BASEFONT COLOR=#FFFFFF>{0}</BASEFONT>", Body.String), false, false);
             }
 
             AddRadio(25, 175, 0x25F8, 0x25FB, true, 1);

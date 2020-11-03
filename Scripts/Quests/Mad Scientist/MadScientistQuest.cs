@@ -25,9 +25,11 @@ namespace Server.Engines.Quests
                 WeakEntityCollection.Add("sa", new SutekIngredientItem(def));
             }
 
-            XmlSpawner sp = new XmlSpawner("Sutek");
-            sp.SpawnRange = 5;
-            sp.HomeRange = 5;
+            XmlSpawner sp = new XmlSpawner("Sutek")
+            {
+                SpawnRange = 5,
+                HomeRange = 5
+            };
             sp.MoveToWorld(new Point3D(917, 594, -14), Map.TerMur);
             sp.Respawn();
             WeakEntityCollection.Add("sa", sp);
@@ -48,7 +50,7 @@ namespace Server.Engines.Quests
         public static readonly int NeededIngredients = 20;
         public static readonly TimeSpan Timeout = TimeSpan.FromSeconds(15.0);
 
-        public static readonly SutekIngredientInfo[] m_Ingredients = new SutekIngredientInfo[]
+        public static readonly SutekIngredientInfo[] m_Ingredients =
         {
             new SutekIngredientInfo(SutekIngredient.Feathers,      new Point3D(921, 598, -8),    0x1BD3, 1023578),
             new SutekIngredientInfo(SutekIngredient.Shafts,        new Point3D(918, 591, -14),   0x1BD6, 1027125),
@@ -154,7 +156,7 @@ namespace Server.Engines.Quests
 
             QuestContext context = m_Table[from];
 
-            from.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1112821, String.Format("#{0}", (int)context.CurrentIngredient)); // I need to add some ~1_INGREDIENT~.
+            from.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1112821, string.Format("#{0}", (int)context.CurrentIngredient)); // I need to add some ~1_INGREDIENT~.
         }
 
         public class QuestContext
@@ -187,7 +189,7 @@ namespace Server.Engines.Quests
                 SutekIngredient[] ingredients = (SutekIngredient[])Enum.GetValues(typeof(SutekIngredient));
                 m_CurrentIngredient = ingredients[Utility.Random(ingredients.Length)];
 
-                m_Owner.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1112821, String.Format("#{0}", (int)m_CurrentIngredient)); // I need to add some ~1_INGREDIENT~.
+                m_Owner.PublicOverheadMessage(MessageType.Regular, 0x3B2, 1112821, string.Format("#{0}", (int)m_CurrentIngredient)); // I need to add some ~1_INGREDIENT~.
 
                 m_IngredientsLeft--;
             }

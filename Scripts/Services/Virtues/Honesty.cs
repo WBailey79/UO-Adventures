@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 using Server.Engines.CannedEvil;
 using Server.Items;
@@ -24,8 +21,7 @@ namespace Server.Services.Virtues
         public static bool TrammelGeneration { get; set; }
         public static bool UseSpawnArea { get; set; }
 
-        private static readonly string[] _Regions =
-            {"Britain", "Minoc", "Magincia", "Trinsic", "Jhelom", "Moonglow", "Skara Brae", "Yew"};
+        private static readonly string[] _Regions = { "Britain", "Minoc", "Magincia", "Trinsic", "Jhelom", "Moonglow", "Skara Brae", "Yew" };
 
         private const TileFlag _Filter = TileFlag.Wet | TileFlag.Roof | TileFlag.Impassable;
 
@@ -43,24 +39,6 @@ namespace Server.Services.Virtues
             _Items = new HashSet<Item>(MaxGeneration);
         }
 
-        private static void GenerateImages()
-        {
-            if (!Directory.Exists("Honesty"))
-            {
-                Directory.CreateDirectory("Honesty");
-            }
-
-            if (_FeluccaArea != null)
-            {
-                _FeluccaArea.Image.Save("Honesty/Felucca.png", ImageFormat.Png);
-            }
-
-            if (_TrammelArea != null)
-            {
-                _TrammelArea.Image.Save("Honesty/Trammel.png", ImageFormat.Png);
-            }
-        }
-
         public static void Initialize()
         {
             EventSink.ItemDeleted += OnItemDeleted;
@@ -73,11 +51,6 @@ namespace Server.Services.Virtues
                 _Items.UnionWith(World.Items.Values.Where(item => item.HonestyItem));
 
                 GenerateHonestyItems();
-
-                if (UseSpawnArea)
-                {
-                    Task.Factory.StartNew(GenerateImages);
-                }
             }
         }
 
@@ -266,7 +239,7 @@ namespace Server.Services.Virtues
                         }
                         catch (Exception e)
                         {
-                            Server.Diagnostics.ExceptionLogging.LogException(e);
+                            Diagnostics.ExceptionLogging.LogException(e);
                         }
                     }
 
@@ -315,7 +288,7 @@ namespace Server.Services.Virtues
                         catch (Exception e)
                         {
                             item.Delete();
-                            Server.Diagnostics.ExceptionLogging.LogException(e);
+                            Diagnostics.ExceptionLogging.LogException(e);
                         }
                         finally
                         {
@@ -334,7 +307,7 @@ namespace Server.Services.Virtues
             }
             catch (Exception e)
             {
-                Server.Diagnostics.ExceptionLogging.LogException(e);
+                Diagnostics.ExceptionLogging.LogException(e);
             }
 
             Utility.PushColor(ConsoleColor.Yellow);
@@ -351,7 +324,7 @@ namespace Server.Services.Virtues
             {
                 socket.HonestyRegion = _Regions[Utility.Random(_Regions.Length)];
 
-                if (!String.IsNullOrWhiteSpace(socket.HonestyRegion) && BaseVendor.AllVendors.Count >= 10)
+                if (!string.IsNullOrWhiteSpace(socket.HonestyRegion) && BaseVendor.AllVendors.Count >= 10)
                 {
                     List<BaseVendor> matchedVendors = BaseVendor.AllVendors.Where(vendor => (vendor.Map == socket.Owner.Map && vendor.Region.IsPartOf(socket.HonestyRegion))).ToList();
 

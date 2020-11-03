@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Server.Mobiles;
 
@@ -60,7 +59,7 @@ namespace Server.Items
                     FocusInfo info = m_Table[from];
 
                     BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.RageFocusingBuff, 1151393, 1151394,
-                        String.Format("{0}\t{1}", info.Target == null ? "NONE" : info.Target.Name, info.DamageBonus)));
+                        string.Format("{0}\t{1}", info.Target == null ? "NONE" : info.Target.Name, info.DamageBonus)));
                 }
 
                 m_Table[from] = new FocusInfo(target, DefaultDamageBonus);

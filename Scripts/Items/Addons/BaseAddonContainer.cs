@@ -211,7 +211,7 @@ namespace Server.Items
 
             if (!map.CanFit(p3.X, p3.Y, p3.Z, ItemData.Height, false, true, (Z == 0)))
                 return AddonFitResult.Blocked;
-            if (!BaseAddon.CheckHouse(@from, p3, map, ItemData.Height, ref house))
+            if (!BaseAddon.CheckHouse(from, p3, map, ItemData.Height, ref house))
                 return AddonFitResult.NotInHouse;
 
             if (NeedsWall)
@@ -232,9 +232,6 @@ namespace Server.Items
 
                     if (door == null)
                         continue;
-
-                    if (door != null && door.Open)
-                        return AddonFitResult.DoorsNotClosed;
 
                     Point3D doorLoc = door.GetWorldLocation();
                     int doorHeight = door.ItemData.CalcHeight;

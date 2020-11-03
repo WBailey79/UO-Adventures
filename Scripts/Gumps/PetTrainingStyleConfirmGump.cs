@@ -9,8 +9,8 @@ namespace Server.Gumps
         private readonly TextDefinition _Title;
         private readonly TextDefinition _Body;
 
-        private Action ConfirmCallback { get; set; }
-        private Action CancelCallback { get; set; }
+        private Action ConfirmCallback { get; }
+        private Action CancelCallback { get; }
 
         public PetTrainingStyleConfirmGump(PlayerMobile pm, TextDefinition title, TextDefinition body, Action confirmCallback, Action cancelCallback = null)
             : base(pm, 250, 50)
@@ -29,7 +29,7 @@ namespace Server.Gumps
 
             if (_Title.Number > 0)
             {
-                AddHtmlLocalized(35, 10, 400, 20, 1114513, String.Format("#{0}", _Title.Number.ToString()), C32216(0x0d0d0d), false, false);
+                AddHtmlLocalized(35, 10, 400, 20, 1114513, string.Format("#{0}", _Title.Number.ToString()), C32216(0x0d0d0d), false, false);
             }
             else if(!string.IsNullOrEmpty(_Title.String))
             {

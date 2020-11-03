@@ -1,5 +1,4 @@
 using Server.Gumps;
-using System;
 
 namespace Server.Items
 {
@@ -35,7 +34,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            list.Add(1070998, String.Format("#{0}", 1075553));  // Spring Decor Collection Item
+            list.Add(1070998, string.Format("#{0}", 1075553));  // Spring Decor Collection Item
         }
 
         public override void Serialize(GenericWriter writer)

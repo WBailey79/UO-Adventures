@@ -10,7 +10,7 @@ namespace Server.Mobiles
     public class Harrower : BaseCreature
     {
         private readonly int m_StatCap = Config.Get("PlayerCaps.TotalStatCap", 225);
-        private static readonly SpawnEntry[] m_Entries = new[]
+        private static readonly SpawnEntry[] m_Entries =
         {
             new SpawnEntry(new Point3D(5242, 945, -40), new Point3D(1176, 2638, 0)), // Destard
             new SpawnEntry(new Point3D(5225, 798, 0), new Point3D(1176, 2638, 0)), // Destard
@@ -29,7 +29,7 @@ namespace Server.Mobiles
             new SpawnEntry(new Point3D(5579, 1858, 0), new Point3D(2499, 919, 0))// Covetous
         };
         private static readonly ArrayList m_Instances = new ArrayList();
-        private static readonly double[] m_Offsets = new[]
+        private static readonly double[] m_Offsets =
         {
             Math.Cos(000.0 / 180.0 * Math.PI), Math.Sin(000.0 / 180.0 * Math.PI),
             Math.Cos(040.0 / 180.0 * Math.PI), Math.Sin(040.0 / 180.0 * Math.PI),
@@ -119,8 +119,10 @@ namespace Server.Mobiles
 
             SpawnEntry entry = m_Entries[Utility.Random(m_Entries.Length)];
 
-            Harrower harrower = new Harrower();
-            harrower.m_IsSpawned = true;
+            Harrower harrower = new Harrower
+            {
+                m_IsSpawned = true
+            };
 
             m_Instances.Add(harrower);
 
@@ -189,9 +191,10 @@ namespace Server.Mobiles
                     if (!ok)
                         continue;
 
-                    HarrowerTentacles spawn = new HarrowerTentacles(this);
-
-                    spawn.Team = Team;
+                    HarrowerTentacles spawn = new HarrowerTentacles(this)
+                    {
+                        Team = Team
+                    };
 
                     spawn.MoveToWorld(new Point3D(x, y, z), map);
 
@@ -393,7 +396,7 @@ namespace Server.Mobiles
             else
                 m_DamageEntries.Add(from, amount);
 
-            from.SendMessage(String.Format("Total Damage: {0}", m_DamageEntries[from]));
+            from.SendMessage(string.Format("Total Damage: {0}", m_DamageEntries[from]));
         }
 
         public void AwardArtifact(Item artifact)

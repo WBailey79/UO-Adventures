@@ -1,5 +1,7 @@
 using Server.Items;
+
 using System;
+using System.Linq;
 
 namespace Server.Engines.Craft
 {
@@ -84,6 +86,23 @@ namespace Server.Engines.Craft
                 return num; // The tool must be on your person to use.
 
             return 0;
+        }
+
+        private readonly Type[] _RetainsColor = new[]
+        {
+            typeof(BasePlayerBB)
+        };
+
+        public override bool RetainsColorFrom(CraftItem item, Type type)
+        {
+            var itemType = item.ItemType;
+
+            if (_RetainsColor.Any(t => t == itemType || itemType.IsSubclassOf(t)))
+            {
+                return true;
+            }
+
+            return base.RetainsColorFrom(item, type);
         }
 
         public override void PlayCraftEffect(Mobile from)
@@ -392,6 +411,7 @@ namespace Server.Engines.Craft
             AddRes(index, typeof(BlackrockMoonstone), 1156993, 1, 1156992);
             AddRes(index, typeof(StaffOfTheMagi), 1061600, 1, 1044253);
             AddRecipe(index, (int)CarpRecipes.KotlBlackRod);
+            ForceNonExceptional(index);
 
             // Armor
             AddCraft(typeof(WoodenShield), 1062760, 1027034, 52.6, 77.6, typeof(Board), 1044041, 9, 1044351);

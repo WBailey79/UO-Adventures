@@ -58,9 +58,11 @@ namespace Server.Mobiles
                 pack.Delete();
             }
 
-            pack = new Backpack();
-            pack.Movable = false;
-            pack.Weight = 13.0;
+            pack = new Backpack
+            {
+                Movable = false,
+                Weight = 13.0
+            };
 
             AddItem(pack);
         }
@@ -217,7 +219,7 @@ namespace Server.Mobiles
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

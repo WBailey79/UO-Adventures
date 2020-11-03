@@ -88,11 +88,10 @@ namespace Server.Multis
         public virtual int MaxAddons => 0;
         public virtual double CannonDamageMod => 1.0;
 
-        public abstract int[][] CannonTileIDs { get; }
-        public abstract int[][] FillerIDs { get; }
-        public abstract int[][] HoldIDs { get; }
-        public abstract int[][] HoldItemIDs { get; }
-        public abstract int[][] WheelItemIDs { get; }
+        public abstract int[] CannonTileIDs { get; }
+        public abstract int[] HoldIDs { get; }
+        public abstract int[] HoldItemIDs { get; }
+        public abstract int[] WheelItemIDs { get; }
 
         public BaseGalleon(Direction direction) : base(direction, false)
         {
@@ -228,30 +227,32 @@ namespace Server.Multis
 
         private bool IsMainHold(int id)
         {
-            return HoldItemIDs.Any(list => list[0] == id);
+            return HoldItemIDs.Any(listID => listID == id);
         }
 
         private bool IsHold(int id)
         {
-            return HoldIDs.Any(list => list.Any(i => i == id));
+            return HoldIDs.Any(listID => listID == id);
         }
 
         private bool IsWheel(int id)
         {
-            return WheelItemIDs.Any(list => list[0] == id);
+            return WheelItemIDs.Any(listID => listID == id);
         }
 
         private bool IsWeaponPad(int id)
         {
-            return CannonTileIDs.Any(list => list.Any(i => i == id));
+            return CannonTileIDs.Any(listID => listID == id);
         }
 
         public void AddGalleonPilot(Direction direction)
         {
             int dir = GetValueForDirection(Facing);
 
-            GalleonPilot pilot = new GalleonPilot(this);
-            pilot.Direction = direction;
+            GalleonPilot pilot = new GalleonPilot(this)
+            {
+                Direction = direction
+            };
 
             TillerMan = pilot;
             GalleonPilot = pilot;
@@ -858,7 +859,7 @@ namespace Server.Multis
 
         public override DryDockResult CheckDryDock(Mobile from, Mobile dockmaster)
         {
-            if (this is BaseGalleon && (this).GalleonHold.Items.Count > 0)
+            if (this is BaseGalleon && GalleonHold.Items.Count > 0)
                 return DryDockResult.Hold;
 
             Container pack = from.Backpack;
@@ -924,22 +925,11 @@ namespace Server.Multis
                 {
                     DeckItem tile = Addons[addon];
 
-                    addon.MoveToWorld(new Point3D(tile.X, tile.Y, tile.Z), Map);
+                    addon.MoveToWorld(new Point3D(tile.X, tile.Y, tile.Z + tile.ItemData.Height), Map);
                 }
             }
 
             UpdateCannonIDs();
-        }
-
-        public int GetIndex(int[][] list, int check)
-        {
-            for (int i = 0; i < list.Length; i++)
-            {
-                int index = Array.IndexOf(list[i], check);
-                if (index > -1)
-                    return index;
-            }
-            return check;
         }
 
         public override IEnumerable<IEntity> GetComponents()
@@ -950,7 +940,9 @@ namespace Server.Multis
             }
 
             if (GalleonPilot != null)
+            {
                 yield return GalleonPilot;
+            }
         }
 
         public int GetValueForDirection(Direction direction)
@@ -1267,14 +1259,14 @@ namespace Server.Multis
 
         public bool CanAddAddon(Point3D p)
         {
-            if (Addons.Count >= MaxAddons || Map == null || Map == Map.Internal)
+            if ((Addons != null && Addons.Count >= MaxAddons) || Map == null || Map == Map.Internal)
                 return false;
 
             IPooledEnumerable eable = Map.GetItemsInRange(p, 0);
 
             foreach (DeckItem item in eable.OfType<DeckItem>())
             {
-                if (m_ShipAddonTiles.Any(id => id == item.ItemID) && !Addons.ContainsValue(item))
+                if (m_ShipAddonTiles.Any(id => id == item.ItemID) && (Addons == null || !Addons.ContainsValue(item)))
                 {
                     eable.Free();
                     return true;
@@ -1405,7 +1397,7 @@ namespace Server.Multis
                 }
             }
 
-            Timer.DelayCall(TimeSpan.FromSeconds(25), CheckPaintDecay);
+            Timer.DelayCall(TimeSpan.FromMinutes(1), CheckPaintDecay);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1563,7 +1555,7 @@ namespace Server.Multis
                     #endregion
                     else
                     {
-                        if (Addons == null)
+                        if (count > 0 && Addons == null)
                         {
                             Addons = new Dictionary<Item, DeckItem>();
                         }

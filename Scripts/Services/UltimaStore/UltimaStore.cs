@@ -79,6 +79,7 @@ namespace Server.Engines.UOStore
         {
             // Featured
             StoreCategory cat = StoreCategory.Featured;
+            Register<AnvilofArtifactsDeed>(1159437, 1159466, 0xA108, 0, 0, 1000, cat);
             Register<VirtueShield>(1109616, 1158384, 0x7818, 0, 0, 1500, cat);
             Register<SoulstoneToken>(1158404, 1158405, 0x2A93, 0, 2598, 1000, cat, ConstructSoulstone);
             //Register<DeluxeStarterPackToken>(1158368, 1158369, 0, 0x9CCB, 0, 2000, cat);
@@ -192,8 +193,11 @@ namespace Server.Engines.UOStore
             Register<DecorativeDungeonSet>(1159468, 1159475, 0, 0x9D40, 0, 1200, cat);
             Register<MetalLadderDeed>(1159478, 1159479, 0xA55C, 0, 0, 400, cat);
             Register<DecorativeStableSet>(1159272, 1159278, 0, 0x9D3C, 0, 1200, cat);
+            Register<DecorativeFarmSet>(1159046, 1159077, 0, 0x9CEB, 0, 1200, cat);
             Register<DecorativeKitchenSet>(1158970, 1158971, 0, 0x9CE8, 0, 1200, cat);
             Register<SquirrelMailbox>(1158859, 1158857, 0xA207, 0, 0, 400, cat);
+            Register<DolphinMailbox>(1158859, 1158857, 0xA203, 0, 0, 400, cat);
+            Register<ScarecrowMailbox>(1158859, 1158857, 0xA3F4, 0, 0, 400, cat);
             Register<BarrelMailbox>(1158859, 1158857, 0xA1F7, 0, 0, 400, cat);
             Register<DecorativeBlackwidowDeed>(1157897, 1157898, 0, 0x9CD7, 0, 600, cat);
             Register<HildebrandtDragonRugDeed>(1157889, 1157890, 0, 0x9CD8, 0, 700, cat);
@@ -305,17 +309,20 @@ namespace Server.Engines.UOStore
             // misc
             cat = StoreCategory.Misc;
 
-            if (Server.AccountVault.SystemSettings.UseTokens)
+            if (AccountVault.SystemSettings.UseTokens)
             {
                 Register<VaultToken>(1158315, 1158316, 0x9FE8, 0, 0, 300, cat);
             }
 
             Register<SoulstoneToken>(1158404, 1158405, 0x2A93, 0, 2598, 1000, cat, ConstructSoulstone);
+            Register<WeddingChest>(1157895, 1157896, 0, 0x9CCC, 0, 500, cat);
             Register<BagOfBulkOrderCovers>(1071116, 1157603, 0, 0x9CC6, 0, 200, cat, ConstructBOBCoverOne);
 
-            //TODO: UndeadWeddingBundle, TotemOfChromaticFortune, 
+            //TODO: TotemOfChromaticFortune, 
 
             Register<PetBrandingIron>(1157314, 1157372, 0, 0x9CC3, 0, 600, cat);
+            Register<WeddingPackageAddonToken>(1157342, 1157371, 0, 0x9CC5, 0, 900, cat);
+            Register<WeddingPackageToken>(1157339, 1157370, 0, 0x9CC4, 0, 2900, cat);
             Register<ImprovedRockHammer>(1157177, 1157306, 0, 0x9CBB, 0, 1000, cat);
             Register<PetBondingPotion>(1152921, 1156678, 0, 0x9CBC, 0, 500, cat);
 
@@ -660,11 +667,11 @@ namespace Server.Engines.UOStore
             {
                 if (td.Number > 0 && VendorSearch.StringList != null)
                 {
-                    str += String.Format("{0} ", VendorSearch.StringList.GetString(td.Number));
+                    str += string.Format("{0} ", VendorSearch.StringList.GetString(td.Number));
                 }
-                else if (!String.IsNullOrWhiteSpace(td.String))
+                else if (!string.IsNullOrWhiteSpace(td.String))
                 {
-                    str += String.Format("{0} ", td.String);
+                    str += string.Format("{0} ", td.String);
                 }
             }
 
@@ -680,7 +687,7 @@ namespace Server.Engines.UOStore
                 str = VendorSearch.StringList.GetString(text.Number);
             }
 
-            return str ?? String.Empty;
+            return str ?? string.Empty;
         }
 
         public static List<StoreEntry> GetList(StoreCategory cat, StoreEntry forcedEntry = null)
@@ -698,7 +705,7 @@ namespace Server.Engines.UOStore
             switch (sort)
             {
                 case SortBy.Name:
-                    list.Sort((a, b) => String.CompareOrdinal(GetStringName(a.Name), GetStringName(b.Name)));
+                    list.Sort((a, b) => string.CompareOrdinal(GetStringName(a.Name), GetStringName(b.Name)));
                     break;
                 case SortBy.PriceLower:
                     list.Sort((a, b) => a.Price.CompareTo(b.Price));
@@ -763,7 +770,7 @@ namespace Server.Engines.UOStore
 
                         if (sys != null)
                         {
-                            return (int)Math.Min(Int32.MaxValue, sys.GetPoints(m));
+                            return (int)Math.Min(int.MaxValue, sys.GetPoints(m));
                         }
                     }
                     break;
@@ -817,7 +824,7 @@ namespace Server.Engines.UOStore
                             }
                             catch (Exception e)
                             {
-                                Server.Diagnostics.ExceptionLogging.LogException(e);
+                                Diagnostics.ExceptionLogging.LogException(e);
                             }
                         }
                         else

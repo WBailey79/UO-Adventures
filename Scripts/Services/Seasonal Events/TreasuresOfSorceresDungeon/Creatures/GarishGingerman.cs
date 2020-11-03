@@ -1,4 +1,3 @@
-
 using Server.Mobiles;
 
 namespace Server.Engines.SorcerersDungeon
@@ -11,7 +10,6 @@ namespace Server.Engines.SorcerersDungeon
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
             Name = "a garish gingerman";
-
             Body = 14;
             BaseSoundID = 268;
             Hue = 1461;
@@ -40,8 +38,8 @@ namespace Server.Engines.SorcerersDungeon
             SetSkill(SkillName.Tactics, 100.0);
             SetSkill(SkillName.Wrestling, 120);
 
-            Fame = 12000;
-            Karma = -12000;
+            Fame = 16000;
+            Karma = -16000;
 
             SetMagicalAbility(MagicalAbility.MageryMastery);
         }
@@ -51,6 +49,7 @@ namespace Server.Engines.SorcerersDungeon
         {
         }
 
+        public override bool CanFlee => false;
         public override bool AlwaysMurderer => true;
         public override Poison PoisonImmune => Poison.Deadly;
 

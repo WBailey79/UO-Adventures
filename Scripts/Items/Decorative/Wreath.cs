@@ -1,9 +1,8 @@
 using Server.Multis;
-using System;
 
 namespace Server.Items
 {
-    [FlipableAttribute(0xA12E, 0xA12F)]
+    [Flipable(0xA12E, 0xA12F)]
     public class HolidayWreath : Item, IDyable
     {
         public override int LabelNumber => 1029004;  // wreath
@@ -22,7 +21,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            list.Add(1158828, String.Format("#{0}", MadeID)); // Made From Handpicked Trees Near ~1_WHERE~
+            list.Add(1158828, string.Format("#{0}", MadeID)); // Made From Handpicked Trees Near ~1_WHERE~
         }
 
         public HolidayWreath(Serial serial)

@@ -58,7 +58,6 @@ namespace Server.Engines.Quests
 
         public override Type[] Quests => new Type[]
                 {
-                    typeof(DishBestServedColdQuest),
                     typeof(TroubleOnTheWingQuest),
                     typeof(MaraudersQuest),
                     typeof(DisciplineQuest)
@@ -83,12 +82,16 @@ namespace Server.Engines.Quests
 
             Item item;
 
-            item = new LeafChest();
-            item.Hue = 0x1BB;
+            item = new LeafChest
+            {
+                Hue = 0x1BB
+            };
             AddItem(item);
 
-            item = new LeafArms();
-            item.Hue = 0x1BB;
+            item = new LeafArms
+            {
+                Hue = 0x1BB
+            };
             AddItem(item);
         }
 

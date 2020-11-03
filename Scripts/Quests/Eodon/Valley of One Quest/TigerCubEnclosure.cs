@@ -30,11 +30,13 @@ namespace Server.Items
             AddComponent(new AddonComponent(2102), 3, -1, 0);
 
             Door = new EnclosureDoor(this);
-            Cub = new TigerCub();
-            Cub.Blessed = true;
-            Cub.RangeHome = 5;
+            Cub = new TigerCub
+            {
+                Blessed = true,
+                RangeHome = 5,
 
-            Cub.Location = new Point3D(Location.X + 1, Location.Y + 1, Location.Z);
+                Location = new Point3D(Location.X + 1, Location.Y + 1, Location.Z)
+            };
         }
 
         public override void OnLocationChange(Point3D oldLocation)
@@ -77,7 +79,7 @@ namespace Server.Items
         {
             if (Door != null)
             {
-                pm.PrivateOverheadMessage(Server.Network.MessageType.Regular, 0x35, 1156501, pm.NetState); // *You watch as the Tiger Cub safely returns to the Kurak Tribe*
+                pm.PrivateOverheadMessage(MessageType.Regular, 0x35, 1156501, pm.NetState); // *You watch as the Tiger Cub safely returns to the Kurak Tribe*
 
                 Timer.DelayCall(TimeSpan.FromSeconds(.25), Delete);
                 //1156499;*The enclosure unlocks!*  Is this used?
@@ -97,7 +99,7 @@ namespace Server.Items
             if (Utility.RandomBool())
             {
                 if (Door != null)
-                    pm.PrivateOverheadMessage(Server.Network.MessageType.Regular, 0x35, 1156493, pm.NetState); //*A poisonous dart embeds itself into your neck!*
+                    pm.PrivateOverheadMessage(MessageType.Regular, 0x35, 1156493, pm.NetState); //*A poisonous dart embeds itself into your neck!*
 
                 Effects.PlaySound(pm.Location, pm.Map, 0x22E);
 
@@ -107,7 +109,7 @@ namespace Server.Items
             else
             {
                 if (Door != null)
-                    pm.PrivateOverheadMessage(Server.Network.MessageType.Regular, 0x35, 1156494, pm.NetState); //*You are ambushed by attacking trappers!*
+                    pm.PrivateOverheadMessage(MessageType.Regular, 0x35, 1156494, pm.NetState); //*You are ambushed by attacking trappers!*
 
                 SpawnTrappers(pm);
             }
@@ -138,7 +140,7 @@ namespace Server.Items
                 BaseCreature bc = new Trapper();
                 bc.MoveToWorld(p, m.Map);
 
-                Timer.DelayCall(TimeSpan.FromSeconds(.25), (mob) => mob.Combatant = m, bc);
+                Timer.DelayCall(TimeSpan.FromSeconds(.25), mob => mob.Combatant = m, bc);
             }
         }
 
@@ -207,15 +209,15 @@ namespace Server.Items
             }
         }
 
-        private readonly int[] m_Possibles = new int[]
-            {
+        private readonly int[] m_Possibles =
+        {
                 0,   1,   2,   3,
                 4,   5,   6,   7,
                 8,   9,  10,  11,
                 12, 13,  14,  15
-            };
+        };
 
-        private readonly int[][] _Paths = new int[][]
+        private readonly int[][] _Paths =
         {
             new int[] { 0, 1, 2, 3, 7, 11, 15 },
             new int[] { 0, 4, 8, 12, 13, 9, 5, 1, 2, 6, 10, 14, 15 },

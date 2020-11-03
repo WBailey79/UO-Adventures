@@ -8,6 +8,8 @@ namespace Server.Misc
     public class Weather
     {
         private static readonly Dictionary<Map, List<Weather>> m_WeatherByFacet = new Dictionary<Map, List<Weather>>();
+        private static readonly string m_TimerID = "WeatherTimer";
+
         private static Map[] m_Facets;
         private readonly Map m_Facet;
         private Rectangle2D[] m_Area;
@@ -34,7 +36,7 @@ namespace Server.Misc
             if (list != null)
                 list.Add(this);
 
-            Timer.DelayCall(TimeSpan.FromSeconds((0.2 + (Utility.RandomDouble() * 0.8)) * interval.TotalSeconds), interval, OnTick);
+            TimerRegistry.Register(m_TimerID, this, interval, TimeSpan.FromSeconds((0.2 + (Utility.RandomDouble() * 0.8)) * interval.TotalSeconds), false, weather => weather.OnTick());
         }
 
         public Map Facet => m_Facet;
@@ -191,10 +193,11 @@ namespace Server.Misc
                 if (!isValid)
                     continue;
 
-                Weather w = new Weather(m_Facets[i], new Rectangle2D[] { area }, temperature, chanceOfPercipitation, chanceOfExtremeTemperature, TimeSpan.FromSeconds(30.0));
-
-                w.m_Bounds = bounds;
-                w.m_MoveSpeed = moveSpeed;
+                _ = new Weather(m_Facets[i], new Rectangle2D[] { area }, temperature, chanceOfPercipitation, chanceOfExtremeTemperature, TimeSpan.FromSeconds(30.0))
+                {
+                    m_Bounds = bounds,
+                    m_MoveSpeed = moveSpeed
+                };
             }
         }
 
@@ -397,7 +400,7 @@ namespace Server.Misc
                         continue;
 
                     if (weatherPacket == null)
-                        weatherPacket = Packet.Acquire(new Server.Network.Weather(type, density, temperature));
+                        weatherPacket = Packet.Acquire(new Network.Weather(type, density, temperature));
 
                     ns.Send(weatherPacket);
                 }

@@ -103,9 +103,9 @@ namespace Server.Engines.Quests
                                 quest.AddQuestItem(nextItem, this);
 
                                 if (this is Sean)
-                                    SayTo(from, Greeting + 3, String.Format("#{0}", quest.Infos[idx].NeedsLoc));
+                                    SayTo(from, Greeting + 3, string.Format("#{0}", quest.Infos[idx].NeedsLoc));
                                 else
-                                    SayTo(from, Greeting + 4, String.Format("#{0}\t#{1}", quest.Infos[idx].NeedsLoc, quest.Infos[idx].GivesLoc));
+                                    SayTo(from, Greeting + 4, string.Format("#{0}\t#{1}", quest.Infos[idx].NeedsLoc, quest.Infos[idx].GivesLoc));
                             }
                         }
                         else //Didn't find needed item
@@ -215,7 +215,7 @@ namespace Server.Engines.Quests
         }
 
         public static Type[] ItemTypes => m_ItemTypes;
-        private static readonly Type[] m_ItemTypes = new Type[]
+        private static readonly Type[] m_ItemTypes =
         {
             typeof(BrassRing),
             typeof(SeasonedSkillet),
@@ -228,7 +228,7 @@ namespace Server.Engines.Quests
         };
 
         public static int[] ItemLocs => m_ItemLocs;
-        private static readonly int[] m_ItemLocs = new int[]
+        private static readonly int[] m_ItemLocs =
         {
             1075778,
             1075774,
@@ -241,7 +241,7 @@ namespace Server.Engines.Quests
         };
 
         public static Type[] MobileTypes => m_MobileTypes;
-        private static readonly Type[] m_MobileTypes = new Type[]
+        private static readonly Type[] m_MobileTypes =
         {
             typeof(Maribel),
             typeof(Dierdre),

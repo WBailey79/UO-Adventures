@@ -1,6 +1,6 @@
 using Server.ContextMenus;
-using Server.Engines.Points;
 using Server.Items;
+
 using System;
 using System.Collections.Generic;
 
@@ -61,7 +61,7 @@ namespace Server.Engines.Khaldun
                     Chests.Remove(Chest);
                 }
 
-                if (PointsSystem.TreasuresOfDoom.InSeason && Chests.Count < ChestCount)
+                if (TreasuresOfKhaldunEvent.Instance.Running && Chests.Count < ChestCount)
                 {
                     Timer.DelayCall(TimeSpan.FromSeconds(Utility.RandomMinMax(30, 60)), () =>
                     {
@@ -94,9 +94,11 @@ namespace Server.Engines.Khaldun
 
             for (int i = 0; i < count; i++)
             {
-                var Chest = new KhaldunChest();
-                Chest.Movable = false;
-                Chest.Spawner = this;
+                var Chest = new KhaldunChest
+                {
+                    Movable = false,
+                    Spawner = this
+                };
 
                 AddChest(Chest);
 

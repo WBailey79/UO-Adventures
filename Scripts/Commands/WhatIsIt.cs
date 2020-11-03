@@ -1,5 +1,4 @@
 using Server.Targeting;
-using System;
 
 namespace Server.Commands
 {
@@ -23,7 +22,7 @@ namespace Server.Commands
             {
                 if (from == null || targeted == null) return;
 
-                string name = String.Empty;
+                string name = string.Empty;
                 string typename = targeted.GetType().Name;
                 string article = "a";
 
@@ -44,7 +43,7 @@ namespace Server.Commands
                 {
                     name = ((Mobile)targeted).Name;
                 }
-                if (name != String.Empty && name != null)
+                if (name != string.Empty && name != null)
                 {
                     from.SendMessage("That is {0} {1} named '{2}'", article, typename, name);
                 }

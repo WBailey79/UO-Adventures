@@ -155,7 +155,6 @@ namespace Server.Items
                 : base(-1, true, TargetFlags.None)
             {
                 m_Deed = deed;
-
                 CheckLOS = false;
             }
 
@@ -185,27 +184,54 @@ namespace Server.Items
                         if (!m_Deed.ExcludeDeedHue)
                         {
                             if (addon.RetainDeedHue || (m_Deed.Hue != 0 && CraftResources.GetHue(m_Deed.Resource) != m_Deed.Hue))
+                            {
                                 addon.Hue = m_Deed.Hue;
+                            }
                         }
 
                         addon.MoveToWorld(new Point3D(p), map);
 
                         if (house != null)
+                        {
                             house.Addons[addon] = from;
+                        }
 
                         if (galleon != null)
+                        {
                             galleon.AddAddon(addon);
+                        }
 
                         m_Deed.DeleteDeed();
                     }
                     else if (res == AddonFitResult.Blocked)
+                    {
                         from.SendLocalizedMessage(500269); // You cannot build that there.
+                    }
                     else if (res == AddonFitResult.NotInHouse)
+                    {
                         from.SendLocalizedMessage(500274); // You can only place this in a house that you own!
+                    }
+                    else if (res == AddonFitResult.OwnerNotInHouse)
+                    {
+                        from.SendLocalizedMessage(1153770); // The deed is not in the same house as you.
+                    }
                     else if (res == AddonFitResult.DoorTooClose)
+                    {
                         from.SendLocalizedMessage(500271); // You cannot build near the door.
+                    }
                     else if (res == AddonFitResult.NoWall)
+                    {
                         from.SendLocalizedMessage(500268); // This object needs to be mounted on something.
+                    }
+                    else if (res == AddonFitResult.FoundationStairs)
+                    {
+                        from.SendLocalizedMessage(1071262); // You can't place the multi-tile addon at the entrance!
+                    }
+                    else if (res == AddonFitResult.InternalStairs)
+                    {
+                        from.SendLocalizedMessage(1152735); // The targeted location has at least one impassable tile adjacent to the structure.
+                        from.SendLocalizedMessage(500277); // Construction aborted. Please try again.
+                    }
 
                     if (res != AddonFitResult.Valid)
                     {

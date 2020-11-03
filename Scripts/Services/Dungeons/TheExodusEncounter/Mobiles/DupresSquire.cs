@@ -35,48 +35,54 @@ namespace Server.Mobiles
             SetSkill(SkillName.Tactics, 195.0, 220.0);
             SetSkill(SkillName.Wrestling, 195.0, 220.0);
 
-            Item vikingsword = new VikingSword();
-            vikingsword.LootType = LootType.Blessed;
+            Item vikingsword = new VikingSword
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(vikingsword);
 
-            Item cc = new ChainChest();
-            cc.LootType = LootType.Blessed;
+            Item cc = new ChainChest
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(cc);
 
-            Item cl = new ChainLegs();
-            cl.LootType = LootType.Blessed;
+            Item cl = new ChainLegs
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(cl);
 
-            Item ch = new CloseHelm();
-            ch.LootType = LootType.Blessed;
+            Item ch = new CloseHelm
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(ch);
 
-            Item boots = new Boots(1);
-            boots.LootType = LootType.Blessed;
+            Item boots = new Boots(1)
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(boots);
 
-            Item pgl = new PlateGloves();
-            pgl.LootType = LootType.Blessed;
+            Item pgl = new PlateGloves
+            {
+                LootType = LootType.Blessed
+            };
             SetWearable(pgl);
 
-            Item mks = new MetalKiteShield();
-            mks.LootType = LootType.Blessed;
-            mks.Hue = 0x776;
+            Item mks = new MetalKiteShield
+            {
+                LootType = LootType.Blessed,
+                Hue = 0x776
+            };
             SetWearable(mks);
 
-            Item bs = new BodySash(0x794); // dark purple
-            bs.LootType = LootType.Blessed;
-            SetWearable(bs);
-        }
-
-        public override void OnKilledBy(Mobile m)
-        {
-            base.OnKilledBy(m);
-
-            if (Utility.RandomDouble() < 0.1)
+            Item bs = new BodySash(0x794)
             {
-                ExodusChest.GiveRituelItem(m);
-            }
+                LootType = LootType.Blessed
+            }; // dark purple
+            SetWearable(bs);
         }
 
         public override void GenerateLoot()
@@ -106,7 +112,7 @@ namespace Server.Mobiles
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            int version = reader.ReadInt();
+            reader.ReadInt();
         }
     }
 }

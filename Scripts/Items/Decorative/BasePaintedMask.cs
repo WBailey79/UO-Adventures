@@ -1,6 +1,4 @@
-﻿using System;
-
-//using System.Collections.Generic;
+﻿//using System.Collections.Generic;
 namespace Server.Items.Holiday
 {
     [TypeAlias("Server.Items.ClownMask", "Server.Items.DaemonMask", "Server.Items.PlagueMask")]
@@ -41,7 +39,7 @@ namespace Server.Items.Holiday
             {
                 if (m_Staffer != null)
                 {
-                    return String.Format("{0} hand painted by {1}", MaskName, m_Staffer);
+                    return string.Format("{0} hand painted by {1}", MaskName, m_Staffer);
                 }
 
                 return MaskName;

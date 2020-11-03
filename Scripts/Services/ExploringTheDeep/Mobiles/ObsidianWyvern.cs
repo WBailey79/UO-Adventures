@@ -65,9 +65,11 @@ namespace Server.Mobiles
             if (Instances != null && Instances.Count > 0)
                 return null;
 
-            ObsidianWyvern creature = new ObsidianWyvern();
-            creature.Home = platLoc;
-            creature.RangeHome = 4;
+            ObsidianWyvern creature = new ObsidianWyvern
+            {
+                Home = platLoc,
+                RangeHome = 4
+            };
             creature.MoveToWorld(platLoc, platMap);
 
             return creature;
@@ -77,7 +79,7 @@ namespace Server.Mobiles
         {
             private readonly ObsidianWyvern Mare;
 
-            public InternalSelfDeleteTimer(Mobile p) : base(TimeSpan.FromMinutes(60))
+            public InternalSelfDeleteTimer(Mobile p) : base(TimeSpan.FromMinutes(10))
             {
                 Priority = TimerPriority.FiveSeconds;
                 Mare = ((ObsidianWyvern)p);
@@ -138,12 +140,6 @@ namespace Server.Mobiles
         public override bool AutoDispel => true;
 
         public override bool BardImmune => true;
-
-        public override void GenerateLoot()
-        {
-            AddLoot(LootPack.FilthyRich, 3);
-            AddLoot(LootPack.Gems, 5);
-        }
 
         public override int GetIdleSound() { return 0x2D3; }
         public override int GetHurtSound() { return 0x2D1; }

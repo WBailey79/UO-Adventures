@@ -174,15 +174,15 @@ namespace Server.Items
                 OnTarget(from, targeted);
             }
 
-            private static readonly Type[] m_KingsCollectionTypes = new Type[]
+            private static readonly Type[] _IsSpecialTypes = new Type[]
             {
-                typeof(BirdLamp),    typeof(DragonLantern),
-                typeof(KoiLamp),   typeof(TallLamp)
+                typeof(BirdLamp),  typeof(DragonLantern),  typeof(KoiLamp),
+                typeof(TallLamp)
             };
 
-            private static bool IsKingsCollection(Item item)
+            private static bool IsSpecialTypes(Item item)
             {
-                return m_KingsCollectionTypes.Any(t => t == item.GetType());
+                return _IsSpecialTypes.Any(t => t == item.GetType());
             }
 
             protected override void OnTarget(Mobile from, object targeted)
@@ -201,7 +201,7 @@ namespace Server.Items
                         return;
                     }
 
-                    from.SendLocalizedMessage(1158862, String.Format("{0}", hue)); // That object is hue ~1_HUE~
+                    from.SendLocalizedMessage(1158862, string.Format("{0}", hue)); // That object is hue ~1_HUE~
                 }
                 else if (targeted is Item && CheckUse(m_Decorator, from))
                 {
@@ -210,11 +210,11 @@ namespace Server.Items
 
                     bool isDecorableComponent = false;
 
-                    if (m_Decorator.Command == DecorateCommand.Turn && IsKingsCollection(item))
+                    if (m_Decorator.Command == DecorateCommand.Turn && IsSpecialTypes(item))
                     {
                         isDecorableComponent = true;
                     }
-                    else if (item is AddonComponent || item is AddonContainerComponent || item is BaseAddonContainer)
+                    else if (item is AddonComponent || item is AddonContainerComponent || item is BaseAddonContainer || item is TrophyAddon)
                     {
                         object addon = null;
                         int count = 0;
@@ -239,6 +239,9 @@ namespace Server.Items
                         }
 
                         if (count == 1)
+                            isDecorableComponent = true;
+
+                        if (item is TrophyAddon)
                             isDecorableComponent = true;
 
                         if (item is EnormousVenusFlytrapAddon)
@@ -271,22 +274,26 @@ namespace Server.Items
                     else if (!house.IsLockedDown(item) && !house.IsSecure(item) && !isDecorableComponent)
                     {
                         if (item is AddonComponent && m_Decorator.Command == DecorateCommand.Turn)
+                        {
                             from.SendLocalizedMessage(1042273); // You cannot turn that.
+                        }
                         else if (item is AddonComponent && m_Decorator.Command == DecorateCommand.Up)
+                        {
                             from.SendLocalizedMessage(1042274); // You cannot raise it up any higher.
+                        }
                         else if (item is AddonComponent && m_Decorator.Command == DecorateCommand.Down)
+                        {
                             from.SendLocalizedMessage(1042275); // You cannot lower it down any further.
+                        }
                         else
+                        {
                             from.SendLocalizedMessage(1042271); // That is not locked down.
+                        }
                     }
                     else if (item is VendorRentalContract)
                     {
                         from.SendLocalizedMessage(1062491); // You cannot use the house decorator on that object.
                     }
-                    /*else if (item.TotalWeight + item.PileWeight > 100)
-                    {
-                        from.SendLocalizedMessage(1042272); // That is too heavy.
-                    }*/
                     else
                     {
                         switch (m_Decorator.Command)
@@ -338,7 +345,7 @@ namespace Server.Items
 
                         if (aAttributes.Length > 0)
                         {
-                            aAttributes[0].Flip(@from, (Item)addon);
+                            aAttributes[0].Flip(from, (Item)addon);
                             return;
                         }
                     }

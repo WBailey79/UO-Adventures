@@ -2,14 +2,11 @@ using Server.Gumps;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using System;
 
 namespace Server.Guilds
 {
     public abstract class BaseGuildGump : Gump
     {
-        private readonly Guild m_Guild;
-        private readonly PlayerMobile m_Player;
         public BaseGuildGump(PlayerMobile pm, Guild g)
             : this(pm, g, 10, 10)
         {
@@ -18,14 +15,16 @@ namespace Server.Guilds
         public BaseGuildGump(PlayerMobile pm, Guild g, int x, int y)
             : base(x, y)
         {
-            m_Guild = g;
-            m_Player = pm;
+            guild = g;
+            player = pm;
 
             pm.CloseGump(typeof(BaseGuildGump));
         }
 
-        protected Guild guild => m_Guild;
-        protected PlayerMobile player => m_Player;
+        protected Guild guild { get; }
+
+        protected PlayerMobile player { get; }
+
         public static bool IsLeader(Mobile m, Guild g)
         {
             return !(m.Deleted || g.Disbanded || !(m is PlayerMobile) || (m.AccessLevel < AccessLevel.GameMaster && g.Leader != m));
@@ -82,7 +81,7 @@ namespace Server.Guilds
 
         public static string Color(string text, int color)
         {
-            return String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", color, text);
+            return string.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", color, text);
         }
 
         //There's prolly a way to have all the vars set of inherited classes before something is called in the Ctor... but... I can't think of it right now, and I can't use Timer.DelayCall here :<
@@ -134,7 +133,7 @@ namespace Server.Guilds
         {
             if (text != null && text.Number > 0)
                 AddHtmlLocalized(x, y, width, height, text.Number, back, scroll);
-            else if (text != null && text.String != null)
+            else if (text?.String != null)
                 AddHtml(x, y, width, height, text.String, back, scroll);
         }
     }
